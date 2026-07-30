@@ -1,5 +1,5 @@
 function Divisions() {
-  return <div>Divisions</div>
+  return <div>Divisions Page</div>
 }
 
 export default Divisions

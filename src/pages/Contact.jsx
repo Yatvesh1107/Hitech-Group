@@ -1,5 +1,5 @@
 function Contact() {
-  return <div>Contact</div>
+  return <div>Contact Page</div>
 }
 
 export default Contact

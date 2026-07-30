@@ -1,1 +1,3 @@
-// Projects data will go here
+const projects = []
+
+export default projects

@@ -1,1 +1,3 @@
-// Divisions data will go here
+const divisions = []
+
+export default divisions
