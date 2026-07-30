@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #0b2d5c;
+  --color-accent: #f4b400;
+  --color-dark: #0f172a;
+  --color-light: #f8fafc;
+  --color-white: #ffffff;
+  --color-text: #334155;
+
+  --font-heading: "Poppins", sans-serif;
+  --font-body: "Inter", sans-serif;
+
+  --radius-card: 20px;
+  --radius-button: 12px;
+  --radius-image: 24px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background-color: var(--color-accent);
+  color: var(--color-dark);
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background-color: var(--color-white);
+}
