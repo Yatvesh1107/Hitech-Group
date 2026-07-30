@@ -69,8 +69,8 @@ function WhyChooseUs() {
         }}
       />
 
-      <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-[120px]">
-        <div className="text-center max-w-[700px] mx-auto mb-16">
+      <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-10 lg:py-10">
+        <div className="text-center max-w-[700px] mx-auto mb-12">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -86,7 +86,7 @@ function WhyChooseUs() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-[#0B2D5C] text-[34px] md:text-[42px] lg:text-[56px] font-extrabold leading-[1.1] mt-4"
+            className="text-[#0B2D5C] text-[34px] md:text-[42px] lg:text-[56px] font-extrabold leading-[1.1] mt-3"
           >
             Engineering Excellence Built on Trust, Quality &amp; Reliability
           </motion.h2>
@@ -96,7 +96,7 @@ function WhyChooseUs() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-[#334155] text-lg leading-[1.7] mt-6"
+            className="text-[#334155] text-lg leading-[1.7] mt-4"
           >
             HITECH GROUP is committed to delivering industrial engineering solutions that meet the
             highest standards of quality, safety, and reliability. Our approach is built on
@@ -105,7 +105,7 @@ function WhyChooseUs() {
           </motion.p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -158,9 +158,9 @@ function WhyChooseUs() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-center mt-20"
+          className="text-center mt-14"
         >
-          <div className="w-16 h-[2px] bg-[#F4B400] mx-auto mb-6" />
+          <div className="w-16 h-[2px] bg-[#F4B400] mx-auto mb-4" />
           <p className="text-[#334155] text-lg italic max-w-[700px] mx-auto">
             &ldquo;Committed to delivering dependable industrial engineering solutions through
             innovation, quality, and long-term partnerships.&rdquo;

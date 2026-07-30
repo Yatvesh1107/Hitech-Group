@@ -30,8 +30,8 @@ function ClientsSection() {
         }}
       />
 
-      <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-[120px]">
-        <div className="text-center max-w-[700px] mx-auto mb-16">
+      <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-8 lg:py-10">
+        <div className="text-center max-w-[700px] mx-auto mb-12">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -47,7 +47,7 @@ function ClientsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-[#0B2D5C] text-[34px] md:text-[42px] lg:text-[56px] font-extrabold leading-[1.1] mt-4"
+            className="text-[#0B2D5C] text-[34px] md:text-[42px] lg:text-[56px] font-extrabold leading-[1.1] mt-3"
           >
             Trusted by Industry Leaders
           </motion.h2>
@@ -57,7 +57,7 @@ function ClientsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-[#334155] text-lg leading-[1.7] mt-6"
+            className="text-[#334155] text-lg leading-[1.7] mt-4"
           >
             HITECH GROUP has successfully delivered engineering, insulation, and industrial services
             to organizations across sugar, paper, food processing, manufacturing, and heavy
@@ -76,7 +76,7 @@ function ClientsSection() {
             <motion.div
               key={client.name}
               variants={cardVariants}
-              className="bg-white border border-gray-100 rounded-[18px] p-8 flex flex-col items-center justify-center text-center hover:-translate-y-1 hover:border-[#F4B400] hover:shadow-lg transition-all duration-300 min-h-[140px]"
+              className="bg-white border border-gray-100 rounded-[18px] p-7 flex flex-col items-center justify-center text-center hover:-translate-y-1 hover:border-[#F4B400] hover:shadow-lg transition-all duration-300 min-h-[130px]"
             >
               <div className="w-[68px] h-[68px] rounded-full bg-[#F4B400]/10 flex items-center justify-center mb-3">
                 <span className="text-lg font-bold text-[#0B2D5C] tracking-tight">
@@ -96,7 +96,7 @@ function ClientsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-16"
+          className="mt-12"
         >
           <div className="bg-[#0B2D5C] rounded-[28px] px-8 md:px-16 py-12 md:py-14 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
             <div className="max-w-[550px]">

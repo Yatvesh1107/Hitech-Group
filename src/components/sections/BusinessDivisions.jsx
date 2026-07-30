@@ -56,8 +56,8 @@ function BusinessDivisions() {
         }}
       />
 
-      <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-[120px]">
-        <div className="text-center max-w-[700px] mx-auto mb-16">
+      <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-4 lg:py-10">
+        <div className="text-center max-w-[700px] mx-auto mb-12">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -73,7 +73,7 @@ function BusinessDivisions() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-[#0B2D5C] text-[34px] md:text-[42px] lg:text-[56px] font-extrabold leading-[1.1] mt-4"
+            className="text-[#0B2D5C] text-[34px] md:text-[42px] lg:text-[56px] font-extrabold leading-[1.1] mt-3"
           >
             One Group. Three Specialized Engineering Divisions.
           </motion.h2>
@@ -83,7 +83,7 @@ function BusinessDivisions() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-[#334155] text-lg leading-[1.7] mt-6"
+            className="text-[#334155] text-lg leading-[1.7] mt-4"
           >
             HITECH GROUP operates through three distinct divisions, each bringing specialized
             expertise in industrial insulation, ultrasonic testing, and precision engineering to
@@ -92,7 +92,7 @@ function BusinessDivisions() {
         </div>
 
         <motion.div
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -115,7 +115,7 @@ function BusinessDivisions() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 </div>
 
-                <div className="p-8 flex flex-col flex-1">
+                <div className="p-7 flex flex-col flex-1">
                   <div className="w-10 h-10 rounded-lg bg-[#F4B400]/10 flex items-center justify-center mb-4">
                     <Icon size={20} className="text-[#F4B400]" />
                   </div>
@@ -154,9 +154,9 @@ function BusinessDivisions() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="text-center mt-16"
+          className="text-center mt-12"
         >
-          <div className="w-16 h-[2px] bg-[#F4B400] mx-auto mb-6" />
+          <div className="w-16 h-[2px] bg-[#F4B400] mx-auto mb-4" />
           <p className="text-[#334155] text-lg font-medium">
             Integrated Industrial Solutions Under One Trusted Group
           </p>

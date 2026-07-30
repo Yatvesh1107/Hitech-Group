@@ -84,8 +84,8 @@ function Industries() {
         }}
       />
 
-      <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-[120px]">
-        <div className="text-center max-w-[700px] mx-auto mb-16">
+      <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-8 lg:py-10">
+        <div className="text-center max-w-[700px] mx-auto mb-12">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -101,7 +101,7 @@ function Industries() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-[#0B2D5C] text-[34px] md:text-[42px] lg:text-[56px] font-extrabold leading-[1.1] mt-4"
+            className="text-[#0B2D5C] text-[34px] md:text-[42px] lg:text-[56px] font-extrabold leading-[1.1] mt-3"
           >
             Delivering Engineering Solutions Across Diverse Industries
           </motion.h2>
@@ -111,7 +111,7 @@ function Industries() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-[#334155] text-lg leading-[1.7] mt-6"
+            className="text-[#334155] text-lg leading-[1.7] mt-4"
           >
             HITECH GROUP delivers industrial insulation, inspection, testing, and engineering
             solutions across a wide range of industries, with a consistent focus on quality,
@@ -132,7 +132,7 @@ function Industries() {
               <motion.div
                 key={industry.title}
                 variants={cardVariants}
-                className="bg-white border border-gray-100 rounded-[22px] p-8 hover:-translate-y-1.5 hover:border-[#F4B400] hover:shadow-xl transition-all duration-300"
+                className="bg-white border border-gray-100 rounded-[22px] p-7 hover:-translate-y-1.5 hover:border-[#F4B400] hover:shadow-xl transition-all duration-300"
               >
                 <div className="w-14 h-14 rounded-xl bg-[#F4B400]/10 flex items-center justify-center mb-5">
                   <Icon size={28} className="text-[#F4B400]" />
@@ -151,7 +151,7 @@ function Industries() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-16"
+          className="mt-12"
         >
           <div className="bg-[#0B2D5C] rounded-[28px] px-8 md:px-16 py-12 md:py-14 flex flex-col md:flex-row md:items-center md:justify-between gap-8">
             <div className="max-w-[600px]">

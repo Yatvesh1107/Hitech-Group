@@ -80,8 +80,8 @@ function ServicesSection() {
         }}
       />
 
-      <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-[120px]">
-        <div className="text-center max-w-[700px] mx-auto mb-16">
+      <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-8 lg:py-10">
+        <div className="text-center max-w-[700px] mx-auto mb-12">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -97,7 +97,7 @@ function ServicesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-[#0B2D5C] text-[34px] md:text-[42px] lg:text-[56px] font-extrabold leading-[1.1] mt-4"
+            className="text-[#0B2D5C] text-[34px] md:text-[42px] lg:text-[56px] font-extrabold leading-[1.1] mt-3"
           >
             Comprehensive Industrial Solutions Under One Group
           </motion.h2>
@@ -107,7 +107,7 @@ function ServicesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-[#334155] text-lg leading-[1.7] mt-6"
+            className="text-[#334155] text-lg leading-[1.7] mt-4"
           >
             HITECH GROUP delivers integrated industrial solutions through three specialized
             business divisions, combining deep technical expertise with a commitment to quality
@@ -116,7 +116,7 @@ function ServicesSection() {
         </div>
 
         <motion.div
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -130,7 +130,7 @@ function ServicesSection() {
               <motion.div
                 key={service.title}
                 variants={cardVariants}
-                className={`group bg-white border border-gray-100 rounded-[24px] p-9 shadow-md ${colors.border} hover:-translate-y-1.5 hover:shadow-xl transition-all duration-300 flex flex-col`}
+                className={`group bg-white border border-gray-100 rounded-[24px] p-7 shadow-md ${colors.border} hover:-translate-y-1.5 hover:shadow-xl transition-all duration-300 flex flex-col`}
               >
                 <div
                   className={`w-16 h-16 rounded-2xl ${colors.bg} flex items-center justify-center mb-6`}
@@ -140,7 +140,7 @@ function ServicesSection() {
 
                 <h3 className="text-xl font-bold text-[#0B2D5C]">{service.title}</h3>
 
-                <div className="mt-6 space-y-3.5 flex-1">
+                <div className="mt-5 space-y-3 flex-1">
                   {service.items.map((item) => (
                     <div key={item} className="flex items-start gap-3 text-sm text-[#334155]">
                       <Check size={16} className="text-[#F4B400] shrink-0 mt-0.5" />
@@ -149,7 +149,7 @@ function ServicesSection() {
                   ))}
                 </div>
 
-                <div className="mt-8 pt-6 border-t border-gray-100">
+                <div className="mt-6 pt-5 border-t border-gray-100">
                   <Link
                     to="/divisions"
                     className="inline-flex items-center gap-2 text-sm font-semibold text-[#0B2D5C] hover:text-[#F4B400] transition-colors"
@@ -167,7 +167,7 @@ function ServicesSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-16"
+          className="mt-12"
         >
           <div className="bg-[#0B2D5C] rounded-[28px] px-8 md:px-16 py-12 md:py-14 flex flex-col md:flex-row md:items-center md:justify-between gap-8">
             <div className="max-w-[600px]">

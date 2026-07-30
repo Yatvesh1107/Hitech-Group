@@ -64,7 +64,7 @@ function Hero() {
       </div>
 
       {/* Main content */}
-      <div className="relative z-10 mx-auto max-w-[1280px] px-5 sm:px-6 md:px-8 min-h-screen lg:h-full flex flex-col justify-center pt-24 pb-28 sm:pt-28 sm:pb-32 lg:pt-[80px] lg:pb-[80px]">
+      <div className="relative z-10 mx-auto max-w-[1280px] px-5 sm:px-6 md:px-8 min-h-screen lg:h-full flex flex-col justify-center pt-12 pb-28 sm:pt-28 sm:pb-32 lg:pt-[25px] lg:pb-[120px]">
         <motion.div
           className="grid w-full lg:grid-cols-2 gap-8 lg:gap-10 xl:gap-14 items-center"
           variants={containerVariants}
