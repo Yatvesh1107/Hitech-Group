@@ -89,6 +89,8 @@ const inputClass =
 
 function Contact() {
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState("")
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -103,9 +105,31 @@ function Contact() {
     setForm((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setSubmitted(true)
+    setSubmitting(true)
+    setError("")
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        setError(data.error || "Something went wrong. Please try again.")
+        return
+      }
+
+      setSubmitted(true)
+    } catch {
+      setError("Unable to reach the server. Please try again later.")
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -357,6 +381,7 @@ function Contact() {
                     <button
                       onClick={() => {
                         setSubmitted(false)
+                        setError("")
                         setForm({
                           name: "",
                           email: "",
@@ -497,11 +522,19 @@ function Contact() {
                         />
                       </div>
 
+                      {error && (
+                        <div className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl px-4 py-3">
+                          {error}
+                        </div>
+                      )}
+
                       <button
                         type="submit"
-                        className="h-14 w-full bg-[#F4B400] text-[#0F172A] font-semibold rounded-xl inline-flex items-center justify-center gap-2 hover:bg-[#d9a000] transition-colors"
+                        disabled={submitting}
+                        className="h-14 w-full bg-[#F4B400] text-[#0F172A] font-semibold rounded-xl inline-flex items-center justify-center gap-2 hover:bg-[#d9a000] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
                       >
-                        Send Message <Send size={18} />
+                        {submitting ? "Sending…" : "Send Message"}
+                        {!submitting && <Send size={18} />}
                       </button>
                     </div>
                   </form>
