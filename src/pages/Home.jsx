@@ -6,6 +6,8 @@ import Industries from "../components/sections/Industries"
 import ServicesSection from "../components/sections/ServicesSection"
 import ProjectsSection from "../components/sections/ProjectsSection"
 import ClientsSection from "../components/sections/ClientsSection"
+import Certifications from "../components/sections/Certifications"
+import CTASection from "../components/sections/CTASection"
 
 function Home() {
   return (
@@ -18,6 +20,8 @@ function Home() {
       <ServicesSection />
       <ProjectsSection />
       <ClientsSection />
+      <Certifications />
+      <CTASection />
     </>
   )
 }
