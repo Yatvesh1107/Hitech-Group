@@ -9,9 +9,9 @@ const navLinks = [
     label: "Business Divisions",
     path: "/divisions",
     dropdown: [
-      { label: "Industrial Insulation", path: "/divisions" },
-      { label: "Experts in Ultrasonics", path: "/divisions" },
-      { label: "Precision Tech Engineering", path: "/divisions" },
+      { label: "Industrial Insulation", path: "/divisions/industrial-insulation" },
+      { label: "Experts in Ultrasonics", path: "/divisions/experts-in-ultrasonics" },
+      { label: "Precision Tech Engineering", path: "/divisions/precision-tech" },
     ],
   },
   { label: "Projects", path: "/projects" },
