@@ -73,7 +73,7 @@ function ExpertsUltrasonics() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: "url('/images/home/ultrasonic-bd.png')",
+            backgroundImage: "url('/images/ultrasonics/hero.png')",
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[rgba(8,42,87,0.92)] via-[rgba(8,42,87,0.75)] to-[rgba(8,42,87,0.6)]" />
@@ -183,7 +183,7 @@ function ExpertsUltrasonics() {
             <div className="relative">
               <div className="rounded-[24px] overflow-hidden">
                 <img
-                  src="/images/home/ultrasonic-bd.png"
+                  src="/images/ultrasonics/ultra-about.png"
                   alt="Ultrasonic testing operations"
                   className="w-full h-[420px] md:h-[500px] object-cover"
                 />

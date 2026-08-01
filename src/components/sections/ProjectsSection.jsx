@@ -10,7 +10,7 @@ const projects = [
     description:
       "Industrial insulation solutions designed to improve thermal efficiency and operational performance for power generation facilities.",
     image:
-      "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80",
+      "/images/home/thermal.png",
     alt: "Power plant thermal insulation",
   },
   {
@@ -20,7 +20,7 @@ const projects = [
     description:
       "Cold insulation systems developed for temperature-sensitive industrial applications in chemical processing environments.",
     image:
-      "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80",
+      "/images/home/chemical.png",
     alt: "Chemical facility insulation",
   },
   {
@@ -30,7 +30,7 @@ const projects = [
     description:
       "Engineering and insulation services supporting efficient and hygienic food manufacturing operations.",
     image:
-      "https://images.unsplash.com/photo-1581092787765-e3feb951d987?auto=format&fit=crop&w=600&q=80",
+      "/images/home/food.png",
     alt: "Food processing facility",
   },
 ]

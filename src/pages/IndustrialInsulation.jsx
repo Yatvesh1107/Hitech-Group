@@ -485,37 +485,37 @@ function IndustrialInsulation() {
             {
               name: "Rockwool",
               description: "Rigid mineral wool boards for high-temperature thermal insulation.",
-              image: "/images/home/hitech-bd.png",
+              image: "/images/bd/rockwool.png",
               alt: "Rockwool insulation material",
             },
             {
               name: "Glass Wool",
               description: "Lightweight fibrous insulation for thermal and acoustic control.",
-              image: "/images/home/home-about-main.png",
+              image: "/images/bd/glasswool.png",
               alt: "Glass wool insulation material",
             },
             {
               name: "Mineral Wool",
               description: "Versatile insulation for heat retention, fire resistance and noise control.",
-              image: "/images/home/home-about-small.png",
+              image: "/images/bd/mineralwool.png",
               alt: "Mineral wool insulation material",
             },
             {
               name: "ArmaFlex",
               description: "Flexible elastomeric insulation for chilled and refrigeration systems.",
-              image: "/images/home/ultrasonic-bd.png",
+              image: "/images/bd/armaflex.png",
               alt: "ArmaFlex insulation material",
             },
             {
               name: "Aluminium Cladding Sheets",
               description: "Protective metal cladding that shields insulation from weather and damage.",
-              image: "/images/home/precision-bd.png",
+              image: "/images/bd/alusheet.png",
               alt: "Aluminium cladding sheets",
             },
             {
               name: "Cold Insulation Materials",
               description: "Specialized materials for condensation control and low-temperature protection.",
-              image: "/images/about/hero-bg.png",
+              image: "/images/bd/cold.png",
               alt: "Cold insulation materials",
             },
           ].map((product) => (

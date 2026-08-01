@@ -115,7 +115,7 @@ function WhyChooseUs() {
             <div className="relative">
               <div className="rounded-[24px] overflow-hidden">
                 <img
-                  src="https://images.unsplash.com/photo-1581092787765-e3feb951d987?auto=format&fit=crop&w=800&q=80"
+                  src="/images/home/whychoose.png"
                   alt="HITECH industrial operations"
                   className="w-full h-[500px] md:h-[600px] object-cover"
                 />
