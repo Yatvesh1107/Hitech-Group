@@ -21,6 +21,14 @@ import {
   Hammer,
   Layers,
 } from "lucide-react"
+import hitechBd from "@/assets/images/home/hitech-bd.png"
+import aboutSmall from "@/assets/images/home/home-about-small.png"
+import rockwool from "@/assets/images/bd/rockwool.png"
+import glasswool from "@/assets/images/bd/glasswool.png"
+import mineralwool from "@/assets/images/bd/mineralwool.png"
+import armaflex from "@/assets/images/bd/armaflex.png"
+import alusheet from "@/assets/images/bd/alusheet.png"
+import cold from "@/assets/images/bd/cold.png"
 
 const expertise = [
   {
@@ -75,7 +83,7 @@ function IndustrialInsulation() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: "url('/images/home/hitech-bd.png')",
+            backgroundImage: `url(${hitechBd})`,
           }}
         />
         <div className="absolute inset-0 bg-[rgba(8,42,87,0.7)]" />
@@ -185,7 +193,7 @@ function IndustrialInsulation() {
             <div className="relative">
               <div className="rounded-[24px] overflow-hidden">
                 <img
-                  src="/images/home/hitech-bd.png"
+                  src={hitechBd}
                   alt="Hitech Industrial Insulation operations"
                   className="w-full h-[420px] md:h-[500px] object-cover"
                 />
@@ -193,7 +201,7 @@ function IndustrialInsulation() {
 
               <div className="absolute -top-4 -right-4 rounded-[20px] overflow-hidden shadow-lg w-[160px] md:w-[200px]">
                 <img
-                  src="/images/home/home-about-small.png"
+                  src={aboutSmall}
                   alt="Insulation detail"
                   className="w-full h-[110px] md:h-[140px] object-cover"
                 />
@@ -485,37 +493,37 @@ function IndustrialInsulation() {
             {
               name: "Rockwool",
               description: "Rigid mineral wool boards for high-temperature thermal insulation.",
-              image: "/images/bd/rockwool.png",
+              image: rockwool,
               alt: "Rockwool insulation material",
             },
             {
               name: "Glass Wool",
               description: "Lightweight fibrous insulation for thermal and acoustic control.",
-              image: "/images/bd/glasswool.png",
+              image: glasswool,
               alt: "Glass wool insulation material",
             },
             {
               name: "Mineral Wool",
               description: "Versatile insulation for heat retention, fire resistance and noise control.",
-              image: "/images/bd/mineralwool.png",
+              image: mineralwool,
               alt: "Mineral wool insulation material",
             },
             {
               name: "ArmaFlex",
               description: "Flexible elastomeric insulation for chilled and refrigeration systems.",
-              image: "/images/bd/armaflex.png",
+              image: armaflex,
               alt: "ArmaFlex insulation material",
             },
             {
               name: "Aluminium Cladding Sheets",
               description: "Protective metal cladding that shields insulation from weather and damage.",
-              image: "/images/bd/alusheet.png",
+              image: alusheet,
               alt: "Aluminium cladding sheets",
             },
             {
               name: "Cold Insulation Materials",
               description: "Specialized materials for condensation control and low-temperature protection.",
-              image: "/images/bd/cold.png",
+              image: cold,
               alt: "Cold insulation materials",
             },
           ].map((product) => (

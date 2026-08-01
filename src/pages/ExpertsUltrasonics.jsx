@@ -19,6 +19,9 @@ import {
   Hammer,
   Search,
 } from "lucide-react"
+import ultrasonicsHero from "@/assets/images/ultrasonics/hero.png"
+import ultraAbout from "@/assets/images/ultrasonics/ultra-about.png"
+import aboutSmall from "@/assets/images/home/home-about-small.png"
 
 const expertise = [
   {
@@ -73,7 +76,7 @@ function ExpertsUltrasonics() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: "url('/images/ultrasonics/hero.png')",
+            backgroundImage: `url(${ultrasonicsHero})`,
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[rgba(8,42,87,0.92)] via-[rgba(8,42,87,0.75)] to-[rgba(8,42,87,0.6)]" />
@@ -183,7 +186,7 @@ function ExpertsUltrasonics() {
             <div className="relative">
               <div className="rounded-[24px] overflow-hidden">
                 <img
-                  src="/images/ultrasonics/ultra-about.png"
+                  src={ultraAbout}
                   alt="Ultrasonic testing operations"
                   className="w-full h-[420px] md:h-[500px] object-cover"
                 />
@@ -191,7 +194,7 @@ function ExpertsUltrasonics() {
 
               <div className="absolute -top-4 -right-4 rounded-[20px] overflow-hidden shadow-lg w-[160px] md:w-[200px]">
                 <img
-                  src="/images/home/home-about-small.png"
+                  src={aboutSmall}
                   alt="Inspection detail"
                   className="w-full h-[110px] md:h-[140px] object-cover"
                 />

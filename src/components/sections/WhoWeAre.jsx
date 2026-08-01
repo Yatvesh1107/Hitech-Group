@@ -1,5 +1,7 @@
 import { motion } from "framer-motion"
 import { Factory, Cog, BadgeCheck, Handshake, Check } from "lucide-react"
+import aboutMain from "@/assets/images/home/home-about-main.png"
+import aboutSmall from "@/assets/images/home/home-about-small.png"
 
 const highlights = [
   {
@@ -54,7 +56,7 @@ function WhoWeAre() {
             <div className="relative">
               <div className="rounded-[24px] overflow-hidden">
                 <img
-                  src="/images/home/home-about-main.png"
+                  src={aboutMain}
                   alt="HITECH GROUP industrial operations"
                   className="w-full h-[420px] md:h-[500px] object-cover"
                 />
@@ -62,7 +64,7 @@ function WhoWeAre() {
 
               <div className="absolute -top-4 -right-4 rounded-[20px] overflow-hidden shadow-lg w-[160px] md:w-[200px]">
                 <img
-                  src="/images/home/home-about-small.png"
+                  src={aboutSmall}
                   alt="Engineering detail"
                   className="w-full h-[110px] md:h-[140px] object-cover"
                 />

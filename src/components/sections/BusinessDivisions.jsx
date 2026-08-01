@@ -1,6 +1,9 @@
 import { motion } from "framer-motion"
 import { Link } from "react-router-dom"
 import { Thermometer, Scan, Settings, ArrowRight, Check } from "lucide-react"
+import hitechBd from "@/assets/images/home/hitech-bd.png"
+import ultrasonicBd from "@/assets/images/home/ultrasonic-bd.png"
+import precisionBd from "@/assets/images/home/precision-bd.png"
 
 const divisions = [
   {
@@ -10,8 +13,7 @@ const divisions = [
       "Professional thermal and acoustic insulation solutions for industrial facilities.",
     features: ["Thermal Insulation", "Cold Insulation", "Acoustic Insulation"],
     icon: Thermometer,
-    image:
-      "/images/home/hitech-bd.png",
+    image: hitechBd,
     alt: "Industrial insulation pipes and equipment",
   },
   {
@@ -21,8 +23,7 @@ const divisions = [
       "Industrial inspection and ultrasonic testing services for quality assurance.",
     features: ["Ultrasonic Testing", "NDT Inspection", "Material Evaluation"],
     icon: Scan,
-    image:
-      "/images/home/ultrasonic-bd.png",
+    image: ultrasonicBd,
     alt: "Ultrasonic testing and NDT inspection",
   },
   {
@@ -32,8 +33,7 @@ const divisions = [
       "Engineering support and technical solutions for industrial infrastructure.",
     features: ["Engineering Services", "Industrial Projects", "Technical Consultancy"],
     icon: Settings,
-    image:
-      "/images/home/precision-bd.png",
+    image: precisionBd,
     alt: "Industrial engineering and machinery",
   },
 ]

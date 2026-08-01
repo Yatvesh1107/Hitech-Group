@@ -10,6 +10,7 @@ import {
   BadgeCheck,
   MapPin,
 } from "lucide-react"
+import heroBg from "@/assets/images/home/hero-bg.png"
 
 const expertise = [
   {
@@ -58,7 +59,7 @@ function Hero() {
       <div className="absolute inset-0">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/images/home/hero-bg.png')" }}
+          style={{ backgroundImage: `url(${heroBg})` }}
         />
         <div className="absolute inset-0 bg-[rgba(8,42,87,0.75)]" />
       </div>

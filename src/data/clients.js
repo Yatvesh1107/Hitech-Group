@@ -1,58 +1,68 @@
+import renukasugars from "@/assets/images/clients/renukasugars.png"
+import westcoast from "@/assets/images/clients/westcoast.png"
+import riddhisiddhi from "@/assets/images/clients/Riddhisiddhi.png"
+import eidparrys from "@/assets/images/clients/eidparrys.png"
+import satish from "@/assets/images/clients/satish.png"
+import murugappa from "@/assets/images/clients/murugappa.svg"
+import nsl from "@/assets/images/clients/nsl.png"
+import shahu from "@/assets/images/clients/shahu.png"
+import adm from "@/assets/images/clients/adm.png"
+
 const clients = [
   {
     name: "Renuka Sugar",
     initials: "RS",
     domain: "Sugar Industry",
-    logo: "/images/clients/renukasugars.png",
+    logo: renukasugars,
   },
   {
     name: "West Coast Paper Mills",
     initials: "WCP",
     domain: "Paper & Pulp",
-    logo: "/images/clients/westcoast.png",
+    logo: westcoast,
   },
   {
     name: "Riddhi Siddhi",
     initials: "RS",
     domain: "Sugar Industry",
-    logo: "/images/clients/Riddhisiddhi.png",
+    logo: riddhisiddhi,
   },
   {
     name: "EID Parry",
     initials: "EP",
     domain: "Sugar & Fertilizers",
-    logo: "/images/clients/eidparrys.png",
+    logo: eidparrys,
   },
   { name: "Gokul", initials: "GK", domain: "Sugar Industry" },
   {
     name: "Satish Sugars",
     initials: "SS",
     domain: "Sugar Industry",
-    logo: "/images/clients/satish.png",
+    logo: satish,
   },
   {
     name: "Murugappa Group",
     initials: "MG",
     domain: "Conglomerate",
-    logo: "/images/clients/murugappa.svg",
+    logo: murugappa,
   },
   {
     name: "NSL Sugars",
     initials: "NSL",
     domain: "Sugar Industry",
-    logo: "/images/clients/nsl.png",
+    logo: nsl,
   },
   {
     name: "Shahu Group",
     initials: "SG",
-    domain: "Sugar Industry",
-    logo: "/images/clients/shahu.png",
+    domain: "Industrial Group",
+    logo: shahu,
   },
   {
     name: "ADM",
     initials: "ADM",
     domain: "Food Processing",
-    logo: "/images/clients/adm.png",
+    logo: adm,
   },
   { name: "Sound Casting", initials: "SC", domain: "Foundry" },
   {

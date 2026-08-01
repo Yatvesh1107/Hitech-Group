@@ -11,6 +11,8 @@ import {
   ThumbsUp,
   Check,
 } from "lucide-react"
+import aboutMain from "@/assets/images/home/home-about-main.png"
+import aboutSmall from "@/assets/images/home/home-about-small.png"
 
 const milestones = [
   {
@@ -139,7 +141,7 @@ function OurJourney() {
             <div className="relative">
               <div className="rounded-[24px] overflow-hidden">
                 <img
-                  src="/images/home/home-about-main.png"
+                  src={aboutMain}
                   alt="HITECH GROUP engineering operations"
                   className="w-full h-[420px] md:h-[520px] object-cover"
                 />
@@ -147,7 +149,7 @@ function OurJourney() {
 
               <div className="absolute -bottom-8 -right-3 md:-right-6 rounded-[20px] overflow-hidden shadow-lg w-[140px] md:w-[170px]">
                 <img
-                  src="/images/home/home-about-small.png"
+                  src={aboutSmall}
                   alt="Engineering detail"
                   className="w-full h-[110px] md:h-[130px] object-cover"
                 />

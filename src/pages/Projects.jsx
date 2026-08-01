@@ -10,6 +10,10 @@ import {
   Users,
   Globe,
 } from "lucide-react"
+import thermal from "@/assets/images/home/thermal.png"
+import chemical from "@/assets/images/home/chemical.png"
+import food from "@/assets/images/home/food.png"
+import heroBg from "@/assets/images/about/hero-bg.png"
 
 const projects = [
   {
@@ -19,7 +23,7 @@ const projects = [
     status: "Completed",
     description:
       "Industrial thermal insulation solutions for boilers, pipelines and process equipment that improve energy efficiency and reduce heat loss.",
-    image: "/images/home/thermal.png",
+    image: thermal,
     alt: "Power plant thermal insulation",
   },
   {
@@ -29,7 +33,7 @@ const projects = [
     status: "Completed",
     description:
       "Cold insulation systems designed for low-temperature industrial processes while maintaining thermal stability and operational safety.",
-    image: "/images/home/chemical.png",
+    image: chemical,
     alt: "Chemical factory cold insulation",
   },
   {
@@ -39,7 +43,7 @@ const projects = [
     status: "Completed",
     description:
       "Thermal and acoustic insulation solutions supporting efficient, hygienic and reliable food processing operations.",
-    image: "/images/home/food.png",
+    image: food,
     alt: "Food processing facility insulation",
   },
 ]
@@ -118,7 +122,7 @@ function Projects() {
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
-              backgroundImage: "url('/images/about/hero-bg.png')",
+              backgroundImage: `url(${heroBg})`,
             }}
           />
           <div className="absolute inset-0 bg-[rgba(8,42,87,0.7)]" />

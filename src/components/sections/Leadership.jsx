@@ -1,12 +1,14 @@
 import { motion } from "framer-motion"
 import { Briefcase, GraduationCap, Users, Award, BadgeCheck } from "lucide-react"
+import aboutMain from "@/assets/images/home/home-about-main.png"
+import aboutSmall from "@/assets/images/home/home-about-small.png"
 
 const leaders = [
   {
     name: "Mr. Raghunath Patil",
     role: "CEO",
     company: "Hitech Industrial Insulation",
-    image: "/images/home/home-about-main.png",
+    image: aboutMain,
     imageAlt: "Portrait placeholder – Mr. Raghunath Patil",
     credentials: "DME, BE(Mech) – UT Level 3",
     bio: "With a strong engineering vision and a hands-on understanding of industrial processes, Mr. Raghunath Patil leads HITECH GROUP with an unwavering commitment to quality, dependable customer relationships and industrial excellence across every division.",
@@ -21,7 +23,7 @@ const leaders = [
     name: "Mr. Ajinkya Patil",
     role: "Director",
     company: "Hitech Industrial Insulation",
-    image: "/images/home/home-about-small.png",
+    image: aboutSmall,
     imageAlt: "Portrait placeholder – Mr. Ajinkya Patil",
     credentials: "DME, BE(Mech) – UT Level 3",
     bio: "Mr. Ajinkya Patil directs the group's business growth and future development, championing innovation, operational excellence and the long-term evolution of HITECH GROUP's capabilities and client partnerships.",

@@ -7,6 +7,7 @@ import {
   Handshake,
   Lightbulb,
 } from "lucide-react"
+import whyChoose from "@/assets/images/home/whychoose.png"
 
 const trustCards = [
   {
@@ -115,7 +116,7 @@ function WhyChooseUs() {
             <div className="relative">
               <div className="rounded-[24px] overflow-hidden">
                 <img
-                  src="/images/home/whychoose.png"
+                  src={whyChoose}
                   alt="HITECH industrial operations"
                   className="w-full h-[500px] md:h-[600px] object-cover"
                 />

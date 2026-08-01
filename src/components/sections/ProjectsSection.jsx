@@ -1,6 +1,9 @@
 import { motion } from "framer-motion"
 import { Link } from "react-router-dom"
 import { ArrowUpRight } from "lucide-react"
+import thermal from "@/assets/images/home/thermal.png"
+import chemical from "@/assets/images/home/chemical.png"
+import food from "@/assets/images/home/food.png"
 
 const projects = [
   {
@@ -9,8 +12,7 @@ const projects = [
     industry: "Power Generation",
     description:
       "Industrial insulation solutions designed to improve thermal efficiency and operational performance for power generation facilities.",
-    image:
-      "/images/home/thermal.png",
+    image: thermal,
     alt: "Power plant thermal insulation",
   },
   {
@@ -19,8 +21,7 @@ const projects = [
     industry: "Chemical Processing",
     description:
       "Cold insulation systems developed for temperature-sensitive industrial applications in chemical processing environments.",
-    image:
-      "/images/home/chemical.png",
+    image: chemical,
     alt: "Chemical facility insulation",
   },
   {
@@ -29,8 +30,7 @@ const projects = [
     industry: "Food Processing",
     description:
       "Engineering and insulation services supporting efficient and hygienic food manufacturing operations.",
-    image:
-      "/images/home/food.png",
+    image: food,
     alt: "Food processing facility",
   },
 ]

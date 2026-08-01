@@ -19,6 +19,12 @@ import {
   PackageCheck,
   ArrowDown,
 } from "lucide-react"
+import heroBg from "@/assets/images/about/hero-bg.png"
+import aboutMain from "@/assets/images/home/home-about-main.png"
+import aboutSmall from "@/assets/images/home/home-about-small.png"
+import hitechBd from "@/assets/images/home/hitech-bd.png"
+import ultrasonicBd from "@/assets/images/home/ultrasonic-bd.png"
+import precisionBd from "@/assets/images/home/precision-bd.png"
 
 const divisions = [
   {
@@ -68,7 +74,7 @@ function Divisions() {
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
-              backgroundImage: "url('/images/about/hero-bg.png')",
+              backgroundImage: `url(${heroBg})`,
             }}
           />
           <div className="absolute inset-0 bg-[rgba(8,42,87,0.7)]" />
@@ -183,7 +189,7 @@ function Divisions() {
               <div className="relative">
                 <div className="rounded-[24px] overflow-hidden">
                   <img
-                    src="/images/home/home-about-main.png"
+                    src={aboutMain}
                     alt="HITECH GROUP specialized engineering operations"
                     className="w-full h-[420px] md:h-[500px] object-cover"
                   />
@@ -191,7 +197,7 @@ function Divisions() {
 
                 <div className="absolute -top-4 -right-4 rounded-[20px] overflow-hidden shadow-lg w-[160px] md:w-[200px]">
                   <img
-                    src="/images/home/home-about-small.png"
+                    src={aboutSmall}
                     alt="Engineering detail"
                     className="w-full h-[110px] md:h-[140px] object-cover"
                   />
@@ -315,7 +321,7 @@ function Divisions() {
                 title: "Hitech Industrial Insulation",
                 description:
                   "Professional insulation contracting for industrial facilities — protecting processes, equipment and personnel.",
-                image: "/images/home/hitech-bd.png",
+                image: hitechBd,
                 alt: "Industrial insulation pipes and equipment",
                 icon: Flame,
                 services: ["Thermal", "Cold", "Acoustic", "Roofing"],
@@ -324,7 +330,7 @@ function Divisions() {
                 title: "Experts in Ultrasonics",
                 description:
                   "Non-destructive testing and ultrasonic inspection services that verify material integrity and operational safety.",
-                image: "/images/home/ultrasonic-bd.png",
+                image: ultrasonicBd,
                 alt: "Ultrasonic testing and NDT inspection",
                 icon: ScanSearch,
                 services: ["UT", "DPT", "MPT", "Thickness Testing"],
@@ -333,7 +339,7 @@ function Divisions() {
                 title: "Precision Tech Engineering",
                 description:
                   "Precision engineering and technical services that restore and sustain the performance of industrial machinery.",
-                image: "/images/home/precision-bd.png",
+                image: precisionBd,
                 alt: "Industrial engineering and machinery",
                 icon: Settings,
                 services: ["Dynamic Balancing", "VSR", "Jet Cleaning", "Engineering"],
@@ -498,7 +504,7 @@ function Divisions() {
               <div className="relative">
                 <div className="rounded-[24px] overflow-hidden">
                   <img
-                    src="/images/home/home-about-main.png"
+                    src={aboutMain}
                     alt="HITECH GROUP structured engineering process"
                     className="w-full h-[420px] md:h-[540px] object-cover"
                   />
@@ -506,7 +512,7 @@ function Divisions() {
 
                 <div className="absolute -top-4 -right-4 rounded-[20px] overflow-hidden shadow-lg w-[150px] md:w-[180px]">
                   <img
-                    src="/images/home/home-about-small.png"
+                    src={aboutSmall}
                     alt="Engineering detail"
                     className="w-full h-[100px] md:h-[120px] object-cover"
                   />

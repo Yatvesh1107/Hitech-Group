@@ -1,5 +1,7 @@
 import { motion } from "framer-motion"
 import { Award, BadgeCheck, Users, Target, Check } from "lucide-react"
+import aboutMain from "@/assets/images/home/home-about-main.png"
+import aboutSmall from "@/assets/images/home/home-about-small.png"
 
 const features = [
   {
@@ -70,7 +72,7 @@ function AboutSection() {
             {/* Main image */}
             <div className="relative rounded-[28px] overflow-hidden shadow-[0_20px_50px_-12px_rgba(11,45,92,0.15)]">
               <img
-                src="/images/home/home-about-main.png"
+                src={aboutMain}
                 alt="HITECH industrial facility"
                 className="w-full h-[400px] md:h-[480px] lg:h-[520px] object-cover"
               />
@@ -81,7 +83,7 @@ function AboutSection() {
             {/* Floating secondary image */}
             <div className="absolute -bottom-5 -right-3 md:-right-6 w-[150px] md:w-[190px] rounded-[20px] overflow-hidden shadow-[0_12px_30px_-8px_rgba(11,45,92,0.25)] border-[5px] border-white">
               <img
-                src="/images/home/home-about-small.png"
+                src={aboutSmall}
                 alt="Engineering operations"
                 className="w-full h-[105px] md:h-[130px] object-cover"
               />

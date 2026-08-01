@@ -18,6 +18,8 @@ import {
   Building2,
   FlaskConical,
 } from "lucide-react"
+import precisionBd from "@/assets/images/home/precision-bd.png"
+import aboutSmall from "@/assets/images/home/home-about-small.png"
 
 const expertise = [
   {
@@ -72,7 +74,7 @@ function PrecisionTech() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: "url('/images/home/precision-bd.png')",
+            backgroundImage: `url(${precisionBd})`,
           }}
         />
         <div className="absolute inset-0 bg-[rgba(8,42,87,0.8)]" />
@@ -182,7 +184,7 @@ function PrecisionTech() {
             <div className="relative">
               <div className="rounded-[24px] overflow-hidden">
                 <img
-                  src="/images/home/precision-bd.png"
+                  src={precisionBd}
                   alt="Precision Tech engineering operations"
                   className="w-full h-[420px] md:h-[500px] object-cover"
                 />
@@ -190,7 +192,7 @@ function PrecisionTech() {
 
               <div className="absolute -top-4 -right-4 rounded-[20px] overflow-hidden shadow-lg w-[160px] md:w-[200px]">
                 <img
-                  src="/images/home/home-about-small.png"
+                  src={aboutSmall}
                   alt="Maintenance service detail"
                   className="w-full h-[110px] md:h-[140px] object-cover"
                 />

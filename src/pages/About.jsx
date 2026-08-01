@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
+import heroBg from "@/assets/images/about/hero-bg.png"
 import WhoWeAre from "../components/sections/WhoWeAre"
 import OurJourney from "../components/sections/OurJourney"
 import MissionVision from "../components/sections/MissionVision"
@@ -69,7 +70,7 @@ function About() {
     <div
       className="absolute inset-0 bg-cover bg-center bg-no-repeat"
       style={{
-        backgroundImage: "url('/images/about/hero-bg.png')",
+        backgroundImage: `url(${heroBg})`,
       }}
     />
     <div className="absolute inset-0 bg-[rgba(8,42,87,0.68)]" />
