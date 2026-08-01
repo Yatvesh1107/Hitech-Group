@@ -81,9 +81,9 @@ function IndustrialInsulation() {
         <div className="absolute inset-0 bg-[rgba(8,42,87,0.7)]" />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-[1280px] px-5 md:px-8 min-h-[70vh] flex flex-col justify-center pt-[80px] pb-[140px]">
+      <div className="relative z-10 mx-auto max-w-[1280px] px-5 md:px-8 min-h-[calc(100svh-124px)] flex flex-col justify-center pt-10 pb-20">
         <motion.div
-          className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center"
+          className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -105,7 +105,7 @@ function IndustrialInsulation() {
 
             <motion.p
               variants={itemVariants}
-              className="text-[rgba(255,255,255,0.85)] text-lg lg:text-xl leading-[1.7] max-w-[560px] mt-5 mx-auto lg:mx-0"
+              className="text-[rgba(255,255,255,0.85)] text-lg lg:text-xl leading-[1.7] max-w-[560px] mt-4 mx-auto lg:mx-0"
             >
               Hitech Industrial Insulation provides thermal, cold, acoustic and industrial
               insulation solutions focused on efficiency, safety and long-term performance. From
@@ -115,7 +115,7 @@ function IndustrialInsulation() {
 
             <motion.div
               variants={itemVariants}
-              className="flex flex-col sm:flex-row gap-4 mt-9 justify-center lg:justify-start"
+              className="flex flex-col sm:flex-row gap-4 mt-6 justify-center lg:justify-start"
             >
               <Link
                 to="/divisions/industrial-insulation"
@@ -158,7 +158,7 @@ function IndustrialInsulation() {
 
       <div className="absolute bottom-0 left-0 right-0 bg-black/30 backdrop-blur-sm">
         <div className="max-w-[1280px] mx-auto px-5 md:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-y-3 gap-x-6 py-5">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-y-2.5 gap-x-5 py-4">
             {bottomStrip.map((item) => {
               const Icon = item.icon
               return (

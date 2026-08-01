@@ -76,12 +76,12 @@ function ExpertsUltrasonics() {
             backgroundImage: "url('/images/home/ultrasonic-bd.png')",
           }}
         />
-        <div className="absolute inset-0 bg-[rgba(8,42,87,0.7)]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[rgba(8,42,87,0.92)] via-[rgba(8,42,87,0.75)] to-[rgba(8,42,87,0.6)]" />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-[1280px] px-5 md:px-8 min-h-[70vh] flex flex-col justify-center pt-[80px] pb-[140px]">
+      <div className="relative z-10 mx-auto max-w-[1280px] px-5 md:px-8 min-h-[calc(100svh-124px)] flex flex-col justify-center pt-10 pb-20">
         <motion.div
-          className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center"
+          className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -103,7 +103,7 @@ function ExpertsUltrasonics() {
 
             <motion.p
               variants={itemVariants}
-              className="text-[rgba(255,255,255,0.85)] text-lg lg:text-xl leading-[1.7] max-w-[560px] mt-5 mx-auto lg:mx-0"
+              className="text-[rgba(255,255,255,0.85)] text-lg lg:text-xl leading-[1.7] max-w-[560px] mt-4 mx-auto lg:mx-0"
             >
               Experts in Ultrasonics is HITECH GROUP&rsquo;s specialized non-destructive testing
               division. We provide advanced inspection and testing solutions that evaluate
@@ -113,7 +113,7 @@ function ExpertsUltrasonics() {
 
             <motion.div
               variants={itemVariants}
-              className="flex flex-col sm:flex-row gap-4 mt-9 justify-center lg:justify-start"
+              className="flex flex-col sm:flex-row gap-4 mt-6 justify-center lg:justify-start"
             >
               <Link
                 to="/divisions/experts-in-ultrasonics"
@@ -137,7 +137,7 @@ function ExpertsUltrasonics() {
                 {expertise.map((item) => {
                   const Icon = item.icon
                   return (
-                    <div key={item.title} className="flex gap-4">
+                    <div key={item.title} className="flex items-start gap-4">
                       <div className="w-10 h-10 rounded-lg bg-[#F4B400]/10 flex items-center justify-center shrink-0">
                         <Icon size={20} className="text-[#F4B400]" />
                       </div>
@@ -156,7 +156,7 @@ function ExpertsUltrasonics() {
 
       <div className="absolute bottom-0 left-0 right-0 bg-black/30 backdrop-blur-sm">
         <div className="max-w-[1280px] mx-auto px-5 md:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-y-3 gap-x-6 py-5">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-y-2.5 gap-x-5 py-4">
             {bottomStrip.map((item) => {
               const Icon = item.icon
               return (

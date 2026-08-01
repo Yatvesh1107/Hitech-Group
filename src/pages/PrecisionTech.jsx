@@ -75,12 +75,12 @@ function PrecisionTech() {
             backgroundImage: "url('/images/home/precision-bd.png')",
           }}
         />
-        <div className="absolute inset-0 bg-[rgba(8,42,87,0.7)]" />
+        <div className="absolute inset-0 bg-[rgba(8,42,87,0.8)]" />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-[1280px] px-5 md:px-8 min-h-[70vh] flex flex-col justify-center pt-[80px] pb-[140px]">
+      <div className="relative z-10 mx-auto max-w-[1280px] px-5 md:px-8 min-h-[calc(100svh-124px)] flex flex-col justify-center pt-10 pb-20">
         <motion.div
-          className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center"
+          className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -95,14 +95,14 @@ function PrecisionTech() {
 
             <motion.h1
               variants={itemVariants}
-              className="text-white text-[38px] leading-[1.1] lg:text-[60px] lg:leading-[1.05] font-extrabold max-w-[680px] mt-3 mx-auto lg:mx-0"
+              className="text-white text-[38px] leading-[1.1] lg:text-[60px] lg:leading-[1.05] font-extrabold max-w-[680px] mt-2 mx-auto lg:mx-0"
             >
               Engineering Solutions for Reliable Industrial Performance
             </motion.h1>
 
             <motion.p
               variants={itemVariants}
-              className="text-[rgba(255,255,255,0.85)] text-lg lg:text-xl leading-[1.7] max-w-[560px] mt-5 mx-auto lg:mx-0"
+              className="text-[rgba(255,255,255,0.85)] text-lg lg:text-xl leading-[1.7] max-w-[560px] mt-4 mx-auto lg:mx-0"
             >
               Precision Tech Engineering Services provides specialized engineering solutions —
               including dynamic balancing, vibratory stress relieving and industrial
@@ -112,7 +112,7 @@ function PrecisionTech() {
 
             <motion.div
               variants={itemVariants}
-              className="flex flex-col sm:flex-row gap-4 mt-9 justify-center lg:justify-start"
+              className="flex flex-col sm:flex-row gap-4 mt-6 justify-center lg:justify-start"
             >
               <Link
                 to="/divisions/precision-tech"
@@ -136,7 +136,7 @@ function PrecisionTech() {
                 {expertise.map((item) => {
                   const Icon = item.icon
                   return (
-                    <div key={item.title} className="flex gap-4">
+                    <div key={item.title} className="flex items-start gap-4">
                       <div className="w-10 h-10 rounded-lg bg-[#F4B400]/10 flex items-center justify-center shrink-0">
                         <Icon size={20} className="text-[#F4B400]" />
                       </div>
@@ -155,7 +155,7 @@ function PrecisionTech() {
 
       <div className="absolute bottom-0 left-0 right-0 bg-black/30 backdrop-blur-sm">
         <div className="max-w-[1280px] mx-auto px-5 md:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-y-3 gap-x-6 py-5">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-y-2.5 gap-x-5 py-4">
             {bottomStrip.map((item) => {
               const Icon = item.icon
               return (

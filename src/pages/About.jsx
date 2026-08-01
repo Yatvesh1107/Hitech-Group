@@ -64,24 +64,24 @@ const cardVariants = {
 function About() {
   return (
     <>
-      <section className="relative bg-[#082A57] overflow-hidden">
-      <div className="absolute inset-0">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: "url('/images/about/hero-bg.png')",
-          }}
-        />
-        <div className="absolute inset-0 bg-[rgba(8,42,87,0.68)]" />
-      </div>
+      <section className="relative bg-[#082A57] overflow-hidden min-h-[100dvh] flex flex-col">
+  <div className="absolute inset-0">
+    <div
+      className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: "url('/images/about/hero-bg.png')",
+      }}
+    />
+    <div className="absolute inset-0 bg-[rgba(8,42,87,0.68)]" />
+  </div>
 
-      <div className="relative z-10 mx-auto max-w-[1280px] px-5 md:px-8 min-h-[70vh] flex flex-col justify-center pt-[40px] pb-[140px]">
-        <motion.div
-          className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
+      <div className="relative z-10 flex-1 mx-auto max-w-[1280px] w-full px-5 md:px-8 flex flex-col justify-center pt-8 pb-6 lg:pt-5 lg:pb-20">
+    <motion.div
+      className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
           <div className="text-center lg:text-left">
             <motion.span
               variants={itemVariants}
@@ -153,16 +153,16 @@ function About() {
         </motion.div>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 bg-black/30 backdrop-blur-sm">
-        <div className="max-w-[1280px] mx-auto px-5 md:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-y-3 gap-x-6 py-5">
-            {bottomStrip.map((item) => {
-              const Icon = item.icon
-              return (
-                <div key={item.label} className="flex items-center gap-3 text-white/80">
-                  <Icon size={18} className="text-[#F4B400] shrink-0" />
-                  <span className="text-sm font-medium">{item.label}</span>
-                </div>
+      <div className="relative z-10 bg-black/30 backdrop-blur-sm">
+    <div className="max-w-[1280px] mx-auto px-5 md:px-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-y-3 gap-x-6 py-4">
+        {bottomStrip.map((item) => {
+          const Icon = item.icon
+          return (
+            <div key={item.label} className="flex items-center gap-3 text-white/80">
+              <Icon size={18} className="text-[#F4B400] shrink-0" />
+              <span className="text-sm font-medium">{item.label}</span>
+            </div>
               )
             })}
           </div>
