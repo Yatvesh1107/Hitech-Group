@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom"
 import TopBar from "./components/layout/TopBar"
 import Navbar from "./components/layout/Navbar"
 import Footer from "./components/layout/Footer"
+import ScrollToTop from "./components/layout/ScrollToTop"
 import Home from "./pages/Home"
 import About from "./pages/About"
 import Divisions from "./pages/Divisions"
@@ -15,6 +16,7 @@ import PrecisionTech from "./pages/PrecisionTech"
 function App() {
   return (
     <>
+      <ScrollToTop />
       <TopBar />
       <Navbar />
       <main>

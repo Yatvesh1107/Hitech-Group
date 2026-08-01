@@ -145,18 +145,26 @@ function Navbar() {
           {navLinks.map((link) =>
             link.dropdown ? (
               <div key={link.label}>
-                <button
-                  onClick={() => setMobileDropdown(!mobileDropdown)}
-                  className="flex items-center justify-between w-full py-3 text-lg font-medium text-[#0F172A]"
-                >
-                  {link.label}
-                  <ChevronDown
-                    size={20}
-                    className={`transition-transform duration-200 ${
-                      mobileDropdown ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
+                <div className="flex items-center justify-between">
+                  <Link
+                    to={link.path}
+                    className="flex-1 py-3 text-lg font-medium text-[#0F172A]"
+                  >
+                    {link.label}
+                  </Link>
+                  <button
+                    onClick={() => setMobileDropdown(!mobileDropdown)}
+                    className="p-2 text-[#0F172A]"
+                    aria-label={`${mobileDropdown ? "Close" : "Open"} ${link.label} menu`}
+                  >
+                    <ChevronDown
+                      size={20}
+                      className={`transition-transform duration-200 ${
+                        mobileDropdown ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+                </div>
                 <div
                   className={`overflow-hidden transition-all duration-300 ${
                     mobileDropdown ? "max-h-60" : "max-h-0"

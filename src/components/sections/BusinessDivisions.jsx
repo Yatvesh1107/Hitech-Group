@@ -1,9 +1,11 @@
 import { motion } from "framer-motion"
+import { Link } from "react-router-dom"
 import { Thermometer, Scan, Settings, ArrowRight, Check } from "lucide-react"
 
 const divisions = [
   {
     title: "Hitech Industrial Insulation",
+    path: "/divisions/industrial-insulation",
     description:
       "Professional thermal and acoustic insulation solutions for industrial facilities.",
     features: ["Thermal Insulation", "Cold Insulation", "Acoustic Insulation"],
@@ -14,6 +16,7 @@ const divisions = [
   },
   {
     title: "Experts in Ultrasonics",
+    path: "/divisions/experts-in-ultrasonics",
     description:
       "Industrial inspection and ultrasonic testing services for quality assurance.",
     features: ["Ultrasonic Testing", "NDT Inspection", "Material Evaluation"],
@@ -24,6 +27,7 @@ const divisions = [
   },
   {
     title: "Precision Tech Engineering Services",
+    path: "/divisions/precision-tech",
     description:
       "Engineering support and technical solutions for industrial infrastructure.",
     features: ["Engineering Services", "Industrial Projects", "Technical Consultancy"],
@@ -135,13 +139,13 @@ function BusinessDivisions() {
                   <div className="mt-auto pt-6">
                     <div className="border-t border-gray-100 mb-6" />
 
-                    <a
-                      href="/divisions"
+                    <Link
+                      to={division.path}
                       className="inline-flex items-center gap-2 h-12 px-6 border-2 border-[#0B2D5C] text-[#0B2D5C] font-semibold rounded-xl hover:bg-[#F4B400] hover:border-[#F4B400] hover:text-[#0F172A] transition-all duration-300"
                     >
                       Explore Division
                       <ArrowRight size={18} />
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </motion.div>

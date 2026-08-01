@@ -74,7 +74,7 @@ function Divisions() {
           <div className="absolute inset-0 bg-[rgba(8,42,87,0.7)]" />
         </div>
 
-        <div className="relative z-10 mx-auto max-w-[1280px] px-5 md:px-8 min-h-[70vh] flex flex-col justify-center pt-[80px] pb-[140px]">
+        <div className="relative z-10 mx-auto max-w-[1280px] px-5 md:px-8 min-h-[70vh] flex flex-col justify-center pt-[40px] pb-[140px]">
           <motion.div
             className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center"
             variants={containerVariants}

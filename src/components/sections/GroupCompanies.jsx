@@ -5,6 +5,7 @@ import { Flame, ScanSearch, Settings, ArrowRight, Check } from "lucide-react"
 const divisions = [
   {
     title: "Hitech Industrial Insulation",
+    path: "/divisions/industrial-insulation",
     description:
       "Specialized insulation contracting delivering reliable thermal, cold and acoustic protection for industrial facilities.",
     features: [
@@ -19,6 +20,7 @@ const divisions = [
   },
   {
     title: "Experts in Ultrasonics",
+    path: "/divisions/experts-in-ultrasonics",
     description:
       "Advanced non-destructive testing and ultrasonic inspection services that verify material integrity and safety.",
     features: [
@@ -33,6 +35,7 @@ const divisions = [
   },
   {
     title: "Precision Tech Engineering Services",
+    path: "/divisions/precision-tech",
     description:
       "Precision engineering support and technical services that keep industrial machinery running reliably.",
     features: [
@@ -139,7 +142,7 @@ function GroupCompanies() {
                     <div className="border-t border-gray-100 mb-6" />
 
                     <Link
-                      to="/divisions"
+                      to={division.path}
                       className="inline-flex items-center gap-2 h-12 px-6 border-2 border-[#0B2D5C] text-[#0B2D5C] font-semibold rounded-xl hover:bg-[#F4B400] hover:border-[#F4B400] hover:text-[#0F172A] transition-all duration-300"
                     >
                       Explore Division
