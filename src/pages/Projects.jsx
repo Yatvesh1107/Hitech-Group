@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
 import {
-  MapPin,
-  Calendar,
   ClipboardList,
   Search,
   Wrench,
@@ -16,75 +14,33 @@ import {
 const projects = [
   {
     title: "Thermal Insulation for Power Plant",
-    category: "Industrial Insulation",
+    category: "Hitech Industrial Insulation",
     industry: "Power Generation",
-    location: "Maharashtra, India",
-    year: "2025",
     status: "Completed",
     description:
-      "Comprehensive thermal insulation for piping, boilers and process equipment, reducing heat loss and improving overall plant efficiency.",
-    image: "/images/home/hitech-bd.png",
-    alt: "Thermal insulation for power plant",
+      "Industrial thermal insulation solutions for boilers, pipelines and process equipment that improve energy efficiency and reduce heat loss.",
+    image: "/images/home/thermal.png",
+    alt: "Power plant thermal insulation",
   },
   {
-    title: "Cold Insulation for Chemical Facility",
-    category: "Industrial Insulation",
+    title: "Cryogenic Insulation for Chemical Factory",
+    category: "Hitech Industrial Insulation",
     industry: "Chemical Processing",
-    location: "Gujarat, India",
-    year: "2024",
     status: "Completed",
     description:
-      "Cryogenic and cold insulation systems for low-temperature process lines and storage, protecting sensitive chemical operations.",
-    image: "/images/home/home-about-main.png",
-    alt: "Cold insulation for chemical facility",
+      "Cold insulation systems designed for low-temperature industrial processes while maintaining thermal stability and operational safety.",
+    image: "/images/home/chemical.png",
+    alt: "Chemical factory cold insulation",
   },
   {
-    title: "Acoustic Insulation for Food Processing Unit",
-    category: "Industrial Insulation",
+    title: "Insulation for DEF Food Processing Facility",
+    category: "Hitech Industrial Insulation",
     industry: "Food Processing",
-    location: "Karnataka, India",
-    year: "2024",
     status: "Completed",
     description:
-      "Acoustic and thermal insulation solutions supporting quieter, more hygienic and energy-efficient food manufacturing operations.",
-    image: "/images/home/home-about-small.png",
-    alt: "Acoustic insulation for food processing unit",
-  },
-  {
-    title: "Ultrasonic Testing of Pressure Vessels",
-    category: "Experts in Ultrasonics",
-    industry: "Heavy Engineering",
-    location: "Maharashtra, India",
-    year: "2025",
-    status: "Completed",
-    description:
-      "Advanced ultrasonic testing and thickness measurement of pressure vessels and critical equipment, ensuring structural integrity and safety.",
-    image: "/images/home/ultrasonic-bd.png",
-    alt: "Ultrasonic testing of pressure vessels",
-  },
-  {
-    title: "NDT Inspection for Sugar Mill Equipment",
-    category: "Experts in Ultrasonics",
-    industry: "Sugar Industry",
-    location: "Karnataka, India",
-    year: "2024",
-    status: "Completed",
-    description:
-      "Non-destructive testing of shafts, rolls and process equipment for a sugar mill, detecting early defects and extending equipment life.",
-    image: "/images/home/hero-bg.png",
-    alt: "NDT inspection for sugar mill equipment",
-  },
-  {
-    title: "Dynamic Balancing of Industrial Rotors",
-    category: "Precision Tech Engineering",
-    industry: "Manufacturing",
-    location: "Maharashtra, India",
-    year: "2025",
-    status: "Completed",
-    description:
-      "Precision dynamic balancing of industrial rotors and fan assemblies, reducing vibration and improving equipment reliability.",
-    image: "/images/home/precision-bd.png",
-    alt: "Dynamic balancing of industrial rotors",
+      "Thermal and acoustic insulation solutions supporting efficient, hygienic and reliable food processing operations.",
+    image: "/images/home/food.png",
+    alt: "Food processing facility insulation",
   },
 ]
 
@@ -344,17 +300,6 @@ function Projects() {
                   <p className="text-sm text-[#334155] mt-3 leading-relaxed">
                     {project.description}
                   </p>
-
-                  <div className="flex items-center gap-4 mt-4 text-xs text-[#94A3B8]">
-                    <span className="inline-flex items-center gap-1.5">
-                      <MapPin size={13} className="text-[#0B2D5C]" />
-                      {project.location}
-                    </span>
-                    <span className="inline-flex items-center gap-1.5">
-                      <Calendar size={13} className="text-[#0B2D5C]" />
-                      {project.year}
-                    </span>
-                  </div>
                 </div>
               </motion.div>
             ))}

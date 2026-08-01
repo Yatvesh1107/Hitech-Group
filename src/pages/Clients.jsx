@@ -252,11 +252,21 @@ function Clients() {
                 variants={gridCardVariants}
                 className="bg-white border border-gray-100 rounded-[18px] p-7 flex flex-col items-center justify-center text-center hover:-translate-y-1 hover:border-[#F4B400] hover:shadow-lg transition-all duration-300 min-h-[130px]"
               >
-                <div className="w-[68px] h-[68px] rounded-full bg-[#F4B400]/10 flex items-center justify-center mb-3">
-                  <span className="text-lg font-bold text-[#0B2D5C] tracking-tight">
-                    {client.initials}
-                  </span>
-                </div>
+                {client.logo ? (
+                  <div className="h-[56px] w-full flex items-center justify-center mb-3">
+                    <img
+                      src={client.logo}
+                      alt={`${client.name} logo`}
+                      className="max-h-[56px] max-w-[150px] object-contain"
+                    />
+                  </div>
+                ) : (
+                  <div className="w-[68px] h-[68px] rounded-full bg-[#F4B400]/10 flex items-center justify-center mb-3">
+                    <span className="text-lg font-bold text-[#0B2D5C] tracking-tight">
+                      {client.initials}
+                    </span>
+                  </div>
+                )}
                 <span className="text-sm font-semibold text-[#0F172A] leading-tight">
                   {client.name}
                 </span>
