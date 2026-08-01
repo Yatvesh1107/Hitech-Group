@@ -205,7 +205,7 @@ function Clients() {
         />
 
         <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-8 lg:py-10">
-          <div className="text-center max-w-[700px] mx-auto mb-12">
+          <div className="text-center max-w-[700px] mx-auto mb-8">
             <motion.span
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -278,7 +278,7 @@ function Clients() {
         />
 
         <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-8 lg:py-10">
-          <div className="text-center max-w-[700px] mx-auto mb-12">
+          <div className="text-center max-w-[700px] mx-auto mb-8">
             <motion.span
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -351,7 +351,7 @@ function Clients() {
         />
 
         <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-8 lg:py-10">
-          <div className="text-center max-w-[700px] mx-auto mb-12">
+          <div className="text-center max-w-[700px] mx-auto mb-8">
             <motion.span
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -397,7 +397,7 @@ function Clients() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="mt-12"
+            className="mt-10"
           >
             <div className="bg-[#0B2D5C] rounded-[28px] px-8 md:px-16 py-12 md:py-14 flex flex-col md:flex-row md:items-center md:justify-between gap-8">
               <div className="max-w-[600px]">

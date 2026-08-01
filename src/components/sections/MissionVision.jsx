@@ -55,7 +55,7 @@ function MissionVision() {
         }}
       />
 
-      <div className="relative z-10 max-w-[1280px] mx-auto px-5 md:px-8 py-24">
+      <div className="relative z-10 max-w-[1280px] mx-auto px-5 md:px-8 py-12 lg:py-12">
         <motion.div
           className="max-w-[720px] mx-auto text-center"
           variants={containerVariants}
@@ -84,7 +84,7 @@ function MissionVision() {
           </motion.p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8 mt-16">
+        <div className="grid md:grid-cols-2 gap-6 mt-8">
           {cards.map((card) => {
             const Icon = card.icon
             const TagIcon = card.tagIcon
@@ -95,7 +95,7 @@ function MissionVision() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: "-100px" }}
-                className="bg-white rounded-[24px] border border-gray-100 shadow-xl p-8 lg:p-10 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300"
+                className="bg-white rounded-[24px] border border-gray-100 shadow-xl p-7 lg:p-8 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300"
               >
                 <div className="w-14 h-14 rounded-xl bg-[#F4B400]/10 flex items-center justify-center">
                   <Icon size={28} className="text-[#F4B400]" />
@@ -132,7 +132,7 @@ function MissionVision() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="bg-[#0B2D5C] rounded-[24px] mt-16 text-center px-8 py-14 relative overflow-hidden"
+          className="bg-[#0B2D5C] rounded-[24px] mt-10 text-center px-8 py-14 relative overflow-hidden"
         >
           <div
             className="absolute inset-0 opacity-[0.04] pointer-events-none"

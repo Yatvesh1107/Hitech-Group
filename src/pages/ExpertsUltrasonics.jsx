@@ -172,7 +172,7 @@ function ExpertsUltrasonics() {
     </section>
 
     <section className="bg-white">
-      <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-24">
+      <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-8 lg:py-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -326,7 +326,7 @@ function ExpertsUltrasonics() {
     </section>
 
     <section className="bg-[#F8FAFC]">
-      <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-24">
+      <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-8 lg:py-10">
         <motion.div
           className="max-w-[720px] mx-auto text-center"
           variants={containerVariants}
@@ -356,7 +356,7 @@ function ExpertsUltrasonics() {
         </motion.div>
 
         <motion.div
-          className="grid sm:grid-cols-2 gap-6 mt-16"
+          className="grid sm:grid-cols-2 gap-6 mt-8"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -413,7 +413,7 @@ function ExpertsUltrasonics() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="bg-[#0B2D5C] rounded-[24px] mt-16 px-8 py-14 text-center"
+          className="bg-[#0B2D5C] rounded-[24px] mt-10 px-8 py-14 text-center"
         >
           <h3 className="text-white text-2xl md:text-3xl font-extrabold leading-[1.2]">
             Precision Testing for Reliable Industrial Performance
@@ -434,7 +434,7 @@ function ExpertsUltrasonics() {
     </section>
 
     <section className="bg-white">
-      <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-24">
+      <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-8 lg:py-10">
         <motion.div
           className="max-w-[720px] mx-auto text-center"
           variants={containerVariants}
@@ -463,7 +463,7 @@ function ExpertsUltrasonics() {
         </motion.div>
 
         <motion.div
-          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-16"
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -523,7 +523,7 @@ function ExpertsUltrasonics() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="bg-[#0B2D5C] rounded-[24px] mt-16 px-8 py-14 grid lg:grid-cols-2 gap-10 items-center"
+          className="bg-[#0B2D5C] rounded-[24px] mt-10 px-8 py-14 grid lg:grid-cols-2 gap-10 items-center"
         >
           <div>
             <h3 className="text-white text-2xl md:text-3xl font-extrabold leading-[1.2]">

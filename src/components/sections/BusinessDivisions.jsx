@@ -57,7 +57,7 @@ function BusinessDivisions() {
       />
 
       <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-4 lg:py-10">
-        <div className="text-center max-w-[700px] mx-auto mb-12">
+        <div className="text-center max-w-[700px] mx-auto mb-8">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -154,7 +154,7 @@ function BusinessDivisions() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="text-center mt-12"
+          className="text-center mt-10"
         >
           <div className="w-16 h-[2px] bg-[#F4B400] mx-auto mb-4" />
           <p className="text-[#334155] text-lg font-medium">

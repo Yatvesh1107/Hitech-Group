@@ -60,8 +60,8 @@ const cardVariants = {
 function GroupCompanies() {
   return (
     <section className="bg-white relative overflow-hidden">
-      <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-[100px]">
-        <div className="text-center max-w-[700px] mx-auto mb-12">
+      <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-8 lg:py-10">
+        <div className="text-center max-w-[700px] mx-auto mb-8">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -95,7 +95,7 @@ function GroupCompanies() {
         </div>
 
         <motion.div
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -157,7 +157,7 @@ function GroupCompanies() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="bg-[#0B2D5C] rounded-[28px] mt-16 px-8 py-14 text-center"
+          className="bg-[#0B2D5C] rounded-[28px] mt-10 px-8 py-14 text-center"
         >
           <h3 className="text-white text-2xl md:text-3xl font-extrabold leading-[1.2]">
             Integrated Industrial Solutions Under One Trusted Group

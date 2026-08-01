@@ -61,7 +61,7 @@ const itemVariants = {
 function OurJourney() {
   return (
     <section className="bg-[#F8FAFC]">
-      <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-24">
+      <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-3 lg:py-8">
         <motion.div
           className="max-w-[720px] mx-auto text-center"
           variants={containerVariants}
@@ -93,7 +93,7 @@ function OurJourney() {
           </motion.p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-[55%_45%] gap-12 lg:gap-16 items-center mt-16">
+        <div className="grid lg:grid-cols-[55%_45%] gap-12 lg:gap-16 items-center mt-8">
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -172,7 +172,7 @@ function OurJourney() {
         </div>
 
         <motion.div
-          className="flex flex-wrap justify-center gap-4 mt-16"
+          className="flex flex-wrap justify-center gap-4 mt-10"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"

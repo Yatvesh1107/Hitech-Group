@@ -47,7 +47,7 @@ const cardVariants = {
 function Leadership() {
   return (
     <section className="bg-[#F8FAFC]">
-      <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-[100px]">
+      <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-8 lg:py-10">
         <motion.div
           className="max-w-[720px] mx-auto text-center"
           variants={containerVariants}
@@ -76,7 +76,7 @@ function Leadership() {
         </motion.div>
 
         <motion.div
-          className="grid md:grid-cols-2 gap-8 mt-16"
+          className="grid md:grid-cols-2 gap-6 mt-8"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -139,7 +139,7 @@ function Leadership() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="relative bg-[#0B2D5C] rounded-[24px] mt-16 text-center px-8 py-14 overflow-hidden"
+          className="relative bg-[#0B2D5C] rounded-[24px] mt-10 text-center px-8 py-14 overflow-hidden"
         >
           <div
             className="absolute inset-0 opacity-[0.04] pointer-events-none"

@@ -60,7 +60,7 @@ const itemVariants = {
 function CoreValues() {
   return (
     <section className="bg-[#F8FAFC]">
-      <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-24">
+      <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-8 lg:py-8">
         <motion.div
           className="max-w-[720px] mx-auto text-center"
           variants={containerVariants}
@@ -89,7 +89,7 @@ function CoreValues() {
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7 mt-16"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -101,7 +101,7 @@ function CoreValues() {
               <motion.div
                 key={value.title}
                 variants={itemVariants}
-                className="relative bg-white rounded-[24px] border border-gray-100 shadow-sm p-8 hover:-translate-y-1 hover:shadow-xl transition-all duration-300"
+                className="relative bg-white rounded-[24px] border border-gray-100 shadow-sm p-7 hover:-translate-y-1 hover:shadow-xl transition-all duration-300"
               >
                 <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#F4B400] rounded-t-[24px] opacity-80" />
 
@@ -121,7 +121,7 @@ function CoreValues() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="bg-[#0B2D5C] rounded-[24px] mt-16 text-center px-8 py-14"
+          className="bg-[#0B2D5C] rounded-[24px] mt-10 text-center px-8 py-14"
         >
           <p className="text-white text-xl md:text-2xl font-semibold leading-relaxed">
             Engineering Excellence begins with Strong Values.

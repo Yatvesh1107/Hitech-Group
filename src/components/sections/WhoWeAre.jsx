@@ -43,7 +43,7 @@ const itemVariants = {
 function WhoWeAre() {
   return (
     <section className="bg-white relative overflow-hidden">
-      <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-24 lg:py-24">
+      <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-15 lg:py-15">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}

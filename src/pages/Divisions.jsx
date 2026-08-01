@@ -172,7 +172,7 @@ function Divisions() {
       </section>
 
       <section className="bg-white">
-        <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-24">
+        <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-8 lg:py-10">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -302,9 +302,9 @@ function Divisions() {
       </section>
 
       <section className="bg-[#F8FAFC]">
-        <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-24">
+        <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-8 lg:py-10">
           <motion.div
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
@@ -399,7 +399,7 @@ function Divisions() {
       </section>
 
       <section className="bg-white">
-        <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-24">
+        <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-8 lg:py-10">
           <motion.div
             className="max-w-[720px] mx-auto text-center"
             variants={containerVariants}
@@ -427,7 +427,7 @@ function Divisions() {
             </motion.p>
           </motion.div>
 
-          <div className="grid lg:grid-cols-[55%_45%] gap-12 lg:gap-16 items-center mt-16">
+          <div className="grid lg:grid-cols-[55%_45%] gap-12 lg:gap-16 items-center mt-8">
             <motion.div
               className="relative"
               variants={containerVariants}
@@ -534,7 +534,7 @@ function Divisions() {
       </section>
 
       <section className="bg-[#F8FAFC]">
-        <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-24">
+        <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-8 lg:py-10">
           <motion.div
             className="max-w-[720px] mx-auto text-center"
             variants={containerVariants}
@@ -562,7 +562,7 @@ function Divisions() {
             </motion.p>
           </motion.div>
 
-          <div className="flex flex-col lg:flex-row lg:items-stretch gap-8 mt-16">
+          <div className="flex flex-col lg:flex-row lg:items-stretch gap-8 mt-8">
             {[
               {
                 icon: Flame,
