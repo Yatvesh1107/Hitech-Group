@@ -18,16 +18,16 @@ const contactCards = [
   {
     icon: Phone,
     label: "Phone",
-    value: "+91 231 123 4567",
+    value: "+91 87678 14930",
     sub: "Mon–Sat, 9 AM – 6 PM",
-    href: "tel:+912311234567",
+    href: "tel:+918767814930",
   },
   {
     icon: Mail,
     label: "Email",
-    value: "info@hitechgroup.com",
+    value: " insulation.hitech777@gmail.com",
     sub: "We reply within 24 hours",
-    href: "mailto:info@hitechgroup.com",
+    href: "mailto: insulation.hitech777@gmail.com",
   },
   {
     icon: MapPin,
@@ -181,7 +181,7 @@ function Contact() {
                 className="flex flex-col sm:flex-row gap-4 mt-9 justify-center lg:justify-start"
               >
                 <a
-                  href="tel:+912311234567"
+                  href="tel:+918767814930"
                   className="h-14 px-8 bg-[#F4B400] text-[#0F172A] font-semibold rounded-xl inline-flex items-center justify-center hover:bg-[#d9a000] transition-colors"
                 >
                   Call Now
@@ -357,8 +357,8 @@ function Contact() {
               <div className="bg-[#0B2D5C] rounded-[22px] p-7 mt-10">
                 <p className="text-[rgba(255,255,255,0.85)] text-sm leading-relaxed">
                   For urgent on-site requirements or emergency support, call us directly at{" "}
-                  <a href="tel:+912311234567" className="text-[#F4B400] font-semibold">
-                    +91 231 123 4567
+                  <a href="tel:+918767814930" className="text-[#F4B400] font-semibold">
+                    +91 87678 14930
                   </a>
                 </p>
               </div>

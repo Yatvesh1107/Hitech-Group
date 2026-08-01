@@ -6,14 +6,14 @@ const contacts = [
   {
     icon: Phone,
     label: "Phone",
-    value: "+91 231 123 4567",
-    href: "tel:+912311234567",
+    value: "+91 87678 14930",
+    href: "tel:+918767814930",
   },
   {
     icon: Mail,
     label: "Email",
-    value: "info@hitechgroup.com",
-    href: "mailto:info@hitechgroup.com",
+    value: " insulation.hitech777@gmail.com",
+    href: "mailto: insulation.hitech777@gmail.com",
   },
   {
     icon: MapPin,
@@ -106,7 +106,7 @@ function CTASection() {
                   Contact Us
                 </Link>
                 <a
-                  href="tel:+912311234567"
+                  href="tel:+918767814930"
                   className="h-14 px-8 border-2 border-[#0B2D5C] text-[#0B2D5C] font-semibold rounded-xl inline-flex items-center justify-center hover:bg-[#0B2D5C] hover:text-white transition-colors w-full"
                 >
                   Call Now

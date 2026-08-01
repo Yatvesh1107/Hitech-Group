@@ -117,20 +117,20 @@ function Footer() {
               </li>
               <li>
                 <a
-                  href="tel:+912311234567"
+                  href="tel:+918767814930"
                   className="flex items-start gap-3 text-sm text-[rgba(255,255,255,0.7)] hover:text-[#F4B400] transition-colors"
                 >
                   <Phone size={16} className="text-[#F4B400] shrink-0 mt-0.5" />
-                  <span>+91 231 123 4567</span>
+                  <span>+91 87678 14930</span>
                 </a>
               </li>
               <li>
                 <a
-                  href="mailto:info@hitechgroup.com"
+                  href="mailto: insulation.hitech777@gmail.com"
                   className="flex items-start gap-3 text-sm text-[rgba(255,255,255,0.7)] hover:text-[#F4B400] transition-colors"
                 >
                   <Mail size={16} className="text-[#F4B400] shrink-0 mt-0.5" />
-                  <span>info@hitechgroup.com</span>
+                  <span>insulation.hitech777@gmail.com</span>
                 </a>
               </li>
               <li className="flex items-start gap-3 text-sm text-[rgba(255,255,255,0.7)]">

@@ -6,18 +6,18 @@ function TopBar() {
       <div className="mx-auto h-full max-w-[1280px] flex items-center justify-between px-5 md:px-6">
         <div className="flex items-center gap-4 sm:gap-6">
           <a
-            href="mailto:info@hitechgroup.com"
+            href="mailto: insulation.hitech777@gmail.com"
             className="flex items-center gap-1.5 hover:text-[#F4B400] transition-colors"
           >
             <Mail size={14} />
-            <span className="hidden sm:inline">info@hitechgroup.com</span>
+            <span className="hidden sm:inline"> insulation.hitech777@gmail.com</span>
           </a>
           <a
-            href="tel:+912311234567"
+            href="tel:+918767814930"
             className="flex items-center gap-1.5 hover:text-[#F4B400] transition-colors"
           >
             <Phone size={14} />
-            <span className="hidden sm:inline">+91 231 123 4567</span>
+            <span className="hidden sm:inline">+91 87678 14930</span>
           </a>
         </div>
 
