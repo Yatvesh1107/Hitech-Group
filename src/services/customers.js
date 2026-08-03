@@ -1,4 +1,4 @@
-const API_BASE = "/api"
+import { API_BASE } from "../config/env"
 
 async function request(path, token, options = {}) {
   const { headers = {}, ...rest } = options

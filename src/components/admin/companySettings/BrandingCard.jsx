@@ -1,4 +1,5 @@
 import { ImagePlus, LoaderCircle, Trash2 } from "lucide-react"
+import { assetUrl } from "../../../config/env"
 import FormSection from "../FormSection"
 
 const IMAGE_FIELDS = [
@@ -24,7 +25,7 @@ export default function BrandingCard({ values = {}, onUpload, onRemove, uploadin
             <div className="flex items-center gap-4 rounded-[16px] border border-dashed border-gray-200 bg-[#F8FAFC] p-4">
               {url ? (
                 <div className="relative w-20 h-20 shrink-0 rounded-[12px] border border-gray-200 bg-white overflow-hidden flex items-center justify-center">
-                  <img src={url} alt={label} className="max-h-full max-w-full object-contain" />
+                  <img src={assetUrl(url)} alt={label} className="max-h-full max-w-full object-contain" />
                 </div>
               ) : (
                 <div className="w-20 h-20 shrink-0 rounded-[12px] border border-gray-200 bg-white flex items-center justify-center text-[#94A3B8]">

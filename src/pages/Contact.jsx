@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
+import { API_BASE } from "../config/env"
 import heroBg from "@/assets/images/about/hero-bg.png"
 import {
   Phone,
@@ -112,7 +113,7 @@ function Contact() {
     setError("")
 
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch(`${API_BASE}/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
