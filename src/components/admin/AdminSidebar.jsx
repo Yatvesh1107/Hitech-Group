@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { NavLink, useNavigate } from "react-router-dom"
-import { LayoutDashboard, Users, Wrench, FileText, LogOut, X, ChevronDown } from "lucide-react"
+import { LayoutDashboard, Users, Wrench, FileText, Settings, LogOut, X, ChevronDown } from "lucide-react"
 import { useAuth } from "../../context/authContext"
 
 const navItems = [
@@ -20,6 +20,7 @@ export default function AdminSidebar({ open, onClose }) {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
   const [documentsOpen, setDocumentsOpen] = useState(false)
+  const [settingsOpen, setSettingsOpen] = useState(false)
 
   const handleLogout = () => {
     logout()
@@ -121,6 +122,36 @@ export default function AdminSidebar({ open, onClose }) {
                   className={navLinkClass}
                 >
                   Technical Reports
+                </NavLink>
+              </div>
+            )}
+          </div>
+
+          <div>
+            <button
+              type="button"
+              onClick={() => setSettingsOpen((openValue) => !openValue)}
+              className="flex w-full items-center gap-3 px-3.5 py-3 rounded-[12px] text-sm font-semibold text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+            >
+              <Settings size={18} />
+              Settings
+              <ChevronDown
+                size={16}
+                className={`ml-auto transition-transform duration-200 ${
+                  settingsOpen ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+
+            {settingsOpen && (
+              <div className="mt-1 mb-1 ml-5 pl-3 border-l border-white/15 space-y-1">
+                <NavLink
+                  to="/admin/settings/company"
+                  end
+                  onClick={onClose}
+                  className={navLinkClass}
+                >
+                  Company Settings
                 </NavLink>
               </div>
             )}

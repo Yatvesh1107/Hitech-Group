@@ -36,6 +36,7 @@ import TechnicalReportList from "./pages/admin/technicalReport/TechnicalReportLi
 import CreateTechnicalReport from "./pages/admin/technicalReport/CreateTechnicalReport"
 import TechnicalReportDetails from "./pages/admin/technicalReport/TechnicalReportDetails"
 import EditTechnicalReport from "./pages/admin/technicalReport/EditTechnicalReport"
+import CompanySettings from "./pages/admin/settings/CompanySettings"
 
 function PublicLayout() {
   return (
@@ -214,6 +215,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <EditTechnicalReport />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/settings/company"
+            element={
+              <ProtectedRoute>
+                <CompanySettings />
               </ProtectedRoute>
             }
           />
