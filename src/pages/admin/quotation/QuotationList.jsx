@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom"
 import { Plus, ChevronLeft, ChevronRight, FileText } from "lucide-react"
 import { useAuth } from "../../../context/authContext"
 import { useToast } from "../../../context/toastContext"
-import { getQuotations } from "../../../services/quotations"
+import { getQuotations, duplicateQuotation, updateQuotationStatus } from "../../../services/quotations"
 import AdminLayout from "../../../components/admin/AdminLayout"
 import PageHeader from "../../../components/admin/PageHeader"
 import SearchBar from "../../../components/admin/SearchBar"
 import FilterBar from "../../../components/admin/FilterBar"
 import StatisticsCards from "../../../components/admin/StatisticsCards"
 import QuotationTable from "../../../components/admin/QuotationTable"
+import StatusChangeModal from "../../../components/admin/StatusChangeModal"
 import LoadingSkeleton from "../../../components/admin/LoadingSkeleton"
 import EmptyState from "../../../components/admin/EmptyState"
 import ErrorState from "../../../components/admin/ErrorState"
@@ -18,6 +19,19 @@ const PAGE_SIZE = 10
 const SEARCH_DEBOUNCE_MS = 400
 
 const STATUS_COUNTS = ["Draft", "Sent", "Approved", "Rejected"]
+
+const NEXT_STATUSES = {
+  Draft: ["Sent"],
+  Sent: ["Approved", "Rejected", "Expired", "Cancelled"],
+}
+
+const STATUS_TOAST = {
+  Sent: "Quotation marked as Sent.",
+  Approved: "Quotation approved.",
+  Rejected: "Quotation rejected.",
+  Expired: "Quotation expired.",
+  Cancelled: "Quotation cancelled.",
+}
 
 export default function QuotationList() {
   const { token } = useAuth()
@@ -38,6 +52,10 @@ export default function QuotationList() {
   const [refreshKey, setRefreshKey] = useState(0)
   const [counts, setCounts] = useState({ draft: 0, sent: 0, approved: 0, rejected: 0 })
   const [countsLoading, setCountsLoading] = useState(true)
+  const [statusTarget, setStatusTarget] = useState(null)
+  const [statusBusy, setStatusBusy] = useState(false)
+  const [statusError, setStatusError] = useState("")
+  const [duplicateBusyId, setDuplicateBusyId] = useState(null)
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -130,16 +148,61 @@ export default function QuotationList() {
     navigate(`/admin/quotations/${quotation._id}/edit`)
   }
 
-  const handleDuplicate = () => {
-    showToast("Duplicate quotation coming soon.")
+  const handleDuplicate = async (quotation) => {
+    if (!quotation) return
+
+    if (!["Rejected", "Expired"].includes(quotation.status)) {
+      showToast(
+        `Only Rejected or Expired quotations can be duplicated. This quotation is ${quotation.status}.`,
+        "error"
+      )
+      return
+    }
+
+    setDuplicateBusyId(quotation._id)
+
+    try {
+      const duplicated = await duplicateQuotation({ token, id: quotation._id })
+      showToast("Quotation duplicated successfully.")
+      navigate(`/admin/quotations/${duplicated._id}`)
+    } catch (err) {
+      setDuplicateBusyId(null)
+      showToast(err.message || "Failed to duplicate quotation. Please try again.", "error")
+    }
   }
 
-  const handleChangeStatus = () => {
-    showToast("Change status coming soon.")
+  const handleChangeStatus = (quotation) => {
+    if (!quotation) return
+
+    const allowed = NEXT_STATUSES[quotation.status] || []
+
+    if (allowed.length === 0) {
+      showToast(
+        `Quotations in "${quotation.status}" status cannot be moved to another status.`,
+        "error"
+      )
+      return
+    }
+
+    setStatusTarget(quotation)
   }
 
-  const handleDelete = () => {
-    showToast("Delete quotation coming soon.")
+  const handleStatusConfirm = async (targetStatus) => {
+    if (!statusTarget) return
+
+    setStatusBusy(true)
+    setStatusError("")
+
+    try {
+      await updateQuotationStatus({ token, id: statusTarget._id, status: targetStatus })
+      showToast(STATUS_TOAST[targetStatus] || `Quotation marked as ${targetStatus}.`)
+      setStatusTarget(null)
+      setRefreshKey((key) => key + 1)
+    } catch (err) {
+      setStatusError(err.message || "Failed to update status. Please try again.")
+    } finally {
+      setStatusBusy(false)
+    }
   }
 
   const createButton = (
@@ -217,7 +280,7 @@ export default function QuotationList() {
               onEdit={handleEdit}
               onDuplicate={handleDuplicate}
               onChangeStatus={handleChangeStatus}
-              onDelete={handleDelete}
+              duplicateBusyId={duplicateBusyId}
             />
 
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-6 py-4 border-t border-gray-100">
@@ -253,6 +316,20 @@ export default function QuotationList() {
           </>
         )}
       </div>
+
+      {statusTarget && (
+        <StatusChangeModal
+          open
+          allowedStatuses={NEXT_STATUSES[statusTarget.status] || []}
+          busy={statusBusy}
+          error={statusError}
+          onClose={() => {
+            setStatusTarget(null)
+            setStatusError("")
+          }}
+          onConfirm={handleStatusConfirm}
+        />
+      )}
     </AdminLayout>
   )
 }

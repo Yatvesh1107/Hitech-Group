@@ -53,10 +53,10 @@ export default function Dashboard() {
         </div>
 
         <div className="bg-[#0B2D5C] rounded-[22px] p-7 sm:col-span-2 lg:col-span-1">
-          <h3 className="text-lg font-bold text-white">Coming Soon</h3>
+          <h3 className="text-lg font-bold text-white">What's Available</h3>
           <p className="text-sm text-white/70 mt-3 leading-relaxed">
-            Quotations, customers, invoices and reports modules are planned for the next phase
-            of development.
+            Quotations, customers, services and invoices are all live. Reports are planned for a
+            later phase.
           </p>
         </div>
       </div>

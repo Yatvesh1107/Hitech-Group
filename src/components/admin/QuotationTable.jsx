@@ -1,4 +1,4 @@
-import { Eye, Pencil, Copy, ArrowLeftRight, Trash2 } from "lucide-react"
+import { Eye, Pencil, Copy, ArrowLeftRight, LoaderCircle } from "lucide-react"
 import QuotationStatusBadge from "./QuotationStatusBadge"
 import DivisionBadge from "./DivisionBadge"
 
@@ -29,7 +29,7 @@ export default function QuotationTable({
   onEdit,
   onDuplicate,
   onChangeStatus,
-  onDelete,
+  duplicateBusyId,
 }) {
   return (
     <div className="overflow-x-auto">
@@ -108,9 +108,14 @@ export default function QuotationTable({
                     aria-label="Duplicate"
                     title="Duplicate"
                     onClick={() => onDuplicate?.(quotation)}
-                    className={actionButtonClass}
+                    disabled={duplicateBusyId === quotation._id}
+                    className={`${actionButtonClass} disabled:opacity-50 disabled:cursor-wait`}
                   >
-                    <Copy size={16} />
+                    {duplicateBusyId === quotation._id ? (
+                      <LoaderCircle size={16} className="animate-spin" />
+                    ) : (
+                      <Copy size={16} />
+                    )}
                   </button>
                   <button
                     type="button"
@@ -120,15 +125,6 @@ export default function QuotationTable({
                     className={actionButtonClass}
                   >
                     <ArrowLeftRight size={16} />
-                  </button>
-                  <button
-                    type="button"
-                    aria-label="Delete"
-                    title="Delete"
-                    onClick={() => onDelete?.(quotation)}
-                    className="p-2 rounded-[10px] text-[#94A3B8] hover:text-red-600 hover:bg-red-50 transition-colors"
-                  >
-                    <Trash2 size={16} />
                   </button>
                 </div>
               </td>

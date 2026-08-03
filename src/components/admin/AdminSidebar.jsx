@@ -114,12 +114,6 @@ export default function AdminSidebar({ open, onClose }) {
                 >
                   Invoices
                 </NavLink>
-                <div className="flex items-center gap-3 px-3.5 py-3 rounded-[12px] text-sm font-semibold text-white/30 cursor-not-allowed">
-                  Reports
-                  <span className="ml-auto text-[10px] uppercase tracking-wider bg-white/10 text-white/50 px-2 py-0.5 rounded-full">
-                    Soon
-                  </span>
-                </div>
               </div>
             )}
           </div>

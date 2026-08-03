@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { Plus, ChevronLeft, ChevronRight, Receipt } from "lucide-react"
+import { ChevronLeft, ChevronRight, Receipt } from "lucide-react"
 import { useAuth } from "../../../context/authContext"
 import { useToast } from "../../../context/toastContext"
 import { getInvoices, deleteInvoice, getInvoicePdf } from "../../../services/invoices"
@@ -160,10 +160,6 @@ export default function InvoiceList() {
     }
   }
 
-  const handleCreate = () => {
-    showToast("Create invoice coming soon.")
-  }
-
   const handleDelete = (invoice) => {
     setDeleteTarget(invoice)
   }
@@ -185,17 +181,6 @@ export default function InvoiceList() {
     }
   }
 
-  const createButton = (
-    <button
-      type="button"
-      onClick={handleCreate}
-      className="inline-flex items-center gap-2 h-11 px-5 rounded-[12px] bg-[#0B2D5C] text-white text-sm font-semibold hover:bg-[#0B2D5C]/90 transition-colors"
-    >
-      <Plus size={18} className="text-[#F4B400]" />
-      Create Invoice
-    </button>
-  )
-
   const canGoPrevious = page > 1
   const canGoNext = page < pagination.totalPages
 
@@ -204,7 +189,6 @@ export default function InvoiceList() {
       <PageHeader
         title="Invoice Management"
         subtitle="Manage all customer invoices from one place."
-        action={createButton}
       />
 
       <InvoiceStatisticsCards counts={counts} loading={countsLoading} />
@@ -250,9 +234,8 @@ export default function InvoiceList() {
         ) : invoices.length === 0 ? (
           <EmptyState
             title="No Invoices Found"
-            description="Start by creating your first invoice."
+            description="Invoices are created by converting an approved quotation."
             icon={<Receipt size={30} className="text-[#F4B400]" />}
-            action={createButton}
           />
         ) : (
           <>
