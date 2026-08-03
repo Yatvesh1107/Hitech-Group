@@ -1,5 +1,6 @@
+import { useState } from "react"
 import { NavLink, useNavigate } from "react-router-dom"
-import { LayoutDashboard, Users, Wrench, FileText, LogOut, X } from "lucide-react"
+import { LayoutDashboard, Users, Wrench, FileText, LogOut, X, ChevronDown } from "lucide-react"
 import { useAuth } from "../../context/authContext"
 
 const navItems = [
@@ -8,9 +9,17 @@ const navItems = [
   { to: "/admin/services", label: "Services", icon: Wrench, end: false },
 ]
 
+const navLinkClass = ({ isActive }) =>
+  `flex items-center gap-3 px-3.5 py-3 rounded-[12px] text-sm font-semibold transition-colors ${
+    isActive
+      ? "bg-[#F4B400] text-[#081F3F]"
+      : "text-white/70 hover:text-white hover:bg-white/10"
+  }`
+
 export default function AdminSidebar({ open, onClose }) {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
+  const [documentsOpen, setDocumentsOpen] = useState(false)
 
   const handleLogout = () => {
     logout()
@@ -63,13 +72,7 @@ export default function AdminSidebar({ open, onClose }) {
                 to={item.to}
                 end={item.end}
                 onClick={onClose}
-                className={({ isActive }) =>
-                  `flex items-center gap-3 px-3.5 py-3 rounded-[12px] text-sm font-semibold transition-colors ${
-                    isActive
-                      ? "bg-[#F4B400] text-[#081F3F]"
-                      : "text-white/70 hover:text-white hover:bg-white/10"
-                  }`
-                }
+                className={navLinkClass}
               >
                 <Icon size={18} />
                 {item.label}
@@ -77,12 +80,48 @@ export default function AdminSidebar({ open, onClose }) {
             )
           })}
 
-          <div className="flex items-center gap-3 px-3.5 py-3 rounded-[12px] text-sm font-semibold text-white/30 cursor-not-allowed">
-            <FileText size={18} />
-            Quotations
-            <span className="ml-auto text-[10px] uppercase tracking-wider bg-white/10 text-white/50 px-2 py-0.5 rounded-full">
-              Soon
-            </span>
+          <div>
+            <button
+              type="button"
+              onClick={() => setDocumentsOpen((openValue) => !openValue)}
+              className="flex w-full items-center gap-3 px-3.5 py-3 rounded-[12px] text-sm font-semibold text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+            >
+              <FileText size={18} />
+              Business Documents
+              <ChevronDown
+                size={16}
+                className={`ml-auto transition-transform duration-200 ${
+                  documentsOpen ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+
+            {documentsOpen && (
+              <div className="mt-1 mb-1 ml-5 pl-3 border-l border-white/15 space-y-1">
+                <NavLink
+                  to="/admin/quotations"
+                  end
+                  onClick={onClose}
+                  className={navLinkClass}
+                >
+                  Quotations
+                </NavLink>
+                <NavLink
+                  to="/admin/invoices"
+                  end
+                  onClick={onClose}
+                  className={navLinkClass}
+                >
+                  Invoices
+                </NavLink>
+                <div className="flex items-center gap-3 px-3.5 py-3 rounded-[12px] text-sm font-semibold text-white/30 cursor-not-allowed">
+                  Reports
+                  <span className="ml-auto text-[10px] uppercase tracking-wider bg-white/10 text-white/50 px-2 py-0.5 rounded-full">
+                    Soon
+                  </span>
+                </div>
+              </div>
+            )}
           </div>
         </nav>
 

@@ -1,6 +1,20 @@
 import { LoaderCircle, X } from "lucide-react"
 
-export default function ConfirmModal({ open, title, message, confirmLabel = "Confirm", onConfirm, onCancel, busy = false }) {
+const CONFIRM_VARIANTS = {
+  danger: "bg-red-500 text-white hover:bg-red-600",
+  primary: "bg-[#0B2D5C] text-white hover:bg-[#0B2D5C]/90",
+}
+
+export default function ConfirmModal({
+  open,
+  title,
+  message,
+  confirmLabel = "Confirm",
+  onConfirm,
+  onCancel,
+  busy = false,
+  variant = "danger",
+}) {
   if (!open) return null
 
   return (
@@ -38,7 +52,7 @@ export default function ConfirmModal({ open, title, message, confirmLabel = "Con
             type="button"
             onClick={onConfirm}
             disabled={busy}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 h-11 px-6 rounded-[12px] bg-red-500 text-white text-sm font-semibold hover:bg-red-600 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+            className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 h-11 px-6 rounded-[12px] text-sm font-semibold transition-colors disabled:opacity-60 disabled:cursor-not-allowed ${CONFIRM_VARIANTS[variant]}`}
           >
             {busy && <LoaderCircle size={16} className="animate-spin" />}
             {confirmLabel}

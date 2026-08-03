@@ -11,7 +11,7 @@ export default function TextArea({ label, error, required, id, className = "", .
       <textarea
         id={id}
         {...props}
-        className={`w-full min-h-[120px] px-4 py-3 rounded-[12px] border text-sm text-[#0F172A] bg-[#F8FAFC] outline-none resize-y transition-all ${
+        className={`w-full min-h-[120px] px-4 py-3 rounded-[12px] border text-sm text-[#0F172A] bg-[#F8FAFC] outline-none resize-y transition-all disabled:opacity-60 disabled:cursor-not-allowed ${
           error
             ? "border-red-300 focus:border-red-400 focus:ring-2 focus:ring-red-100"
             : "border-gray-200 focus:border-[#F4B400] focus:ring-2 focus:ring-[#F4B400]/30"

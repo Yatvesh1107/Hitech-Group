@@ -25,6 +25,13 @@ import ServiceList from "./pages/admin/service/ServiceList"
 import AddService from "./pages/admin/service/AddService"
 import ServiceDetails from "./pages/admin/service/ServiceDetails"
 import EditService from "./pages/admin/service/EditService"
+import QuotationList from "./pages/admin/quotation/QuotationList"
+import CreateQuotation from "./pages/admin/quotation/CreateQuotation"
+import QuotationDetails from "./pages/admin/quotation/QuotationDetails"
+import EditQuotation from "./pages/admin/quotation/EditQuotation"
+import InvoiceList from "./pages/admin/invoice/InvoiceList"
+import InvoiceDetails from "./pages/admin/invoice/InvoiceDetails"
+import EditInvoice from "./pages/admin/invoice/EditInvoice"
 
 function PublicLayout() {
   return (
@@ -115,6 +122,62 @@ function App() {
             element={
               <ProtectedRoute>
                 <EditService />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/quotations"
+            element={
+              <ProtectedRoute>
+                <QuotationList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/quotations/new"
+            element={
+              <ProtectedRoute>
+                <CreateQuotation />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/quotations/:id"
+            element={
+              <ProtectedRoute>
+                <QuotationDetails />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/quotations/:id/edit"
+            element={
+              <ProtectedRoute>
+                <EditQuotation />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/invoices"
+            element={
+              <ProtectedRoute>
+                <InvoiceList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/invoices/:id"
+            element={
+              <ProtectedRoute>
+                <InvoiceDetails />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/invoices/:id/edit"
+            element={
+              <ProtectedRoute>
+                <EditInvoice />
               </ProtectedRoute>
             }
           />
