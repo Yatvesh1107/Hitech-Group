@@ -2,6 +2,7 @@ import { History } from "lucide-react"
 import SectionHeader from "./SectionHeader"
 import QuotationStatusBadge from "./QuotationStatusBadge"
 import InvoiceStatusBadge from "./InvoiceStatusBadge"
+import TechnicalReportStatusBadge from "./TechnicalReportStatusBadge"
 
 const DOT_STYLES = {
   Created: "bg-[#0B2D5C]",
@@ -63,6 +64,20 @@ const VARIANTS = {
         return `${summary} received${reference}`
       }
       return "Invoice details updated"
+    },
+  },
+  report: {
+    StatusBadge: TechnicalReportStatusBadge,
+    labels: {
+      Created: "Report Created",
+      Updated: "Report Updated",
+      StatusChanged: "Current Status",
+    },
+    body: (activity) => {
+      if (activity.type === "Created") {
+        return `Report created with status ${activity.newStatus || ""}`.trim()
+      }
+      return "Report details updated"
     },
   },
 }
@@ -137,11 +152,18 @@ export default function TimelineCard({ activities = [], type = "quotation" }) {
 
                   <div className="mt-1.5 flex flex-wrap items-center gap-2">
                     {activity.type === "StatusChanged" ? (
-                      <>
-                        <StatusBadge status={activity.previousStatus} />
-                        <span className="text-sm text-[#94A3B8]">→</span>
-                        <StatusBadge status={activity.newStatus} />
-                      </>
+                      activity.previousStatus ? (
+                        <>
+                          <StatusBadge status={activity.previousStatus} />
+                          <span className="text-sm text-[#94A3B8]">→</span>
+                          <StatusBadge status={activity.newStatus} />
+                        </>
+                      ) : (
+                        <>
+                          <span className="text-sm text-[#64748B]">Current status:</span>
+                          <StatusBadge status={activity.newStatus} />
+                        </>
+                      )
                     ) : (
                       <p className="text-sm text-[#64748B]">{body(activity)}</p>
                     )}

@@ -4,6 +4,14 @@ const DIVISIONS = ["Industrial Insulation", "Experts in Ultrasonics", "Precision
 
 const QUOTATION_STATUSES = ["Draft", "Sent", "Approved", "Rejected", "Expired", "Cancelled"]
 
+function optionValue(option) {
+  return typeof option === "string" ? option : option.value
+}
+
+function optionLabel(option) {
+  return typeof option === "string" ? option : option.label
+}
+
 const selectClass =
   "h-11 pl-3.5 pr-9 rounded-[12px] border border-gray-200 bg-[#F8FAFC] text-sm text-[#0F172A] outline-none focus:border-[#F4B400] focus:ring-2 focus:ring-[#F4B400]/30 transition-all appearance-none cursor-pointer"
 
@@ -13,6 +21,8 @@ const dateClass =
 export default function FilterBar({
   status,
   onStatusChange,
+  reportType,
+  onReportTypeChange,
   division,
   onDivisionChange,
   dateFrom,
@@ -21,6 +31,8 @@ export default function FilterBar({
   onDateToChange,
   statusOptions = QUOTATION_STATUSES,
   statusPlaceholder = "All Status",
+  reportTypeOptions = [],
+  reportTypePlaceholder = "All Report Types",
 }) {
   return (
     <div className="flex flex-col lg:flex-row items-stretch lg:items-center gap-3">
@@ -36,13 +48,35 @@ export default function FilterBar({
           className={selectClass}
         >
           <option value="">{statusPlaceholder}</option>
-          {statusOptions.map((name) => (
-            <option key={name} value={name}>
-              {name}
+          {statusOptions.map((option) => (
+            <option key={optionValue(option)} value={optionValue(option)}>
+              {optionLabel(option)}
             </option>
           ))}
         </select>
       </div>
+
+      {reportTypeOptions.length > 0 && (
+        <div className="relative">
+          <ListFilter
+            size={15}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-[#94A3B8] pointer-events-none"
+          />
+          <select
+            value={reportType}
+            onChange={(e) => onReportTypeChange?.(e.target.value)}
+            aria-label="Filter by report type"
+            className={selectClass}
+          >
+            <option value="">{reportTypePlaceholder}</option>
+            {reportTypeOptions.map((option) => (
+              <option key={optionValue(option)} value={optionValue(option)}>
+                {optionLabel(option)}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
 
       <div className="relative">
         <ListFilter

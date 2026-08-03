@@ -1,0 +1,93 @@
+const API_BASE = "/api"
+
+async function request(path, token, options = {}) {
+  const { headers = {}, ...rest } = options
+
+  const response = await fetch(`${API_BASE}${path}`, {
+    ...rest,
+    headers: { Authorization: `Bearer ${token}`, ...headers },
+  })
+
+  const data = await response.json().catch(() => ({}))
+
+  if (!response.ok) {
+    throw new Error(data.message || data.error || "Something went wrong. Please try again.")
+  }
+
+  return data
+}
+
+export async function getTechnicalReports({
+  token,
+  page = 1,
+  limit = 10,
+  search = "",
+  reportType = "",
+  customer = "",
+  division = "",
+  status = "",
+  dateFrom = "",
+  dateTo = "",
+}) {
+  const params = new URLSearchParams({ page, limit })
+  if (search) params.set("search", search)
+  if (reportType) params.set("reportType", reportType)
+  if (customer) params.set("customer", customer)
+  if (division) params.set("division", division)
+  if (status) params.set("status", status)
+  if (dateFrom) params.set("dateFrom", dateFrom)
+  if (dateTo) params.set("dateTo", dateTo)
+
+  const data = await request(`/technical-reports?${params.toString()}`, token)
+
+  return data.data
+}
+
+export async function getTechnicalReport({ token, id }) {
+  const data = await request(`/technical-reports/${id}`, token)
+
+  return data.data
+}
+
+export async function createTechnicalReport({ token, payload }) {
+  const data = await request("/technical-reports", token, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  })
+
+  return data.data
+}
+
+export async function updateTechnicalReport({ token, id, payload }) {
+  const data = await request(`/technical-reports/${id}`, token, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  })
+
+  return data.data
+}
+
+export async function deleteTechnicalReport({ token, id }) {
+  const data = await request(`/technical-reports/${id}`, token, {
+    method: "DELETE",
+  })
+
+  return data.data
+}
+
+export async function getTechnicalReportPdf({ token, id, download = false }) {
+  const query = download ? "?download=1" : ""
+
+  const response = await fetch(`${API_BASE}/technical-reports/${id}/pdf${query}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+
+  if (!response.ok) {
+    const data = await response.json().catch(() => ({}))
+    throw new Error(data.message || data.error || "Failed to generate the PDF. Please try again.")
+  }
+
+  return response.blob()
+}

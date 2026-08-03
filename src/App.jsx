@@ -32,6 +32,10 @@ import EditQuotation from "./pages/admin/quotation/EditQuotation"
 import InvoiceList from "./pages/admin/invoice/InvoiceList"
 import InvoiceDetails from "./pages/admin/invoice/InvoiceDetails"
 import EditInvoice from "./pages/admin/invoice/EditInvoice"
+import TechnicalReportList from "./pages/admin/technicalReport/TechnicalReportList"
+import CreateTechnicalReport from "./pages/admin/technicalReport/CreateTechnicalReport"
+import TechnicalReportDetails from "./pages/admin/technicalReport/TechnicalReportDetails"
+import EditTechnicalReport from "./pages/admin/technicalReport/EditTechnicalReport"
 
 function PublicLayout() {
   return (
@@ -178,6 +182,38 @@ function App() {
             element={
               <ProtectedRoute>
                 <EditInvoice />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/technical-reports"
+            element={
+              <ProtectedRoute>
+                <TechnicalReportList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/technical-reports/new"
+            element={
+              <ProtectedRoute>
+                <CreateTechnicalReport />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/technical-reports/:id"
+            element={
+              <ProtectedRoute>
+                <TechnicalReportDetails />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/technical-reports/:id/edit"
+            element={
+              <ProtectedRoute>
+                <EditTechnicalReport />
               </ProtectedRoute>
             }
           />

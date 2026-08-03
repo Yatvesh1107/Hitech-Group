@@ -114,6 +114,14 @@ export default function AdminSidebar({ open, onClose }) {
                 >
                   Invoices
                 </NavLink>
+                <NavLink
+                  to="/admin/technical-reports"
+                  end
+                  onClick={onClose}
+                  className={navLinkClass}
+                >
+                  Technical Reports
+                </NavLink>
               </div>
             )}
           </div>
