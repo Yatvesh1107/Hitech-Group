@@ -10,6 +10,7 @@ const DOT_STYLES = {
   StatusChanged: "bg-[#F4B400]",
   Converted: "bg-emerald-500",
   Payment: "bg-teal-500",
+  PdfGenerated: "bg-purple-500",
 }
 
 const VARIANTS = {
@@ -71,11 +72,15 @@ const VARIANTS = {
     labels: {
       Created: "Report Created",
       Updated: "Report Updated",
-      StatusChanged: "Current Status",
+      StatusChanged: "Status Changed",
+      PdfGenerated: "PDF Generated",
     },
     body: (activity) => {
       if (activity.type === "Created") {
         return `Report created with status ${activity.newStatus || ""}`.trim()
+      }
+      if (activity.type === "PdfGenerated") {
+        return "The report PDF was generated"
       }
       return "Report details updated"
     },

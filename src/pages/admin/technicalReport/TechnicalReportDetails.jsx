@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import {
   ArrowLeft,
+  BadgeCheck,
   Building2,
   ChevronRight,
   FileDown,
@@ -9,10 +10,15 @@ import {
   LoaderCircle,
   Pencil,
   Printer,
+  XCircle,
 } from "lucide-react"
 import { useAuth } from "../../../context/authContext"
 import { useToast } from "../../../context/toastContext"
-import { getTechnicalReport, getTechnicalReportPdf } from "../../../services/technicalReports"
+import {
+  changeTechnicalReportStatus,
+  getTechnicalReport,
+  getTechnicalReportPdf,
+} from "../../../services/technicalReports"
 import AdminLayout from "../../../components/admin/AdminLayout"
 import PageHeader from "../../../components/admin/PageHeader"
 import ReportTypeBadge from "../../../components/admin/ReportTypeBadge"
@@ -21,6 +27,7 @@ import DivisionBadge from "../../../components/admin/DivisionBadge"
 import CustomerInfoCard from "../../../components/admin/CustomerInfoCard"
 import QuotationInfoCard from "../../../components/admin/QuotationInfoCard"
 import TimelineCard from "../../../components/admin/TimelineCard"
+import ConfirmModal from "../../../components/admin/ConfirmModal"
 import ErrorState from "../../../components/admin/ErrorState"
 import UltrasonicView from "../../../components/admin/UltrasonicView"
 import VSRView from "../../../components/admin/VSRView"
@@ -108,6 +115,8 @@ export default function TechnicalReportDetails() {
   const [refreshKey, setRefreshKey] = useState(0)
   const [pdfBusy, setPdfBusy] = useState(false)
   const [pdfMenuOpen, setPdfMenuOpen] = useState(false)
+  const [statusBusy, setStatusBusy] = useState(false)
+  const [statusAction, setStatusAction] = useState(null)
 
   useEffect(() => {
     let cancelled = false
@@ -174,6 +183,27 @@ export default function TechnicalReportDetails() {
     }
   }
 
+  const handleConfirmStatus = async () => {
+    if (!statusAction) return
+
+    setStatusBusy(true)
+
+    try {
+      const data = await changeTechnicalReportStatus({
+        token,
+        id,
+        status: statusAction.status,
+      })
+      setStatusAction(null)
+      setReport(data)
+      showToast(`Technical report marked as ${data.status}`, "success")
+    } catch (err) {
+      showToast(err.message || "Failed to update the technical report status.", "error")
+    } finally {
+      setStatusBusy(false)
+    }
+  }
+
   const breadcrumb = (
     <nav className="flex items-center gap-2 text-sm text-[#94A3B8]">
       <Link to="/admin/dashboard" className="hover:text-[#0B2D5C] transition-colors">
@@ -224,27 +254,80 @@ export default function TechnicalReportDetails() {
   const pdfMenuBase =
     "flex w-full items-center gap-3 px-4 py-2.5 text-sm text-[#0F172A] hover:bg-[#F8FAFC] transition-colors"
 
+  const statusActions =
+    report.status === "Draft"
+      ? [
+          {
+            status: "Completed",
+            label: "Mark as Completed",
+            icon: BadgeCheck,
+            variant: "primary",
+            message:
+              "Mark this report as Completed? The report is considered finished and ready for approval.",
+          },
+        ]
+      : report.status === "Completed"
+        ? [
+            {
+              status: "Approved",
+              label: "Approve Report",
+              icon: BadgeCheck,
+              variant: "primary",
+              message:
+                "Approve this report? Once approved, the report becomes read-only and can no longer be edited.",
+            },
+            {
+              status: "Cancelled",
+              label: "Cancel Report",
+              icon: XCircle,
+              variant: "danger",
+              message: "Cancel this report? The report will be closed and can no longer be edited.",
+            },
+          ]
+        : []
+
+  const isReadOnly = report.status === "Approved" || report.status === "Cancelled"
+
   const actions = (
     <div className="flex flex-wrap items-center gap-3">
-      <button
-        type="button"
-        onClick={() => navigate(`/admin/technical-reports/${report._id}/edit`)}
-        className={outlineButton}
-      >
-        <Pencil size={16} />
-        Edit Report
-      </button>
+      {statusActions.map((action) => (
+        <button
+          key={action.status}
+          type="button"
+          onClick={() => setStatusAction(action)}
+          className={
+            action.variant === "danger"
+              ? `${buttonBase} border border-red-200 bg-white text-red-600 hover:bg-red-50`
+              : `${buttonBase} bg-[#0B2D5C] text-white hover:bg-[#0B2D5C]/90`
+          }
+        >
+          <action.icon size={16} className={action.variant === "danger" ? undefined : "text-[#F4B400]"} />
+          {action.label}
+        </button>
+      ))}
+
+      {!isReadOnly && (
+        <button
+          type="button"
+          onClick={() => navigate(`/admin/technical-reports/${report._id}/edit`)}
+          className={outlineButton}
+        >
+          <Pencil size={16} />
+          Edit Report
+        </button>
+      )}
+
       <div className="relative">
         <button
           type="button"
           onClick={() => setPdfMenuOpen((open) => !open)}
           disabled={pdfBusy}
-          className={`${buttonBase} bg-[#0B2D5C] text-white hover:bg-[#0B2D5C]/90 disabled:opacity-50 disabled:cursor-not-allowed`}
+          className={`${buttonBase} border border-gray-200 bg-white text-[#0B2D5C] hover:bg-[#F8FAFC] disabled:opacity-50 disabled:cursor-not-allowed`}
         >
           {pdfBusy ? (
             <LoaderCircle size={16} className="animate-spin" />
           ) : (
-            <FileDown size={16} className="text-[#F4B400]" />
+            <FileDown size={16} />
           )}
           {pdfBusy ? "Generating…" : "PDF"}
         </button>
@@ -316,19 +399,7 @@ export default function TechnicalReportDetails() {
     { label: "Last Updated", value: formatDate(report.updatedAt) },
   ]
 
-  const activities = [
-    {
-      _id: "created",
-      type: "Created",
-      createdAt: report.createdAt,
-      newStatus: report.status,
-      user: report.createdBy,
-    },
-    ...(new Date(report.updatedAt).getTime() - new Date(report.createdAt).getTime() > 1000
-      ? [{ _id: "updated", type: "Updated", createdAt: report.updatedAt }]
-      : []),
-    { _id: "status", type: "StatusChanged", createdAt: report.updatedAt, newStatus: report.status },
-  ]
+  const activities = report.activities || []
 
   return (
     <AdminLayout>
@@ -379,6 +450,17 @@ export default function TechnicalReportDetails() {
 
         <TimelineCard activities={activities} type="report" />
       </div>
+
+      <ConfirmModal
+        open={!!statusAction}
+        title={statusAction ? `${statusAction.label}` : ""}
+        message={statusAction?.message || ""}
+        confirmLabel={statusAction?.label || "Confirm"}
+        variant={statusAction?.variant || "primary"}
+        onConfirm={handleConfirmStatus}
+        onCancel={() => setStatusAction(null)}
+        busy={statusBusy}
+      />
     </AdminLayout>
   )
 }

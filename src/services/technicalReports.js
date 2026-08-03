@@ -77,6 +77,16 @@ export async function deleteTechnicalReport({ token, id }) {
   return data.data
 }
 
+export async function changeTechnicalReportStatus({ token, id, status }) {
+  const data = await request(`/technical-reports/${id}/status`, token, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ status }),
+  })
+
+  return data.data
+}
+
 export async function getTechnicalReportPdf({ token, id, download = false }) {
   const query = download ? "?download=1" : ""
 
