@@ -21,12 +21,8 @@ const SEARCH_DEBOUNCE_MS = 400
 const TECHNICAL_REPORT_STATUSES = ["Draft", "Completed", "Approved", "Cancelled"]
 
 const REPORT_TYPE_OPTIONS = [
-  { value: "Ultrasonic", label: "Ultrasonic Testing" },
+  { value: "Ultrasonic / D.P. / Thickness Test", label: "Ultrasonic / D.P. / Thickness Test" },
   { value: "VSR", label: "VSR" },
-  { value: "DPT", label: "DPT" },
-  { value: "MPT", label: "MPT" },
-  { value: "Thickness", label: "Thickness Testing" },
-  { value: "Dynamic Balancing", label: "Dynamic Balancing" },
 ]
 
 export default function TechnicalReportList() {

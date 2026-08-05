@@ -29,11 +29,11 @@ import QuotationInfoCard from "../../../components/admin/QuotationInfoCard"
 import TimelineCard from "../../../components/admin/TimelineCard"
 import ConfirmModal from "../../../components/admin/ConfirmModal"
 import ErrorState from "../../../components/admin/ErrorState"
-import UltrasonicView from "../../../components/admin/UltrasonicView"
+import UltrasonicDpThicknessView from "../../../components/admin/UltrasonicDpThicknessView"
 import VSRView from "../../../components/admin/VSRView"
 
 const REPORT_TYPE_VIEWS = {
-  Ultrasonic: UltrasonicView,
+  "Ultrasonic / D.P. / Thickness Test": UltrasonicDpThicknessView,
   VSR: VSRView,
 }
 

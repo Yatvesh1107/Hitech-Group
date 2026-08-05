@@ -3,16 +3,13 @@ import { Plus, Trash2 } from "lucide-react"
 const cellClass =
   "w-full h-10 px-3 rounded-[10px] border border-gray-200 bg-[#F8FAFC] text-sm text-[#0F172A] outline-none focus:border-[#F4B400] focus:ring-2 focus:ring-[#F4B400]/30 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
 
-export default function ObservationTable({ rows = [], onChange, disabled = false }) {
+export default function PartTable({ rows = [], onChange, disabled = false }) {
   const updateRow = (index, field, value) => {
     onChange(rows.map((row, i) => (i === index ? { ...row, [field]: value } : row)))
   }
 
   const addRow = () => {
-    onChange([
-      ...rows,
-      { key: `obs-${Date.now()}`, location: "", observation: "", result: "", remarks: "" },
-    ])
+    onChange([...rows, { key: `part-${Date.now()}`, partName: "", materialSpecification: "", drawingNumber: "" }])
   }
 
   const removeRow = (index) => {
@@ -23,7 +20,7 @@ export default function ObservationTable({ rows = [], onChange, disabled = false
     <div>
       <div className="flex items-center justify-between gap-3">
         <label className="block text-sm font-semibold text-[#0F172A]">
-          Observations <span className="text-red-500 ml-0.5">*</span>
+          Part Information <span className="text-red-500 ml-0.5">*</span>
         </label>
         <button
           type="button"
@@ -38,60 +35,51 @@ export default function ObservationTable({ rows = [], onChange, disabled = false
 
       {rows.length === 0 ? (
         <div className="mt-3 border border-dashed border-gray-200 rounded-[12px] px-5 py-6 text-center text-sm text-[#94A3B8]">
-          No observations yet. Click "Add Row" to begin.
+          No parts yet. Click "Add Row" to begin.
         </div>
       ) : (
         <div className="mt-3 overflow-x-auto border border-gray-100 rounded-[12px]">
           <table className="w-full min-w-[720px] text-left">
             <thead>
               <tr className="bg-[#F8FAFC] text-xs uppercase tracking-wider text-[#94A3B8]">
-                <th className="px-4 py-3 font-semibold w-[22%]">Location</th>
-                <th className="px-4 py-3 font-semibold w-[30%]">Observation</th>
-                <th className="px-4 py-3 font-semibold w-[22%]">Result</th>
-                <th className="px-4 py-3 font-semibold">Remarks</th>
+                <th className="px-4 py-3 font-semibold w-14">Sr No</th>
+                <th className="px-4 py-3 font-semibold w-[32%]">Part Name</th>
+                <th className="px-4 py-3 font-semibold w-[32%]">Material Specification</th>
+                <th className="px-4 py-3 font-semibold">Drawing Number</th>
                 <th className="px-4 py-3 font-semibold w-12"></th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
               {rows.map((row, index) => (
                 <tr key={row.key || index}>
+                  <td className="px-4 py-2 text-sm font-medium text-[#334155]">{index + 1}</td>
                   <td className="px-3 py-2">
                     <input
                       type="text"
-                      value={row.location || ""}
-                      onChange={(e) => updateRow(index, "location", e.target.value)}
+                      value={row.partName || ""}
+                      onChange={(e) => updateRow(index, "partName", e.target.value)}
                       disabled={disabled}
-                      placeholder="e.g. Weld A"
+                      placeholder="e.g. Pump Shaft"
                       className={cellClass}
                     />
                   </td>
                   <td className="px-3 py-2">
                     <input
                       type="text"
-                      value={row.observation || ""}
-                      onChange={(e) => updateRow(index, "observation", e.target.value)}
+                      value={row.materialSpecification || ""}
+                      onChange={(e) => updateRow(index, "materialSpecification", e.target.value)}
                       disabled={disabled}
-                      placeholder="e.g. No detectable flaw"
+                      placeholder="e.g. SS 316"
                       className={cellClass}
                     />
                   </td>
                   <td className="px-3 py-2">
                     <input
                       type="text"
-                      value={row.result || ""}
-                      onChange={(e) => updateRow(index, "result", e.target.value)}
+                      value={row.drawingNumber || ""}
+                      onChange={(e) => updateRow(index, "drawingNumber", e.target.value)}
                       disabled={disabled}
-                      placeholder="e.g. Accepted"
-                      className={cellClass}
-                    />
-                  </td>
-                  <td className="px-3 py-2">
-                    <input
-                      type="text"
-                      value={row.remarks || ""}
-                      onChange={(e) => updateRow(index, "remarks", e.target.value)}
-                      disabled={disabled}
-                      placeholder="Optional"
+                      placeholder="e.g. DRG-102"
                       className={cellClass}
                     />
                   </td>
@@ -114,7 +102,7 @@ export default function ObservationTable({ rows = [], onChange, disabled = false
         </div>
       )}
 
-      <p className="mt-1.5 text-xs text-[#94A3B8]">Add at least one observation row.</p>
+      <p className="mt-1.5 text-xs text-[#94A3B8]">Add at least one part row.</p>
     </div>
   )
 }

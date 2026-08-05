@@ -6,34 +6,34 @@ import SelectField from "./SelectField"
 import TextArea from "./TextArea"
 import CustomerSelector from "./CustomerSelector"
 import QuotationSelector from "./QuotationSelector"
-import UltrasonicForm from "./UltrasonicForm"
+import UltrasonicDpThicknessForm from "./UltrasonicDpThicknessForm"
 import VSRForm from "./VSRForm"
 
+const ACTIVE_REPORT_TYPE = "Ultrasonic / D.P. / Thickness Test"
+
 const REPORT_TYPE_OPTIONS = [
-  { value: "Ultrasonic", label: "Ultrasonic Testing" },
-  { value: "VSR", label: "Vibratory Stress Relieving (VSR)" },
-  { value: "DPT", label: "DPT (Future)", future: true },
-  { value: "MPT", label: "MPT (Future)", future: true },
-  { value: "Thickness", label: "Thickness Testing (Future)", future: true },
-  { value: "Dynamic Balancing", label: "Dynamic Balancing (Future)", future: true },
+  {
+    value: ACTIVE_REPORT_TYPE,
+    label: "Ultrasonic / D.P. / Thickness Test",
+  },
+  {
+    value: "VSR",
+    label: "Vibratory Stress Relieving (Coming Soon)",
+    future: true,
+  },
 ]
 
+const REPORT_TYPE_DIVISION = {
+  [ACTIVE_REPORT_TYPE]: "Experts in Ultrasonics",
+  VSR: "Precision Tech Engineering",
+}
+
 const FORM_CONFIG = {
-  Ultrasonic: {
-    component: UltrasonicForm,
-    rowsKey: "observations",
-    rowsLabel: "observation",
-  },
   VSR: {
     component: VSRForm,
     rowsKey: "parameters",
     rowsLabel: "parameter",
   },
-}
-
-const REPORT_TYPE_DIVISION = {
-  Ultrasonic: "Experts in Ultrasonics",
-  VSR: "Precision Tech Engineering",
 }
 
 function toDateInputValue(date) {
@@ -50,46 +50,8 @@ function toDateInputValueOrEmpty(value) {
   return toDateInputValue(date)
 }
 
-function rowsFromReportData(reportType, reportData) {
-  if (reportType === "Ultrasonic") {
-    const observations = Array.isArray(reportData?.observations) ? reportData.observations : []
-    return observations.map((row, index) => ({
-      key: `obs-${row._id || index}`,
-      location: row.location || "",
-      observation: row.observation || "",
-      result: row.result || "",
-      remarks: row.remarks || "",
-    }))
-  }
-
-  const parameters = Array.isArray(reportData?.parameters) ? reportData.parameters : []
-  return parameters.map((row, index) => ({
-    key: `param-${row._id || index}`,
-    parameter: row.parameter || "",
-    minimum: row.minimum == null ? "" : row.minimum,
-    maximum: row.maximum == null ? "" : row.maximum,
-    average: row.average == null ? "" : row.average,
-  }))
-}
-
-function initialFormData(reportType, reportData) {
-  const base = getInitialFormData(reportType)
-  if (!reportData) return base
-
-  const rowsKey = FORM_CONFIG[reportType]?.rowsKey
-  return {
-    ...base,
-    ...reportData,
-    ...(rowsKey ? { [rowsKey]: rowsFromReportData(reportType, reportData) } : {}),
-  }
-}
-
-function newObservationRow() {
-  return { key: `obs-${Date.now()}`, location: "", observation: "", result: "", remarks: "" }
-}
-
-function newParameterRow() {
-  return { key: `param-${Date.now()}`, parameter: "", minimum: "", maximum: "", average: "" }
+function newPartRow() {
+  return { key: `part-${Date.now()}`, partName: "", materialSpecification: "", drawingNumber: "" }
 }
 
 function toNumberOrEmpty(value) {
@@ -102,50 +64,108 @@ function isEmptyRow(row) {
   return Object.values(row).every((value) => value === "" || value == null)
 }
 
-function normalizeRows(reportType, rows) {
-  if (reportType === "Ultrasonic") {
-    return rows.map((row) => ({
-      location: String(row.location || "").trim(),
-      observation: String(row.observation || "").trim(),
-      result: String(row.result || "").trim(),
-      remarks: String(row.remarks || "").trim(),
+function normalizeParts(rows) {
+  return (Array.isArray(rows) ? rows : [])
+    .filter(
+      (row) =>
+        String(row.partName || "").trim() ||
+        String(row.materialSpecification || "").trim() ||
+        String(row.drawingNumber || "").trim()
+    )
+    .map((row) => ({
+      partName: String(row.partName || "").trim(),
+      materialSpecification: String(row.materialSpecification || "").trim(),
+      drawingNumber: String(row.drawingNumber || "").trim(),
     }))
-  }
-
-  return rows.map((row) => ({
-    parameter: String(row.parameter || "").trim(),
-    minimum: toNumberOrEmpty(row.minimum),
-    maximum: toNumberOrEmpty(row.maximum),
-    average: toNumberOrEmpty(row.average),
-  }))
 }
 
-function getInitialFormData(reportType) {
-  if (reportType === "Ultrasonic") {
-    return {
-      jobLocation: "",
-      equipmentName: "",
-      equipmentUsed: "",
-      probeType: "",
-      frequency: "",
-      couplant: "",
-      standardSpecification: "",
-      scanningMethod: "",
-      observations: [newObservationRow()],
-      overallResult: "",
-      recommendations: "",
-    }
+function normalizeSections(sections) {
+  return (Array.isArray(sections) ? sections : [])
+    .filter(
+      (section) =>
+        String(section.title || "").trim() ||
+        (Array.isArray(section.rows) &&
+          section.rows.some(
+            (row) => String(row.description || "").trim() || String(row.remark || "").trim()
+          ))
+    )
+    .map((section) => ({
+      title: String(section.title || "").trim(),
+      rows: (Array.isArray(section.rows) ? section.rows : [])
+        .filter(
+          (row) => String(row.description || "").trim() || String(row.remark || "").trim()
+        )
+        .map((row) => ({
+          description: String(row.description || "").trim(),
+          remark: String(row.remark || "").trim(),
+        })),
+    }))
+}
+
+function initialUltrasonicData(reportData) {
+  const data = reportData || {}
+
+  return {
+    kindAttention: data.kindAttention || "",
+    parts:
+      Array.isArray(data.parts) && data.parts.length > 0
+        ? data.parts.map((row, index) => ({
+            key: `part-${index}`,
+            partName: row.partName || "",
+            materialSpecification: row.materialSpecification || "",
+            drawingNumber: row.drawingNumber || "",
+          }))
+        : [newPartRow()],
+    equipmentUsed: data.equipmentUsed || "",
+    placeAndDateOfTesting: data.placeAndDateOfTesting || "",
+    probeFrequency: data.probeFrequency || "",
+    mediumOfCouplant: data.mediumOfCouplant || "",
+    standardSpecification: data.standardSpecification || "",
+    procedureAndTechnique: data.procedureAndTechnique || "",
+    scanningMethod: data.scanningMethod || "",
+    standardNotes: data.standardNotes || "",
+    engineerName: data.engineerName || "",
+    sections:
+      Array.isArray(data.sections) && data.sections.length > 0
+        ? data.sections.map((section, sectionIndex) => ({
+            key: `section-${sectionIndex}`,
+            title: section.title || "",
+            rows: Array.isArray(section.rows)
+              ? section.rows.map((row, rowIndex) => ({
+                  key: `row-${sectionIndex}-${rowIndex}`,
+                  description: row.description || "",
+                  remark: row.remark || "",
+                }))
+              : [],
+          }))
+        : [],
+    finalNotes: data.finalNotes || "",
+    preparedBy: data.preparedBy || "",
+    authorizedBy: data.authorizedBy || "",
+  }
+}
+
+function initialVsrData(reportData) {
+  const parameters = Array.isArray(reportData?.parameters) ? reportData.parameters : []
+  return {
+    ...(reportData || {}),
+    parameters: parameters.map((row, index) => ({
+      key: `param-${index}`,
+      parameter: row.parameter || "",
+      minimum: row.minimum == null ? "" : row.minimum,
+      maximum: row.maximum == null ? "" : row.maximum,
+      average: row.average == null ? "" : row.average,
+    })),
+  }
+}
+
+function initialFormData(reportType, reportData) {
+  if (reportType === ACTIVE_REPORT_TYPE) {
+    return initialUltrasonicData(reportData)
   }
 
   if (reportType === "VSR") {
-    return {
-      machineName: "",
-      startTime: "",
-      endTime: "",
-      duration: "",
-      operator: "",
-      parameters: [newParameterRow()],
-    }
+    return initialVsrData(reportData)
   }
 
   return {}
@@ -168,9 +188,7 @@ export default function TechnicalReportForm({
     initialValues ? toDateInputValueOrEmpty(initialValues.reportDate) : toDateInputValue(today)
   )
   const [formData, setFormData] = useState(() =>
-    initialValues
-      ? initialFormData(initialValues.reportType, initialValues.reportData)
-      : {}
+    initialValues ? initialFormData(initialValues.reportType, initialValues.reportData) : {}
   )
   const [remarks, setRemarks] = useState(() => initialValues?.remarks || "")
   const [errors, setErrors] = useState({})
@@ -184,8 +202,10 @@ export default function TechnicalReportForm({
       ? "This report has been approved and can no longer be edited."
       : "This report has been cancelled and can no longer be edited."
 
+  const isActiveType = reportType === ACTIVE_REPORT_TYPE
   const config = FORM_CONFIG[reportType]
   const FormComponent = config?.component
+
   const effectiveDivision =
     selectedQuotation?.division ||
     (mode === "edit" && initialValues?.division) ||
@@ -195,7 +215,7 @@ export default function TechnicalReportForm({
   const handleReportTypeChange = (e) => {
     const type = e.target.value
     setReportType(type)
-    setFormData(getInitialFormData(type))
+    setFormData(initialFormData(type, {}))
     setSelectedQuotation(null)
     setErrors((prev) => ({ ...prev, reportType: undefined, reportData: undefined }))
   }
@@ -210,35 +230,54 @@ export default function TechnicalReportForm({
     setSelectedQuotation(quotation)
   }
 
-  const handleSubmit = async (status) => {
-    if (submitting || readOnly) return
+  const updateFormField = (field) => (e) => {
+    setFormData((prev) => ({ ...prev, [field]: e.target.value }))
+    setErrors((prev) => ({ ...prev, parts: undefined, sections: undefined }))
+  }
 
-    const nextErrors = {}
+  const buildPayload = (status) => {
+    if (isActiveType) {
+      const data = {
+        kindAttention: String(formData.kindAttention || "").trim(),
+        parts: normalizeParts(formData.parts),
+        equipmentUsed: String(formData.equipmentUsed || "").trim(),
+        placeAndDateOfTesting: String(formData.placeAndDateOfTesting || "").trim(),
+        probeFrequency: String(formData.probeFrequency || "").trim(),
+        mediumOfCouplant: String(formData.mediumOfCouplant || "").trim(),
+        standardSpecification: String(formData.standardSpecification || "").trim(),
+        procedureAndTechnique: String(formData.procedureAndTechnique || "").trim(),
+        scanningMethod: String(formData.scanningMethod || "").trim(),
+        standardNotes: String(formData.standardNotes || "").trim(),
+        engineerName: String(formData.engineerName || "").trim(),
+        sections: normalizeSections(formData.sections),
+        finalNotes: String(formData.finalNotes || "").trim(),
+        preparedBy: String(formData.preparedBy || "").trim(),
+        authorizedBy: String(formData.authorizedBy || "").trim(),
+      }
 
-    if (!reportType) nextErrors.reportType = "Please select a report type."
-    if (!selectedCustomer) nextErrors.customer = "Please select a customer."
-
-    if (reportType && !FORM_CONFIG[reportType]) {
-      nextErrors.reportType = "This report type is not available yet."
-    }
-
-    if (Object.keys(nextErrors).length > 0) {
-      setErrors(nextErrors)
-      return
+      return {
+        reportType,
+        customer: selectedCustomer._id,
+        division: effectiveDivision,
+        quotation: selectedQuotation?._id,
+        reportDate,
+        status,
+        remarks: initialValues?.remarks || "",
+        reportData: data,
+      }
     }
 
     const rows = Array.isArray(formData[config.rowsKey]) ? formData[config.rowsKey] : []
-    const normalizedRows = normalizeRows(reportType, rows).filter((row) => !isEmptyRow(row))
-
-    if (normalizedRows.length === 0) {
-      setErrors((prev) => ({
-        ...prev,
-        reportData: `Please add at least one ${config.rowsLabel} row.`,
+    const normalizedRows = rows
+      .map((row) => ({
+        parameter: String(row.parameter || "").trim(),
+        minimum: toNumberOrEmpty(row.minimum),
+        maximum: toNumberOrEmpty(row.maximum),
+        average: toNumberOrEmpty(row.average),
       }))
-      return
-    }
+      .filter((row) => !isEmptyRow(row))
 
-    const payload = {
+    return {
       reportType,
       customer: selectedCustomer._id,
       division: effectiveDivision,
@@ -248,13 +287,46 @@ export default function TechnicalReportForm({
       remarks: remarks.trim(),
       reportData: { ...formData, [config.rowsKey]: normalizedRows },
     }
+  }
+
+  const handleSubmit = async (status) => {
+    if (submitting || readOnly) return
+
+    const nextErrors = {}
+
+    if (!reportType) nextErrors.reportType = "Please select a report type."
+    if (!selectedCustomer) nextErrors.customer = "Please select a customer."
+    if (reportType === "VSR") {
+      nextErrors.reportType = "The VSR report is coming soon and cannot be created yet."
+    } else if (reportType && reportType !== ACTIVE_REPORT_TYPE && !FORM_CONFIG[reportType]) {
+      nextErrors.reportType = "This report type is not available yet."
+    }
+
+    if (isActiveType) {
+      if (normalizeParts(formData.parts).length === 0) {
+        nextErrors.parts = "Please add at least one part."
+      }
+      if (normalizeSections(formData.sections).length === 0) {
+        nextErrors.sections = "Please add at least one inspection section."
+      }
+    } else if (config && !isActiveType) {
+      const rows = Array.isArray(formData[config.rowsKey]) ? formData[config.rowsKey] : []
+      if (rows.filter((row) => !isEmptyRow(row)).length === 0) {
+        nextErrors.reportData = `Please add at least one ${config.rowsLabel} row.`
+      }
+    }
+
+    if (Object.keys(nextErrors).length > 0) {
+      setErrors(nextErrors)
+      return
+    }
 
     setErrors({})
     setServerError("")
     setSubmitting(true)
 
     try {
-      await onSubmit(payload)
+      await onSubmit(buildPayload(status))
     } catch (err) {
       setServerError(
         err.message ||
@@ -334,9 +406,32 @@ export default function TechnicalReportForm({
       </FormSection>
 
       <FormSection
-        title="2. Customer Information"
-        description="The customer this report is being prepared for."
+        title="2. Report Information"
+        description="Report number, date and the customer this report is being prepared for."
       >
+        <div>
+          <label className="block text-sm font-semibold text-[#0F172A] mb-1.5">
+            Report Number
+          </label>
+          <input
+            type="text"
+            value={initialValues?.reportNumber || "Auto-generated on save"}
+            readOnly
+            disabled
+            tabIndex={-1}
+            className="w-full h-[48px] px-4 rounded-[12px] border border-gray-200 bg-gray-50 text-sm text-[#94A3B8] cursor-not-allowed"
+          />
+        </div>
+        <InputField
+          id="reportDate"
+          name="reportDate"
+          label="Report Date"
+          type="date"
+          required
+          value={reportDate}
+          onChange={(e) => setReportDate(e.target.value)}
+          disabled={inputDisabled}
+        />
         <div className="sm:col-span-2">
           <CustomerSelector
             token={token}
@@ -347,6 +442,19 @@ export default function TechnicalReportForm({
             disabled={inputDisabled}
           />
         </div>
+        {isActiveType && (
+          <div className="sm:col-span-2">
+            <InputField
+              id="kindAttention"
+              name="kindAttention"
+              label="Kind Attention"
+              value={formData.kindAttention || ""}
+              onChange={updateFormField("kindAttention")}
+              placeholder="Person or department the report is addressed to"
+              disabled={inputDisabled}
+            />
+          </div>
+        )}
       </FormSection>
 
       <FormSection
@@ -365,42 +473,41 @@ export default function TechnicalReportForm({
         </div>
       </FormSection>
 
-      {config && FormComponent && (
-        <FormSection
-          title="4. Report Details"
-          description="Fill in the inspection details and measured data for this report."
-        >
-          <div className="sm:col-span-2">
-            <InputField
-              id="reportDate"
-              name="reportDate"
-              label="Report Date"
-              type="date"
-              required
-              value={reportDate}
-              onChange={(e) => setReportDate(e.target.value)}
-              disabled={inputDisabled}
-            />
-          </div>
+      {isActiveType ? (
+        <UltrasonicDpThicknessForm
+          values={formData}
+          onChange={setFormData}
+          disabled={inputDisabled}
+          errors={errors}
+        />
+      ) : (
+        config &&
+        FormComponent && (
+          <FormSection
+            title="Report Details"
+            description="Fill in the inspection details and measured data for this report."
+          >
+            <div className="sm:col-span-2">
+              <FormComponent values={formData} onChange={setFormData} disabled={inputDisabled} />
+            </div>
 
-          <FormComponent values={formData} onChange={setFormData} disabled={inputDisabled} />
+            {errors.reportData && (
+              <div className="sm:col-span-2 text-sm text-red-600">{errors.reportData}</div>
+            )}
 
-          {errors.reportData && (
-            <div className="sm:col-span-2 text-sm text-red-600">{errors.reportData}</div>
-          )}
-
-          <div className="sm:col-span-2">
-            <TextArea
-              id="remarks"
-              name="remarks"
-              label="Remarks"
-              value={remarks}
-              onChange={(e) => setRemarks(e.target.value)}
-              placeholder="Any additional notes about this report (optional)"
-              disabled={inputDisabled}
-            />
-          </div>
-        </FormSection>
+            <div className="sm:col-span-2">
+              <TextArea
+                id="remarks"
+                name="remarks"
+                label="Remarks"
+                value={remarks}
+                onChange={(e) => setRemarks(e.target.value)}
+                placeholder="Any additional notes about this report (optional)"
+                disabled={inputDisabled}
+              />
+            </div>
+          </FormSection>
+        )
       )}
 
       {readOnly ? (

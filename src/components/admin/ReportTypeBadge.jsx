@@ -1,19 +1,11 @@
 const REPORT_TYPE_STYLES = {
-  Ultrasonic: "bg-blue-50 border-blue-200 text-blue-700",
+  "Ultrasonic / D.P. / Thickness Test": "bg-blue-50 border-blue-200 text-blue-700",
   VSR: "bg-indigo-50 border-indigo-200 text-indigo-700",
-  DPT: "bg-pink-50 border-pink-200 text-pink-700",
-  MPT: "bg-cyan-50 border-cyan-200 text-cyan-700",
-  Thickness: "bg-orange-50 border-orange-200 text-orange-700",
-  "Dynamic Balancing": "bg-purple-50 border-purple-200 text-purple-700",
 }
 
 const REPORT_TYPE_LABELS = {
-  Ultrasonic: "Ultrasonic Testing",
+  "Ultrasonic / D.P. / Thickness Test": "Ultrasonic / D.P. / Thickness Test",
   VSR: "VSR",
-  DPT: "DPT",
-  MPT: "MPT",
-  Thickness: "Thickness Testing",
-  "Dynamic Balancing": "Dynamic Balancing",
 }
 
 export default function ReportTypeBadge({ reportType }) {
