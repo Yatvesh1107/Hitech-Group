@@ -38,7 +38,7 @@ export default function AdminSidebar({ open, onClose }) {
       )}
 
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-[260px] bg-[#082A57] flex flex-col transition-transform duration-300 md:translate-x-0 md:static md:z-auto ${
+        className={`fixed inset-y-0 left-0 z-50 w-[260px] bg-[#082A57] flex flex-col transition-transform duration-300 md:translate-x-0 md:sticky md:top-0 md:h-screen md:overflow-y-auto md:z-auto ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >

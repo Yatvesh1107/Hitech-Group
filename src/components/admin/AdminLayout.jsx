@@ -26,7 +26,7 @@ export default function AdminLayout({ children }) {
 
       <AdminSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-      <main className="flex-1 min-w-0 px-5 md:px-8 py-8 md:py-10 pt-24 md:pt-10">
+      <main className="flex-1 min-w-0 md:h-screen md:overflow-y-auto px-5 md:px-8 py-8 md:py-10 pt-24 md:pt-10">
         <div className="max-w-[1200px] mx-auto">{children}</div>
       </main>
     </div>
