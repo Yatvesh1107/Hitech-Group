@@ -19,7 +19,7 @@ const navLinkClass = ({ isActive }) =>
 export default function AdminSidebar({ open, onClose }) {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
-  const [documentsOpen, setDocumentsOpen] = useState(false)
+  const [documentsOpen, setDocumentsOpen] = useState(true)
   const [settingsOpen, setSettingsOpen] = useState(false)
 
   const handleLogout = () => {
