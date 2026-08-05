@@ -47,6 +47,16 @@ export async function getInvoice({ token, id }) {
   return data.data
 }
 
+export async function createInvoice({ token, payload }) {
+  const data = await request("/invoices", token, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  })
+
+  return data.data
+}
+
 export async function updateInvoice({ token, id, payload }) {
   const data = await request(`/invoices/${id}`, token, {
     method: "PUT",

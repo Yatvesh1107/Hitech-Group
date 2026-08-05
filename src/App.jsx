@@ -30,6 +30,7 @@ import CreateQuotation from "./pages/admin/quotation/CreateQuotation"
 import QuotationDetails from "./pages/admin/quotation/QuotationDetails"
 import EditQuotation from "./pages/admin/quotation/EditQuotation"
 import InvoiceList from "./pages/admin/invoice/InvoiceList"
+import CreateInvoice from "./pages/admin/invoice/CreateInvoice"
 import InvoiceDetails from "./pages/admin/invoice/InvoiceDetails"
 import EditInvoice from "./pages/admin/invoice/EditInvoice"
 import TechnicalReportList from "./pages/admin/technicalReport/TechnicalReportList"
@@ -167,6 +168,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <InvoiceList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/invoices/new"
+            element={
+              <ProtectedRoute>
+                <CreateInvoice />
               </ProtectedRoute>
             }
           />

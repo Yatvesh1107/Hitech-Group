@@ -1,10 +1,6 @@
 export function validateInvoiceForm(values, items) {
   const errors = {}
 
-  if (!values.customer) {
-    errors.customer = "Customer is required"
-  }
-
   if (!values.division) {
     errors.division = "Division is required"
   }

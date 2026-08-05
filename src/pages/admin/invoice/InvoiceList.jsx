@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { ChevronLeft, ChevronRight, Receipt } from "lucide-react"
+import { ChevronLeft, ChevronRight, Receipt, Plus } from "lucide-react"
 import { useAuth } from "../../../context/authContext"
 import { useToast } from "../../../context/toastContext"
 import { getInvoices, deleteInvoice, getInvoicePdf } from "../../../services/invoices"
@@ -189,6 +189,16 @@ export default function InvoiceList() {
       <PageHeader
         title="Invoice Management"
         subtitle="Manage all customer invoices from one place."
+        action={
+          <button
+            type="button"
+            onClick={() => navigate("/admin/invoices/new")}
+            className="inline-flex items-center gap-2 h-11 px-5 rounded-[12px] bg-[#0B2D5C] text-white text-sm font-semibold hover:bg-[#0B2D5C]/90 transition-colors"
+          >
+            <Plus size={16} className="text-[#F4B400]" />
+            Create Invoice
+          </button>
+        }
       />
 
       <InvoiceStatisticsCards counts={counts} loading={countsLoading} />
@@ -234,7 +244,7 @@ export default function InvoiceList() {
         ) : invoices.length === 0 ? (
           <EmptyState
             title="No Invoices Found"
-            description="Invoices are created by converting an approved quotation."
+            description="Create an invoice for an existing customer or a walk-in customer."
             icon={<Receipt size={30} className="text-[#F4B400]" />}
           />
         ) : (
