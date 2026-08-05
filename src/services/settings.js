@@ -17,14 +17,20 @@ async function request(path, token, options = {}) {
   return data
 }
 
-export async function getCompanySettings({ token }) {
-  const data = await request("/settings/company", token)
+export async function getCompanySettings({ token, division }) {
+  const data = await request(`/settings/company/${encodeURIComponent(division)}`, token)
 
   return data.data
 }
 
-export async function updateCompanySettings({ token, payload }) {
-  const data = await request("/settings/company", token, {
+export async function getCompanies({ token }) {
+  const data = await request("/settings/companies", token)
+
+  return data.data
+}
+
+export async function updateCompanySettings({ token, division, payload }) {
+  const data = await request(`/settings/company/${encodeURIComponent(division)}`, token, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),

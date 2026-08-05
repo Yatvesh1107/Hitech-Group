@@ -6,7 +6,7 @@ export default function ErrorState({ message, onRetry }) {
       <div className="w-16 h-16 bg-red-50 rounded-2xl flex items-center justify-center">
         <TriangleAlert size={30} className="text-red-500" />
       </div>
-      <h3 className="mt-5 text-lg font-bold text-[#0F172A]">Failed to load customers</h3>
+      <h3 className="mt-5 text-lg font-bold text-[#0F172A]">Failed to load data</h3>
       <p className="mt-1.5 text-sm text-[#64748B] max-w-md">{message}</p>
       <button
         type="button"

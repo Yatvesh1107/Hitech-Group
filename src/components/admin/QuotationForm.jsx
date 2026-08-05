@@ -1,6 +1,7 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { LoaderCircle, Save, Send, X, ArrowLeft, Info } from "lucide-react"
 import { validateQuotationForm } from "../../utils/quotationValidation"
+import { getCompanySettings } from "../../services/settings"
 import FormSection from "./FormSection"
 import InputField from "./InputField"
 import SelectField from "./SelectField"
@@ -120,6 +121,28 @@ export default function QuotationForm({
   const [errors, setErrors] = useState({})
   const [serverError, setServerError] = useState("")
   const [submitting, setSubmitting] = useState(false)
+  const [termsDirty, setTermsDirty] = useState(() => mode === "edit")
+
+  useEffect(() => {
+    if (mode !== "create") return
+    if (!values.division || termsDirty) return
+
+    let cancelled = false
+
+    getCompanySettings({ token, division: values.division })
+      .then((settings) => {
+        if (cancelled) return
+        const defaultTerms = settings?.defaultTerms?.quotation?.trim()
+        if (defaultTerms) {
+          setValues((prev) => ({ ...prev, termsAndConditions: defaultTerms }))
+        }
+      })
+      .catch(() => {})
+
+    return () => {
+      cancelled = true
+    }
+  }, [mode, token, values.division, termsDirty])
 
   const handleFieldChange = (e) => {
     const { name, value } = e.target
@@ -434,7 +457,10 @@ export default function QuotationForm({
       >
         <TermsSection
           value={values.termsAndConditions}
-          onChange={(value) => setValues((prev) => ({ ...prev, termsAndConditions: value }))}
+          onChange={(value) => {
+            setTermsDirty(true)
+            setValues((prev) => ({ ...prev, termsAndConditions: value }))
+          }}
           className="sm:col-span-2"
           disabled={readOnly}
         />

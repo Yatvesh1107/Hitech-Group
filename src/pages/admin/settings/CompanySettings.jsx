@@ -17,6 +17,8 @@ import DocumentDefaultsCard from "../../../components/admin/companySettings/Docu
 import TermsCard from "../../../components/admin/companySettings/TermsCard"
 import { validateCompanySettings, trimCompanySettings } from "../../../utils/settingsValidation"
 
+const DIVISIONS = ["Industrial Insulation", "Experts in Ultrasonics", "Precision Tech Engineering"]
+
 const EMPTY_SETTINGS = {
   company: { name: "", tagline: "", description: "" },
   branding: { logo: "", seal: "", signature: "" },
@@ -55,6 +57,7 @@ export default function CompanySettings() {
 
   const [settings, setSettings] = useState(null)
   const [formValues, setFormValues] = useState(null)
+  const [selectedDivision, setSelectedDivision] = useState(DIVISIONS[0])
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState("")
@@ -70,7 +73,7 @@ export default function CompanySettings() {
       setError("")
 
       try {
-        const data = await getCompanySettings({ token })
+        const data = await getCompanySettings({ token, division: selectedDivision })
         if (cancelled) return
         const normalized = normalizeSettings(data)
         setSettings(normalized)
@@ -89,7 +92,7 @@ export default function CompanySettings() {
     return () => {
       cancelled = true
     }
-  }, [token, refreshKey])
+  }, [token, selectedDivision, refreshKey])
 
   const handleGroupChange = (group, field, value) => {
     setFormValues((current) => ({
@@ -135,7 +138,7 @@ export default function CompanySettings() {
 
     try {
       const payload = trimCompanySettings(formValues)
-      const updated = await updateCompanySettings({ token, payload })
+      const updated = await updateCompanySettings({ token, division: selectedDivision, payload })
       const normalized = normalizeSettings(updated)
       setSettings(normalized)
       setFormValues(normalized)
@@ -172,8 +175,31 @@ export default function CompanySettings() {
       <div className="mt-6">
         <PageHeader
           title="Company Settings"
-          subtitle="Manage company information used across the ERP and printed on PDF documents."
+          subtitle="Manage information used across the ERP and printed on PDF documents. Each company keeps its own logo, contacts, GST and defaults."
         />
+      </div>
+
+      <div className="mt-6">
+        <p className="text-sm font-semibold text-[#0F172A] mb-2">Select Company</p>
+        <div className="flex flex-wrap gap-2">
+          {DIVISIONS.map((division) => {
+            const active = division === selectedDivision
+            return (
+              <button
+                key={division}
+                type="button"
+                onClick={() => setSelectedDivision(division)}
+                className={`h-10 px-4 rounded-[12px] text-sm font-semibold transition-colors ${
+                  active
+                    ? "bg-[#0B2D5C] text-white"
+                    : "bg-white border border-gray-200 text-[#0F172A] hover:bg-gray-50"
+                }`}
+              >
+                {division}
+              </button>
+            )
+          })}
+        </div>
       </div>
 
       {loading ? (
@@ -235,7 +261,7 @@ export default function CompanySettings() {
             />
           </div>
 
-          <div className="sticky bottom-4 mt-8 flex items-center justify-end gap-3">
+          <div className="sticky bottom-4 mt-8 flex flex-col-reverse sm:flex-row items-stretch sm:items-center gap-3 sm:justify-end bg-white/90 backdrop-blur rounded-[16px] border border-gray-200 p-3 shadow-sm">
             <button
               type="button"
               onClick={handleReset}
