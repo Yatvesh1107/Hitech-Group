@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Menu } from "lucide-react"
 import AdminSidebar from "./AdminSidebar"
+import CompanySwitcher from "./CompanySwitcher"
 
 export default function AdminLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -26,8 +27,17 @@ export default function AdminLayout({ children }) {
 
       <AdminSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-      <main className="flex-1 min-w-0 md:h-screen md:overflow-y-auto px-5 md:px-8 py-8 md:py-10 pt-24 md:pt-10">
-        <div className="max-w-[1200px] mx-auto">{children}</div>
+      <main className="flex-1 min-w-0 md:h-screen md:overflow-y-auto">
+        <div className="hidden md:flex items-center justify-between px-8 py-3.5 bg-white border-b border-gray-200 sticky top-0 z-30">
+          <p className="text-sm font-semibold text-[#0B2D5C]">
+            HITECH GROUP <span className="text-[#94A3B8] font-normal">· Admin Panel</span>
+          </p>
+          <CompanySwitcher />
+        </div>
+
+        <div className="px-5 md:px-8 py-8 md:py-10 pt-24 md:pt-10">
+          <div className="max-w-[1200px] mx-auto">{children}</div>
+        </div>
       </main>
     </div>
   )

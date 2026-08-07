@@ -1,5 +1,6 @@
 import { Routes, Route, Outlet } from "react-router-dom"
 import AuthProvider from "./context/AuthProvider"
+import CompanyProvider from "./context/CompanyProvider"
 import ToastProvider from "./context/ToastProvider"
 import ProtectedRoute from "./components/admin/ProtectedRoute"
 import TopBar from "./components/layout/TopBar"
@@ -55,8 +56,9 @@ function PublicLayout() {
 function App() {
   return (
     <AuthProvider>
-      <ToastProvider>
-        <ScrollToTop />
+      <CompanyProvider>
+        <ToastProvider>
+          <ScrollToTop />
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route
@@ -247,7 +249,8 @@ function App() {
             <Route path="/contact" element={<Contact />} />
           </Route>
         </Routes>
-      </ToastProvider>
+        </ToastProvider>
+      </CompanyProvider>
     </AuthProvider>
   )
 }

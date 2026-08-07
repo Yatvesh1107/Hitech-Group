@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { LoaderCircle, Save, X } from "lucide-react"
+import { useCompany } from "../../context/companyContext"
 import { validateServiceForm, trimServiceValues } from "../../utils/serviceValidation"
 import FormSection from "./FormSection"
 import InputField from "./InputField"
@@ -17,12 +18,15 @@ const emptyValues = {
   status: true,
 }
 
-const DIVISIONS = ["Industrial Insulation", "Experts in Ultrasonics", "Precision Tech Engineering"]
-
 const UNITS = ["Sq.M", "Nos", "Job", "Kg", "Hour", "Visit", "Lot"]
 
 export default function ServiceForm({ initialValues, onSubmit, onCancel, submitLabel = "Save Service" }) {
-  const [values, setValues] = useState({ ...emptyValues, ...initialValues })
+  const { activeCompany } = useCompany()
+  const [values, setValues] = useState({
+    ...emptyValues,
+    ...initialValues,
+    division: initialValues?.division || activeCompany,
+  })
   const [errors, setErrors] = useState({})
   const [serverError, setServerError] = useState("")
   const [submitting, setSubmitting] = useState(false)
@@ -81,23 +85,7 @@ export default function ServiceForm({ initialValues, onSubmit, onCancel, submitL
         </div>
       )}
 
-      <FormSection title="Service Details" description="Describe the service and which division it belongs to.">
-        <SelectField
-          id="division"
-          name="division"
-          label="Division"
-          required
-          value={values.division}
-          onChange={handleChange}
-          error={errors.division}
-        >
-          <option value="">Select Division</option>
-          {DIVISIONS.map((division) => (
-            <option key={division} value={division}>
-              {division}
-            </option>
-          ))}
-        </SelectField>
+      <FormSection title="Service Details" description="Describe the service being offered by the active company.">
         <InputField
           id="serviceCode"
           name="serviceCode"

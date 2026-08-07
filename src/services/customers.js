@@ -17,9 +17,10 @@ async function request(path, token, options = {}) {
   return data
 }
 
-export async function getCustomers({ token, page = 1, limit = 10, search = "" }) {
+export async function getCustomers({ token, page = 1, limit = 10, search = "", division = "" }) {
   const params = new URLSearchParams({ page, limit })
   if (search) params.set("search", search)
+  if (division) params.set("division", division)
 
   const data = await request(`/customers?${params.toString()}`, token)
 

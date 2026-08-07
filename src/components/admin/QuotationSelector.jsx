@@ -11,6 +11,7 @@ function formatAmount(value) {
 
 export default function QuotationSelector({
   token,
+  division,
   customerId,
   value,
   selectedQuotation,
@@ -44,7 +45,7 @@ export default function QuotationSelector({
       setLoading(true)
 
       try {
-        const data = await getQuotations({ token, customer: customerId, page: 1, limit: 8, search: search.trim() })
+        const data = await getQuotations({ token, customer: customerId, division, page: 1, limit: 8, search: search.trim() })
         if (!cancelled) setQuotations(data.quotations || [])
       } catch {
         if (!cancelled) setQuotations([])
@@ -58,7 +59,7 @@ export default function QuotationSelector({
     return () => {
       cancelled = true
     }
-  }, [open, customerId, search, token])
+  }, [open, customerId, search, token, division])
 
   const display = selectedQuotation?.quotationNumber || ""
 

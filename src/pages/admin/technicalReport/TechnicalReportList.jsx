@@ -2,7 +2,9 @@ import { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { Plus, ChevronLeft, ChevronRight, FileText } from "lucide-react"
 import { useAuth } from "../../../context/authContext"
+import { useCompany } from "../../../context/companyContext"
 import { useToast } from "../../../context/toastContext"
+import { getCompanyReportTypes, companyUsesTechnicalReports } from "../../../constants/companies"
 import { getTechnicalReports, deleteTechnicalReport, getTechnicalReportPdf } from "../../../services/technicalReports"
 import AdminLayout from "../../../components/admin/AdminLayout"
 import PageHeader from "../../../components/admin/PageHeader"
@@ -27,14 +29,20 @@ const REPORT_TYPE_OPTIONS = [
 
 export default function TechnicalReportList() {
   const { token } = useAuth()
+  const { activeCompany } = useCompany()
   const { showToast } = useToast()
   const navigate = useNavigate()
+
+  const companyReportTypes = getCompanyReportTypes(activeCompany)
+  const usesTechnicalReports = companyUsesTechnicalReports(activeCompany)
+  const reportTypeOptions = REPORT_TYPE_OPTIONS.filter((option) =>
+    companyReportTypes.includes(option.value)
+  )
 
   const [searchInput, setSearchInput] = useState("")
   const [search, setSearch] = useState("")
   const [reportType, setReportType] = useState("")
   const [status, setStatus] = useState("")
-  const [division, setDivision] = useState("")
   const [dateFrom, setDateFrom] = useState("")
   const [dateTo, setDateTo] = useState("")
   const [page, setPage] = useState(1)
@@ -59,6 +67,13 @@ export default function TechnicalReportList() {
   }, [searchInput])
 
   useEffect(() => {
+    if (reportType && !companyReportTypes.includes(reportType)) {
+      setReportType("")
+      setPage(1)
+    }
+  }, [activeCompany, reportType, companyReportTypes])
+
+  useEffect(() => {
     let cancelled = false
 
     async function loadTechnicalReports() {
@@ -72,7 +87,7 @@ export default function TechnicalReportList() {
           limit: PAGE_SIZE,
           search,
           reportType,
-          division,
+          division: activeCompany,
           status,
           dateFrom,
           dateTo,
@@ -94,7 +109,7 @@ export default function TechnicalReportList() {
     return () => {
       cancelled = true
     }
-  }, [token, page, search, reportType, status, division, dateFrom, dateTo, refreshKey])
+  }, [token, page, search, reportType, status, activeCompany, dateFrom, dateTo, refreshKey])
 
   useEffect(() => {
     let cancelled = false
@@ -104,10 +119,10 @@ export default function TechnicalReportList() {
 
       try {
         const [total, draft, completed, approved] = await Promise.all([
-          getTechnicalReports({ token, limit: 1 }),
-          getTechnicalReports({ token, limit: 1, status: "Draft" }),
-          getTechnicalReports({ token, limit: 1, status: "Completed" }),
-          getTechnicalReports({ token, limit: 1, status: "Approved" }),
+          getTechnicalReports({ token, limit: 1, division: activeCompany }),
+          getTechnicalReports({ token, limit: 1, status: "Draft", division: activeCompany }),
+          getTechnicalReports({ token, limit: 1, status: "Completed", division: activeCompany }),
+          getTechnicalReports({ token, limit: 1, status: "Approved", division: activeCompany }),
         ])
         if (cancelled) return
         setCounts({
@@ -129,7 +144,7 @@ export default function TechnicalReportList() {
     return () => {
       cancelled = true
     }
-  }, [token])
+  }, [token, activeCompany])
 
   const handleRetry = () => {
     setPage(1)
@@ -180,7 +195,7 @@ export default function TechnicalReportList() {
     }
   }
 
-  const createButton = (
+  const createButton = usesTechnicalReports ? (
     <Link
       to="/admin/technical-reports/new"
       className="inline-flex items-center gap-2 h-11 px-5 rounded-[12px] bg-[#0B2D5C] text-white text-sm font-semibold hover:bg-[#0B2D5C]/90 transition-colors"
@@ -188,7 +203,7 @@ export default function TechnicalReportList() {
       <Plus size={18} className="text-[#F4B400]" />
       Create Technical Report
     </Link>
-  )
+  ) : null
 
   const canGoPrevious = page > 1
   const canGoNext = page < pagination.totalPages
@@ -226,11 +241,6 @@ export default function TechnicalReportList() {
             reportTypePlaceholder="All Report Types"
             statusOptions={TECHNICAL_REPORT_STATUSES}
             statusPlaceholder="All Status"
-            division={division}
-            onDivisionChange={(value) => {
-              setDivision(value)
-              setPage(1)
-            }}
             dateFrom={dateFrom}
             onDateFromChange={(value) => {
               setDateFrom(value)

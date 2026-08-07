@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import { UsersRound, FileText, Receipt, Wallet, Hourglass, ShieldCheck, LayoutDashboard, ArrowLeft } from "lucide-react"
 import { Link } from "react-router-dom"
 import { useAuth } from "../../context/authContext"
+import { useCompany } from "../../context/companyContext"
+import { companyUsesTechnicalReports } from "../../constants/companies"
 import AdminLayout from "../../components/admin/AdminLayout"
 import ErrorState from "../../components/admin/ErrorState"
 import DashboardCard from "../../components/admin/dashboard/DashboardCard"
@@ -28,12 +30,12 @@ const todayLabel = () =>
   })
 
 const OVERVIEW_CARDS = [
-  { key: "customers", label: "Total Customers", description: "Registered customer companies", tone: "navy", icon: UsersRound, link: "/admin/customers" },
-  { key: "quotations", label: "Total Quotations", description: "All quotations created", tone: "gold", icon: FileText, link: "/admin/quotations" },
-  { key: "invoices", label: "Total Invoices", description: "All invoices issued", tone: "emerald", icon: Receipt, link: "/admin/invoices" },
-  { key: "payments", label: "Payments Received", description: "Payments recorded against invoices", tone: "blue", icon: Wallet, link: "/admin/invoices" },
-  { key: "pendingPayments", label: "Pending Payments", description: "Invoices with an outstanding balance", tone: "orange", icon: Hourglass, link: "/admin/invoices" },
-  { key: "technicalReports", label: "Technical Reports", description: "Inspection reports created", tone: "purple", icon: ShieldCheck, link: "/admin/technical-reports" },
+  { key: "customers", label: "Total Customers", description: "Registered customer companies", tone: "navy", icon: UsersRound, link: "/admin/customers", show: true },
+  { key: "quotations", label: "Total Quotations", description: "All quotations created", tone: "gold", icon: FileText, link: "/admin/quotations", show: true },
+  { key: "invoices", label: "Total Invoices", description: "All invoices issued", tone: "emerald", icon: Receipt, link: "/admin/invoices", show: true },
+  { key: "payments", label: "Payments Received", description: "Payments recorded against invoices", tone: "blue", icon: Wallet, link: "/admin/invoices", show: true },
+  { key: "pendingPayments", label: "Pending Payments", description: "Invoices with an outstanding balance", tone: "orange", icon: Hourglass, link: "/admin/invoices", show: true },
+  { key: "technicalReports", label: "Technical Reports", description: "Inspection reports created", tone: "purple", icon: ShieldCheck, link: "/admin/technical-reports", show: "reports" },
 ]
 
 function DashboardSkeleton() {
@@ -89,6 +91,7 @@ function DashboardSkeleton() {
 
 export default function Dashboard() {
   const { token, user } = useAuth()
+  const { activeCompany, activeCompanyName } = useCompany()
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
@@ -101,7 +104,7 @@ export default function Dashboard() {
       setLoading(true)
       setError("")
       try {
-        const result = await getDashboardData({ token })
+        const result = await getDashboardData({ token, division: activeCompany })
         if (cancelled) return
         setData(result)
       } catch (err) {
@@ -118,7 +121,7 @@ export default function Dashboard() {
     return () => {
       cancelled = true
     }
-  }, [token, refreshKey])
+  }, [token, activeCompany, refreshKey])
 
   return (
     <AdminLayout>
@@ -147,7 +150,7 @@ export default function Dashboard() {
             </span>
             <div>
               <p className="text-xs text-[#94A3B8]">Company</p>
-              <p className="text-sm font-semibold text-[#0F172A]">{data?.system?.companyName || "—"}</p>
+              <p className="text-sm font-semibold text-[#0F172A]">{activeCompanyName || "—"}</p>
             </div>
           </div>
         </div>
@@ -162,7 +165,7 @@ export default function Dashboard() {
           <>
             <section>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {OVERVIEW_CARDS.map(({ key, label, description, tone, icon, link }) => (
+                {OVERVIEW_CARDS.filter((card) => card.show === true || (card.show === "reports" && companyUsesTechnicalReports(activeCompany))).map(({ key, label, description, tone, icon, link }) => (
                   <DashboardCard
                     key={key}
                     icon={icon}

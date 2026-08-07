@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { Plus, ChevronLeft, ChevronRight } from "lucide-react"
 import { useAuth } from "../../../context/authContext"
+import { useCompany } from "../../../context/companyContext"
 import { useToast } from "../../../context/toastContext"
 import { getCustomers, deactivateCustomer, restoreCustomer } from "../../../services/customers"
 import AdminLayout from "../../../components/admin/AdminLayout"
@@ -18,6 +19,7 @@ const SEARCH_DEBOUNCE_MS = 400
 
 export default function Customers() {
   const { token } = useAuth()
+  const { activeCompany } = useCompany()
   const { showToast } = useToast()
   const navigate = useNavigate()
 
@@ -50,7 +52,7 @@ export default function Customers() {
       setError("")
 
       try {
-        const data = await getCustomers({ token, page, limit: PAGE_SIZE, search })
+        const data = await getCustomers({ token, page, limit: PAGE_SIZE, search, division: activeCompany })
         if (cancelled) return
         setCustomers(data.customers)
         setPagination(data.pagination)
@@ -68,7 +70,7 @@ export default function Customers() {
     return () => {
       cancelled = true
     }
-  }, [token, page, search, refreshKey])
+  }, [token, page, search, activeCompany, refreshKey])
 
   const handleRetry = () => {
     setPage(1)

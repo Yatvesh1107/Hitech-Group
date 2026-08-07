@@ -1,7 +1,5 @@
 import { ListFilter, CalendarRange } from "lucide-react"
 
-const DIVISIONS = ["Industrial Insulation", "Experts in Ultrasonics", "Precision Tech Engineering"]
-
 const QUOTATION_STATUSES = ["Draft", "Sent", "Approved", "Rejected", "Expired", "Cancelled"]
 
 function optionValue(option) {
@@ -23,8 +21,6 @@ export default function FilterBar({
   onStatusChange,
   reportType,
   onReportTypeChange,
-  division,
-  onDivisionChange,
   dateFrom,
   onDateFromChange,
   dateTo,
@@ -77,26 +73,6 @@ export default function FilterBar({
           </select>
         </div>
       )}
-
-      <div className="relative">
-        <ListFilter
-          size={15}
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-[#94A3B8] pointer-events-none"
-        />
-        <select
-          value={division}
-          onChange={(e) => onDivisionChange?.(e.target.value)}
-          aria-label="Filter by division"
-          className={selectClass}
-        >
-          <option value="">All Divisions</option>
-          {DIVISIONS.map((divisionName) => (
-            <option key={divisionName} value={divisionName}>
-              {divisionName}
-            </option>
-          ))}
-        </select>
-      </div>
 
       <div className="flex items-center gap-2">
         <CalendarRange size={16} className="text-[#94A3B8] shrink-0" />

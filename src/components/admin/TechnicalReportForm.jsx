@@ -1,5 +1,7 @@
 import { useState } from "react"
 import { ArrowLeft, LoaderCircle, Save, X, CheckCircle2, Info } from "lucide-react"
+import { useCompany } from "../../context/companyContext"
+import { getCompanyReportTypes } from "../../constants/companies"
 import FormSection from "./FormSection"
 import InputField from "./InputField"
 import SelectField from "./SelectField"
@@ -18,10 +20,11 @@ const REPORT_TYPE_OPTIONS = [
   },
   {
     value: "VSR",
-    label: "Vibratory Stress Relieving (Coming Soon)",
-    future: true,
+    label: "Vibratory Stress Relieving",
   },
 ]
+
+const REPORT_TYPES_BY_VALUE = Object.fromEntries(REPORT_TYPE_OPTIONS.map((option) => [option.value, option]))
 
 const REPORT_TYPE_DIVISION = {
   [ACTIVE_REPORT_TYPE]: "Experts in Ultrasonics",
@@ -180,8 +183,15 @@ export default function TechnicalReportForm({
   onBack,
 }) {
   const today = new Date()
+  const { activeCompany } = useCompany()
 
-  const [reportType, setReportType] = useState(() => initialValues?.reportType || "")
+  const companyReportTypes = getCompanyReportTypes(activeCompany)
+
+  const [reportType, setReportType] = useState(() => {
+    if (initialValues?.reportType) return initialValues.reportType
+    if (companyReportTypes.length === 1) return companyReportTypes[0]
+    return ""
+  })
   const [selectedCustomer, setSelectedCustomer] = useState(() => initialValues?.customer || null)
   const [selectedQuotation, setSelectedQuotation] = useState(() => initialValues?.quotation || null)
   const [reportDate, setReportDate] = useState(() =>
@@ -206,11 +216,19 @@ export default function TechnicalReportForm({
   const config = FORM_CONFIG[reportType]
   const FormComponent = config?.component
 
+  const availableReportTypes = companyReportTypes.length > 0 ? companyReportTypes : null
+
   const effectiveDivision =
     selectedQuotation?.division ||
     (mode === "edit" && initialValues?.division) ||
     REPORT_TYPE_DIVISION[reportType] ||
     ""
+
+  const reportTypeOptions = REPORT_TYPE_OPTIONS.filter((option) => {
+    if (mode === "edit" && initialValues?.reportType === option.value) return true
+    if (availableReportTypes && !availableReportTypes.includes(option.value)) return false
+    return true
+  })
 
   const handleReportTypeChange = (e) => {
     const type = e.target.value
@@ -296,9 +314,7 @@ export default function TechnicalReportForm({
 
     if (!reportType) nextErrors.reportType = "Please select a report type."
     if (!selectedCustomer) nextErrors.customer = "Please select a customer."
-    if (reportType === "VSR") {
-      nextErrors.reportType = "The VSR report is coming soon and cannot be created yet."
-    } else if (reportType && reportType !== ACTIVE_REPORT_TYPE && !FORM_CONFIG[reportType]) {
+    if (reportType && reportType !== ACTIVE_REPORT_TYPE && !FORM_CONFIG[reportType]) {
       nextErrors.reportType = "This report type is not available yet."
     }
 
@@ -377,8 +393,8 @@ export default function TechnicalReportForm({
           disabled={inputDisabled || mode === "edit"}
         >
           <option value="">Select Report Type</option>
-          {REPORT_TYPE_OPTIONS.map((option) => (
-            <option key={option.value} value={option.value} disabled={option.future}>
+          {reportTypeOptions.map((option) => (
+            <option key={option.value} value={option.value}>
               {option.label}
             </option>
           ))}
@@ -435,6 +451,7 @@ export default function TechnicalReportForm({
         <div className="sm:col-span-2">
           <CustomerSelector
             token={token}
+            division={effectiveDivision}
             value={selectedCustomer?._id}
             selectedCustomer={selectedCustomer}
             onSelect={handleCustomerSelect}
@@ -464,6 +481,7 @@ export default function TechnicalReportForm({
         <div className="sm:col-span-2">
           <QuotationSelector
             token={token}
+            division={effectiveDivision}
             customerId={selectedCustomer?._id}
             value={selectedQuotation?._id}
             selectedQuotation={selectedQuotation}

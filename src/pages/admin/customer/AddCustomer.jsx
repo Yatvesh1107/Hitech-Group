@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom"
 import { ArrowLeft } from "lucide-react"
 import { useAuth } from "../../../context/authContext"
+import { useCompany } from "../../../context/companyContext"
 import { useToast } from "../../../context/toastContext"
 import { createCustomer } from "../../../services/customers"
 import AdminLayout from "../../../components/admin/AdminLayout"
@@ -9,6 +10,7 @@ import CustomerForm from "../../../components/admin/CustomerForm"
 
 export default function AddCustomer() {
   const { token } = useAuth()
+  const { activeCompany } = useCompany()
   const { showToast } = useToast()
   const navigate = useNavigate()
 
@@ -17,7 +19,7 @@ export default function AddCustomer() {
   }
 
   const handleSubmit = async (payload) => {
-    await createCustomer({ token, payload })
+    await createCustomer({ token, payload: { ...payload, division: activeCompany } })
     showToast("Customer created successfully.")
     navigate("/admin/customers")
   }

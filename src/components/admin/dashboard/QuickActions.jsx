@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom"
 import { UsersRound, FileText, Receipt, Wallet, ShieldCheck } from "lucide-react"
+import { useCompany } from "../../../context/companyContext"
+import { companyUsesTechnicalReports } from "../../../constants/companies"
 
 const ACTIONS = [
   {
@@ -40,13 +42,22 @@ const ACTIONS = [
 ]
 
 export default function QuickActions() {
+  const { activeCompany } = useCompany()
+
+  const actions = ACTIONS.filter((action) => {
+    if (action.to === "/admin/technical-reports/new") {
+      return companyUsesTechnicalReports(activeCompany)
+    }
+    return true
+  })
+
   return (
     <section className="bg-white border border-gray-100 rounded-[22px] p-6 shadow-sm">
       <h2 className="text-[15px] font-bold text-[#0F172A]">Quick Actions</h2>
       <p className="mt-0.5 text-xs text-[#94A3B8]">Jump straight into your most used tasks</p>
 
       <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-        {ACTIONS.map(({ label, description, to, Icon, tone }) => (
+        {actions.map(({ label, description, to, Icon, tone }) => (
           <Link
             key={to}
             to={to}

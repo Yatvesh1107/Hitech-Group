@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { LoaderCircle, Save, Send, X, ArrowLeft, Info } from "lucide-react"
 import { validateQuotationForm } from "../../utils/quotationValidation"
 import { getCompanySettings } from "../../services/settings"
+import { useCompany } from "../../context/companyContext"
 import FormSection from "./FormSection"
 import InputField from "./InputField"
 import SelectField from "./SelectField"
@@ -11,8 +12,6 @@ import QuotationItemsTable from "./QuotationItemsTable"
 import SummaryCard from "./SummaryCard"
 import TermsSection from "./TermsSection"
 import NotesSection from "./NotesSection"
-
-const DIVISIONS = ["Industrial Insulation", "Experts in Ultrasonics", "Precision Tech Engineering"]
 
 const CREATE_STATUSES = ["Draft", "Sent"]
 
@@ -70,6 +69,7 @@ export default function QuotationForm({
   onBack,
 }) {
   const today = new Date()
+  const { activeCompany } = useCompany()
 
   const [values, setValues] = useState(() => {
     if (initialValues) {
@@ -90,7 +90,7 @@ export default function QuotationForm({
 
     return {
       customer: "",
-      division: "",
+      division: activeCompany,
       service: "",
       quotationDate: toDateInputValue(today),
       validTill: toDateInputValue(addDays(today, 30)),
@@ -341,6 +341,7 @@ export default function QuotationForm({
         <div className="sm:col-span-2">
           <CustomerSelector
             token={token}
+            division={values.division}
             value={values.customer}
             selectedCustomer={selectedCustomer}
             onSelect={handleCustomerSelect}
@@ -381,25 +382,8 @@ export default function QuotationForm({
 
       <FormSection
         title="3. Business Information"
-        description="Select the division and the service being quoted."
+        description={`The active company (${values.division || "—"}) and the service being quoted.`}
       >
-        <SelectField
-          id="division"
-          name="division"
-          label="Division"
-          required
-          value={values.division}
-          onChange={handleFieldChange}
-          error={errors.division}
-          disabled={readOnly}
-        >
-          <option value="">Select Division</option>
-          {DIVISIONS.map((division) => (
-            <option key={division} value={division}>
-              {division}
-            </option>
-          ))}
-        </SelectField>
         <ServiceSelector
           token={token}
           division={values.division}

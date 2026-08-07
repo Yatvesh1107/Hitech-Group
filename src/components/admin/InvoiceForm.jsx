@@ -2,6 +2,7 @@ import { useState } from "react"
 import { LoaderCircle, Save, X, ArrowLeft, Info, AlertTriangle } from "lucide-react"
 import { validateInvoiceForm } from "../../utils/invoiceValidation"
 import { createCustomer } from "../../services/customers"
+import { useCompany } from "../../context/companyContext"
 import FormSection from "./FormSection"
 import InputField from "./InputField"
 import SelectField from "./SelectField"
@@ -12,8 +13,6 @@ import SummaryCard from "./SummaryCard"
 import TermsSection from "./TermsSection"
 import NotesSection from "./NotesSection"
 import InvoiceStatusBadge from "./InvoiceStatusBadge"
-
-const DIVISIONS = ["Industrial Insulation", "Experts in Ultrasonics", "Precision Tech Engineering"]
 
 const PAYMENT_METHODS = ["Cash", "Cheque", "Bank Transfer", "UPI", "NEFT", "RTGS", "Other"]
 
@@ -105,13 +104,14 @@ export default function InvoiceForm({
   onBack,
 }) {
   const today = new Date()
+  const { activeCompany } = useCompany()
 
   const isWalkInEdit =
     mode === "edit" && !initialValues?.customer?._id && Boolean(initialValues?.walkInCustomer)
 
   const [values, setValues] = useState(() => ({
     customer: initialValues?.customer?._id || initialValues?.customer || "",
-    division: initialValues?.division || "",
+    division: initialValues?.division || activeCompany,
     service: initialValues?.service?._id || initialValues?.service || "",
     invoiceDate: toDateInputValueOrEmpty(initialValues?.invoiceDate) || toDateInputValue(today),
     dueDate: toDateInputValueOrEmpty(initialValues?.dueDate) || toDateInputValue(addDays(today, 30)),
@@ -291,6 +291,7 @@ export default function InvoiceForm({
             mobile: walkIn.mobile.trim(),
             gstNumber: walkIn.gstNumber.trim() || undefined,
             address: walkIn.address.trim() || undefined,
+            division: values.division,
           },
         })
         delete payload.walkInCustomer
@@ -554,25 +555,8 @@ export default function InvoiceForm({
 
       <FormSection
         title="3. Business Information"
-        description="Division and service for this invoice."
+        description={`The active company (${values.division || "—"}) and the service for this invoice.`}
       >
-        <SelectField
-          id="division"
-          name="division"
-          label="Division"
-          required
-          value={values.division}
-          onChange={handleFieldChange}
-          error={errors.division}
-          disabled={formReadOnly || mode !== "create"}
-        >
-          <option value="">Select Division</option>
-          {DIVISIONS.map((division) => (
-            <option key={division} value={division}>
-              {division}
-            </option>
-          ))}
-        </SelectField>
         <ServiceSelector
           token={token}
           division={values.division}

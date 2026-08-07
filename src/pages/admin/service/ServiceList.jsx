@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { Plus, ChevronLeft, ChevronRight, Wrench, ListFilter } from "lucide-react"
+import { Plus, ChevronLeft, ChevronRight, Wrench } from "lucide-react"
 import { useAuth } from "../../../context/authContext"
+import { useCompany } from "../../../context/companyContext"
 import { useToast } from "../../../context/toastContext"
 import { getServices, deactivateService, restoreService } from "../../../services/services"
 import AdminLayout from "../../../components/admin/AdminLayout"
@@ -16,19 +17,17 @@ import ConfirmModal from "../../../components/admin/ConfirmModal"
 const PAGE_SIZE = 10
 const SEARCH_DEBOUNCE_MS = 400
 
-const DIVISIONS = ["Industrial Insulation", "Experts in Ultrasonics", "Precision Tech Engineering"]
-
 const selectClass =
   "h-11 pl-3.5 pr-9 rounded-[12px] border border-gray-200 bg-[#F8FAFC] text-sm text-[#0F172A] outline-none focus:border-[#F4B400] focus:ring-2 focus:ring-[#F4B400]/30 transition-all appearance-none cursor-pointer"
 
 export default function ServiceList() {
   const { token } = useAuth()
+  const { activeCompany } = useCompany()
   const { showToast } = useToast()
   const navigate = useNavigate()
 
   const [searchInput, setSearchInput] = useState("")
   const [search, setSearch] = useState("")
-  const [division, setDivision] = useState("")
   const [status, setStatus] = useState("")
   const [page, setPage] = useState(1)
   const [services, setServices] = useState([])
@@ -57,7 +56,7 @@ export default function ServiceList() {
       setError("")
 
       try {
-        const data = await getServices({ token, page, limit: PAGE_SIZE, search, division, status })
+        const data = await getServices({ token, page, limit: PAGE_SIZE, search, division: activeCompany, status })
         if (cancelled) return
         setServices(data.services)
         setPagination(data.pagination)
@@ -75,7 +74,7 @@ export default function ServiceList() {
     return () => {
       cancelled = true
     }
-  }, [token, page, search, division, status, refreshKey])
+  }, [token, page, search, activeCompany, status, refreshKey])
 
   const handleRetry = () => {
     setPage(1)
@@ -127,11 +126,6 @@ export default function ServiceList() {
     }
   }
 
-  const handleDivisionChange = (value) => {
-    setDivision(value)
-    setPage(1)
-  }
-
   const handleStatusChange = (value) => {
     setStatus(value)
     setPage(1)
@@ -168,22 +162,6 @@ export default function ServiceList() {
           />
 
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-            <div className="relative">
-              <ListFilter size={15} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#94A3B8] pointer-events-none" />
-              <select
-                value={division}
-                onChange={(e) => handleDivisionChange(e.target.value)}
-                className={selectClass}
-              >
-                <option value="">All Divisions</option>
-                {DIVISIONS.map((divisionName) => (
-                  <option key={divisionName} value={divisionName}>
-                    {divisionName}
-                  </option>
-                ))}
-              </select>
-            </div>
-
             <div className="relative">
               <select
                 value={status}

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { Plus, ChevronLeft, ChevronRight, FileText } from "lucide-react"
 import { useAuth } from "../../../context/authContext"
+import { useCompany } from "../../../context/companyContext"
 import { useToast } from "../../../context/toastContext"
 import { getQuotations, duplicateQuotation, updateQuotationStatus } from "../../../services/quotations"
 import AdminLayout from "../../../components/admin/AdminLayout"
@@ -35,13 +36,13 @@ const STATUS_TOAST = {
 
 export default function QuotationList() {
   const { token } = useAuth()
+  const { activeCompany } = useCompany()
   const { showToast } = useToast()
   const navigate = useNavigate()
 
   const [searchInput, setSearchInput] = useState("")
   const [search, setSearch] = useState("")
   const [status, setStatus] = useState("")
-  const [division, setDivision] = useState("")
   const [dateFrom, setDateFrom] = useState("")
   const [dateTo, setDateTo] = useState("")
   const [page, setPage] = useState(1)
@@ -80,7 +81,7 @@ export default function QuotationList() {
           limit: PAGE_SIZE,
           search,
           status,
-          division,
+          division: activeCompany,
           dateFrom,
           dateTo,
         })
@@ -101,7 +102,7 @@ export default function QuotationList() {
     return () => {
       cancelled = true
     }
-  }, [token, page, search, status, division, dateFrom, dateTo, refreshKey])
+  }, [token, page, search, status, activeCompany, dateFrom, dateTo, refreshKey])
 
   useEffect(() => {
     let cancelled = false
@@ -111,7 +112,9 @@ export default function QuotationList() {
 
       try {
         const results = await Promise.all(
-          STATUS_COUNTS.map((name) => getQuotations({ token, limit: 1, status: name }))
+          STATUS_COUNTS.map((name) =>
+            getQuotations({ token, limit: 1, status: name, division: activeCompany })
+          )
         )
         if (cancelled) return
         setCounts({
@@ -133,7 +136,7 @@ export default function QuotationList() {
     return () => {
       cancelled = true
     }
-  }, [token])
+  }, [token, activeCompany])
 
   const handleRetry = () => {
     setPage(1)
@@ -241,11 +244,6 @@ export default function QuotationList() {
             status={status}
             onStatusChange={(value) => {
               setStatus(value)
-              setPage(1)
-            }}
-            division={division}
-            onDivisionChange={(value) => {
-              setDivision(value)
               setPage(1)
             }}
             dateFrom={dateFrom}

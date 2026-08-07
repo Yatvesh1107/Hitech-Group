@@ -17,7 +17,8 @@ async function request(path, token, options = {}) {
   return data
 }
 
-export async function getDashboardData({ token }) {
-  const data = await request("/dashboard", token)
+export async function getDashboardData({ token, division = "" }) {
+  const query = division ? `?division=${encodeURIComponent(division)}` : ""
+  const data = await request(`/dashboard${query}`, token)
   return data.data
 }

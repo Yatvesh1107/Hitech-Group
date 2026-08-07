@@ -2,6 +2,9 @@ import { useState } from "react"
 import { NavLink, useNavigate } from "react-router-dom"
 import { LayoutDashboard, Users, Wrench, FileText, Settings, LogOut, X, ChevronDown } from "lucide-react"
 import { useAuth } from "../../context/authContext"
+import { useCompany } from "../../context/companyContext"
+import { companyUsesTechnicalReports } from "../../constants/companies"
+import CompanySwitcher from "./CompanySwitcher"
 
 const navItems = [
   { to: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard, end: false },
@@ -18,9 +21,12 @@ const navLinkClass = ({ isActive }) =>
 
 export default function AdminSidebar({ open, onClose }) {
   const { user, logout } = useAuth()
+  const { activeCompany } = useCompany()
   const navigate = useNavigate()
   const [documentsOpen, setDocumentsOpen] = useState(true)
   const [settingsOpen, setSettingsOpen] = useState(false)
+
+  const showTechnicalReports = companyUsesTechnicalReports(activeCompany)
 
   const handleLogout = () => {
     logout()
@@ -65,6 +71,10 @@ export default function AdminSidebar({ open, onClose }) {
         </div>
 
         <nav className="flex-1 px-3 md:px-4 py-6 space-y-1">
+          <div className="mb-4">
+            <CompanySwitcher variant="sidebar" />
+          </div>
+
           {navItems.map((item) => {
             const Icon = item.icon
             return (
@@ -115,14 +125,16 @@ export default function AdminSidebar({ open, onClose }) {
                 >
                   Invoices
                 </NavLink>
-                <NavLink
-                  to="/admin/technical-reports"
-                  end
-                  onClick={onClose}
-                  className={navLinkClass}
-                >
-                  Technical Reports
-                </NavLink>
+                {showTechnicalReports && (
+                  <NavLink
+                    to="/admin/technical-reports"
+                    end
+                    onClick={onClose}
+                    className={navLinkClass}
+                  >
+                    Technical Reports
+                  </NavLink>
+                )}
               </div>
             )}
           </div>

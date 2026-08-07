@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { ArrowLeft, LoaderCircle, RotateCcw, Save } from "lucide-react"
 import { useAuth } from "../../../context/authContext"
+import { useCompany } from "../../../context/companyContext"
 import { useToast } from "../../../context/toastContext"
 import { getCompanySettings, updateCompanySettings, uploadCompanyImage } from "../../../services/settings"
 import AdminLayout from "../../../components/admin/AdminLayout"
@@ -16,8 +17,6 @@ import BankCard from "../../../components/admin/companySettings/BankCard"
 import DocumentDefaultsCard from "../../../components/admin/companySettings/DocumentDefaultsCard"
 import TermsCard from "../../../components/admin/companySettings/TermsCard"
 import { validateCompanySettings, trimCompanySettings } from "../../../utils/settingsValidation"
-
-const DIVISIONS = ["Industrial Insulation", "Experts in Ultrasonics", "Precision Tech Engineering"]
 
 const EMPTY_SETTINGS = {
   company: { name: "", tagline: "", description: "" },
@@ -52,12 +51,12 @@ function normalizeSettings(settings) {
 
 export default function CompanySettings() {
   const { token } = useAuth()
+  const { activeCompany, activeCompanyName } = useCompany()
   const { showToast } = useToast()
   const navigate = useNavigate()
 
   const [settings, setSettings] = useState(null)
   const [formValues, setFormValues] = useState(null)
-  const [selectedDivision, setSelectedDivision] = useState(DIVISIONS[0])
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState("")
@@ -73,7 +72,7 @@ export default function CompanySettings() {
       setError("")
 
       try {
-        const data = await getCompanySettings({ token, division: selectedDivision })
+        const data = await getCompanySettings({ token, division: activeCompany })
         if (cancelled) return
         const normalized = normalizeSettings(data)
         setSettings(normalized)
@@ -92,7 +91,7 @@ export default function CompanySettings() {
     return () => {
       cancelled = true
     }
-  }, [token, selectedDivision, refreshKey])
+  }, [token, activeCompany, refreshKey])
 
   const handleGroupChange = (group, field, value) => {
     setFormValues((current) => ({
@@ -138,7 +137,7 @@ export default function CompanySettings() {
 
     try {
       const payload = trimCompanySettings(formValues)
-      const updated = await updateCompanySettings({ token, division: selectedDivision, payload })
+      const updated = await updateCompanySettings({ token, division: activeCompany, payload })
       const normalized = normalizeSettings(updated)
       setSettings(normalized)
       setFormValues(normalized)
@@ -180,25 +179,9 @@ export default function CompanySettings() {
       </div>
 
       <div className="mt-6">
-        <p className="text-sm font-semibold text-[#0F172A] mb-2">Select Company</p>
-        <div className="flex flex-wrap gap-2">
-          {DIVISIONS.map((division) => {
-            const active = division === selectedDivision
-            return (
-              <button
-                key={division}
-                type="button"
-                onClick={() => setSelectedDivision(division)}
-                className={`h-10 px-4 rounded-[12px] text-sm font-semibold transition-colors ${
-                  active
-                    ? "bg-[#0B2D5C] text-white"
-                    : "bg-white border border-gray-200 text-[#0F172A] hover:bg-gray-50"
-                }`}
-              >
-                {division}
-              </button>
-            )
-          })}
+        <p className="text-sm font-semibold text-[#0F172A] mb-2">Company</p>
+        <div className="inline-flex items-center gap-2 bg-white border border-gray-200 rounded-[12px] px-4 py-2.5">
+          <span className="text-sm font-semibold text-[#0B2D5C]">{activeCompanyName || activeCompany}</span>
         </div>
       </div>
 

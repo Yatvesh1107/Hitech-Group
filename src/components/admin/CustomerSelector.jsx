@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import { Search, ChevronDown, LoaderCircle, Check } from "lucide-react"
 import { getCustomers } from "../../services/customers"
 
-export default function CustomerSelector({ token, value, selectedCustomer, onSelect, error, disabled = false }) {
+export default function CustomerSelector({ token, division, value, selectedCustomer, onSelect, error, disabled = false }) {
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState("")
   const [customers, setCustomers] = useState([])
@@ -29,7 +29,7 @@ export default function CustomerSelector({ token, value, selectedCustomer, onSel
       setLoading(true)
 
       try {
-        const data = await getCustomers({ token, page: 1, limit: 8, search: search.trim() })
+        const data = await getCustomers({ token, page: 1, limit: 8, search: search.trim(), division })
         if (!cancelled) setCustomers(data.customers || [])
       } catch {
         if (!cancelled) setCustomers([])
@@ -43,7 +43,7 @@ export default function CustomerSelector({ token, value, selectedCustomer, onSel
     return () => {
       cancelled = true
     }
-  }, [open, search, token])
+  }, [open, search, token, division])
 
   const display = selectedCustomer?.companyName || ""
 

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { ChevronLeft, ChevronRight, Receipt, Plus } from "lucide-react"
 import { useAuth } from "../../../context/authContext"
+import { useCompany } from "../../../context/companyContext"
 import { useToast } from "../../../context/toastContext"
 import { getInvoices, deleteInvoice, getInvoicePdf } from "../../../services/invoices"
 import AdminLayout from "../../../components/admin/AdminLayout"
@@ -22,13 +23,13 @@ const PAYMENT_STATUSES = ["Unpaid", "Partially Paid", "Paid"]
 
 export default function InvoiceList() {
   const { token } = useAuth()
+  const { activeCompany } = useCompany()
   const { showToast } = useToast()
   const navigate = useNavigate()
 
   const [searchInput, setSearchInput] = useState("")
   const [search, setSearch] = useState("")
   const [paymentStatus, setPaymentStatus] = useState("")
-  const [division, setDivision] = useState("")
   const [dateFrom, setDateFrom] = useState("")
   const [dateTo, setDateTo] = useState("")
   const [page, setPage] = useState(1)
@@ -66,7 +67,7 @@ export default function InvoiceList() {
           limit: PAGE_SIZE,
           search,
           paymentStatus,
-          division,
+          division: activeCompany,
           dateFrom,
           dateTo,
         })
@@ -87,7 +88,7 @@ export default function InvoiceList() {
     return () => {
       cancelled = true
     }
-  }, [token, page, search, paymentStatus, division, dateFrom, dateTo, refreshKey])
+  }, [token, page, search, paymentStatus, activeCompany, dateFrom, dateTo, refreshKey])
 
   useEffect(() => {
     let cancelled = false
@@ -97,10 +98,10 @@ export default function InvoiceList() {
 
       try {
         const [total, unpaid, partiallyPaid, paid] = await Promise.all([
-          getInvoices({ token, limit: 1 }),
-          getInvoices({ token, limit: 1, paymentStatus: "Unpaid" }),
-          getInvoices({ token, limit: 1, paymentStatus: "Partially Paid" }),
-          getInvoices({ token, limit: 1, paymentStatus: "Paid" }),
+          getInvoices({ token, limit: 1, division: activeCompany }),
+          getInvoices({ token, limit: 1, paymentStatus: "Unpaid", division: activeCompany }),
+          getInvoices({ token, limit: 1, paymentStatus: "Partially Paid", division: activeCompany }),
+          getInvoices({ token, limit: 1, paymentStatus: "Paid", division: activeCompany }),
         ])
         if (cancelled) return
         setCounts({
@@ -122,7 +123,7 @@ export default function InvoiceList() {
     return () => {
       cancelled = true
     }
-  }, [token])
+  }, [token, activeCompany])
 
   const handleRetry = () => {
     setPage(1)
@@ -215,11 +216,6 @@ export default function InvoiceList() {
             status={paymentStatus}
             onStatusChange={(value) => {
               setPaymentStatus(value)
-              setPage(1)
-            }}
-            division={division}
-            onDivisionChange={(value) => {
-              setDivision(value)
               setPage(1)
             }}
             dateFrom={dateFrom}
