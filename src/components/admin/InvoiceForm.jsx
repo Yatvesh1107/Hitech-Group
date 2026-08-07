@@ -291,7 +291,6 @@ export default function InvoiceForm({
             mobile: walkIn.mobile.trim(),
             gstNumber: walkIn.gstNumber.trim() || undefined,
             address: walkIn.address.trim() || undefined,
-            division: values.division,
           },
         })
         delete payload.walkInCustomer

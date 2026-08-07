@@ -451,7 +451,6 @@ export default function TechnicalReportForm({
         <div className="sm:col-span-2">
           <CustomerSelector
             token={token}
-            division={effectiveDivision}
             value={selectedCustomer?._id}
             selectedCustomer={selectedCustomer}
             onSelect={handleCustomerSelect}

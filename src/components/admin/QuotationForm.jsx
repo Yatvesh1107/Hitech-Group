@@ -341,7 +341,6 @@ export default function QuotationForm({
         <div className="sm:col-span-2">
           <CustomerSelector
             token={token}
-            division={values.division}
             value={values.customer}
             selectedCustomer={selectedCustomer}
             onSelect={handleCustomerSelect}

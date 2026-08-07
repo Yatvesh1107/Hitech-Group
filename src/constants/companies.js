@@ -2,6 +2,7 @@ export const COMPANIES = [
   { id: "Industrial Insulation", name: "Industrial Insulation" },
   { id: "Experts in Ultrasonics", name: "Experts in Ultrasonics" },
   { id: "Precision Tech Engineering", name: "Precision Tech Engineering" },
+  { id: "New Hitech", name: "New Hitech" },
 ]
 
 export const DEFAULT_COMPANY = COMPANIES[0].id
