@@ -277,16 +277,7 @@ export default function CustomerDetails() {
 
       {activeTab === "profile" && (
         <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <CustomerInfoCard
-            icon={<Building2 size={16} />}
-            title="Basic Information"
-            rows={[
-              { label: "Company Name", value: customer.companyName },
-              { label: "Contact Person", value: customer.contactPerson },
-              { label: "Email", value: customer.email },
-              { label: "Mobile", value: customer.mobile },
-            ]}
-          />
+          <CustomerInfoCard customer={customer} />
 
           <CustomerInfoCard
             icon={<Briefcase size={16} />}

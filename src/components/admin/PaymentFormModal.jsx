@@ -11,12 +11,12 @@ const formatINR = (value) =>
     maximumFractionDigits: 2,
   })}`
 
-function toDateInputValue(value) {
+function toDatetimeInputValue(value) {
   const date = value ? new Date(value) : new Date()
   if (Number.isNaN(date.getTime())) return ""
 
   const local = new Date(date.getTime() - date.getTimezoneOffset() * 60000)
-  return local.toISOString().slice(0, 10)
+  return local.toISOString().slice(0, 16)
 }
 
 export default function PaymentFormModal({
@@ -30,7 +30,7 @@ export default function PaymentFormModal({
   onConfirm,
 }) {
   const [paymentDate, setPaymentDate] = useState(() =>
-    payment ? toDateInputValue(payment.paymentDate) : toDateInputValue()
+    payment ? toDatetimeInputValue(payment.paymentDate) : toDatetimeInputValue()
   )
   const [amount, setAmount] = useState(() => (payment ? String(payment.amount) : ""))
   const [paymentMethod, setPaymentMethod] = useState(payment?.paymentMethod || "Cash")
@@ -107,8 +107,8 @@ export default function PaymentFormModal({
         <div className="mt-6 grid sm:grid-cols-2 gap-5">
           <InputField
             id="paymentDate"
-            label="Payment Date"
-            type="date"
+            label="Payment Date & Time"
+            type="datetime-local"
             required
             value={paymentDate}
             onChange={(event) => setPaymentDate(event.target.value)}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import { Plus } from "lucide-react"
+import { Plus, FileText } from "lucide-react"
 import { getInvoices } from "../../services/invoices"
 import { useCompany } from "../../context/companyContext"
 import InvoiceTable from "./InvoiceTable"

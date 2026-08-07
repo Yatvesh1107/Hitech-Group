@@ -22,8 +22,8 @@ export default function ServiceTable({ services, onView, onEdit, onDeactivate, o
           <tr className="border-b border-gray-100 text-xs uppercase tracking-wider text-[#94A3B8]">
             <th className="px-6 py-4 font-semibold">Service Name</th>
             <th className="px-6 py-4 font-semibold">Division</th>
-            <th className="px-6 py-4 font-semibold">Unit</th>
-            <th className="px-6 py-4 font-semibold">Default Rate</th>
+            {/* <th className="px-6 py-4 font-semibold">Unit</th> */}
+            {/* <th className="px-6 py-4 font-semibold">Default Rate</th> */}
             <th className="px-6 py-4 font-semibold">GST %</th>
             <th className="px-6 py-4 font-semibold">Status</th>
             <th className="px-6 py-4 font-semibold text-right">Actions</th>
@@ -43,12 +43,12 @@ export default function ServiceTable({ services, onView, onEdit, onDeactivate, o
               <td className="px-6 py-4">
                 <DivisionBadge division={service.division} />
               </td>
-              <td className="px-6 py-4 text-sm text-[#334155]">{service.unit || "—"}</td>
-              <td className="px-6 py-4 text-sm font-semibold text-[#334155]">
+              {/* <td className="px-6 py-4 text-sm text-[#334155]">{service.unit || "—"}</td> */}
+              {/* <td className="px-6 py-4 text-sm font-semibold text-[#334155]">
                 {service.defaultRate !== null && service.defaultRate !== undefined
                   ? `₹${formatRate(service.defaultRate)}`
                   : "—"}
-              </td>
+              </td> */}
               <td className="px-6 py-4 text-sm text-[#334155]">
                 {service.gstPercentage !== null && service.gstPercentage !== undefined
                   ? `${service.gstPercentage}%`

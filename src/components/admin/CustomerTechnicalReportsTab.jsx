@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import { Plus } from "lucide-react"
+import { Plus, FileText } from "lucide-react"
 import { getTechnicalReports } from "../../services/technicalReports"
 import { useCompany } from "../../context/companyContext"
 import TechnicalReportTable from "./TechnicalReportTable"

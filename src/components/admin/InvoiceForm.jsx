@@ -74,6 +74,11 @@ function toDateInputValue(date) {
   return `${year}-${month}-${day}`
 }
 
+function toDatetimeInputValue(date) {
+  const local = new Date(date.getTime() - date.getTimezoneOffset() * 60000)
+  return local.toISOString().slice(0, 16)
+}
+
 function addDays(date, days) {
   const next = new Date(date)
   next.setDate(next.getDate() + days)
@@ -141,7 +146,7 @@ export default function InvoiceForm({
 
   const [advancePayment, setAdvancePayment] = useState(() => ({
     amount: "",
-    paymentDate: toDateInputValue(today),
+    paymentDate: toDatetimeInputValue(today),
     paymentMethod: "Cash",
   }))
 
@@ -664,8 +669,8 @@ export default function InvoiceForm({
           />
           <InputField
             id="advancePaymentDate"
-            label="Payment Date"
-            type="date"
+            label="Payment Date & Time"
+            type="datetime-local"
             value={advancePayment.paymentDate}
             onChange={(e) =>
               setAdvancePayment((prev) => ({ ...prev, paymentDate: e.target.value }))
