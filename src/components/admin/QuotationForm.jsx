@@ -180,7 +180,6 @@ export default function QuotationForm({
     setErrors((prev) => ({ ...prev, service: undefined, gstPercentage: undefined }))
 
     const autoFill = {
-      description: service.description || service.serviceName || "",
       unit: service.unit || "",
       rate: service.defaultRate ?? "",
     }

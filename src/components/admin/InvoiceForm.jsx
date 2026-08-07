@@ -574,7 +574,6 @@ export default function InvoiceForm({
             setErrors((prev) => ({ ...prev, service: undefined, gstPercentage: undefined }))
 
             const autoFill = {
-              description: service.description || service.serviceName || "",
               unit: service.unit || "",
               rate: service.defaultRate ?? "",
             }

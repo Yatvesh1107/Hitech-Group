@@ -1,13 +1,32 @@
 import { useState, useEffect } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
-import { ArrowLeft, Building2, Briefcase, MapPin, StickyNote, ChevronRight, Pencil } from "lucide-react"
+import {
+  ArrowLeft,
+  Building2,
+  Briefcase,
+  MapPin,
+  StickyNote,
+  ChevronRight,
+  Pencil,
+  FileText,
+  Receipt,
+  Wallet,
+  BookOpen,
+  UserRound,
+} from "lucide-react"
 import { useAuth } from "../../../context/authContext"
+import { useCompany } from "../../../context/companyContext"
+import { companyUsesTechnicalReports } from "../../../constants/companies"
 import { getCustomer } from "../../../services/customers"
 import AdminLayout from "../../../components/admin/AdminLayout"
 import PageHeader from "../../../components/admin/PageHeader"
 import StatusBadge from "../../../components/admin/StatusBadge"
 import CustomerInfoCard from "../../../components/admin/CustomerInfoCard"
 import ErrorState from "../../../components/admin/ErrorState"
+import LedgerTab from "../../../components/admin/LedgerTab"
+import CustomerInvoicesTab from "../../../components/admin/CustomerInvoicesTab"
+import CustomerPaymentsTab from "../../../components/admin/CustomerPaymentsTab"
+import CustomerTechnicalReportsTab from "../../../components/admin/CustomerTechnicalReportsTab"
 
 function formatDate(value) {
   if (!value) return "—"
@@ -94,15 +113,26 @@ function DetailsSkeleton() {
   )
 }
 
+const TAB_ICONS = {
+  profile: UserRound,
+  invoices: Receipt,
+  payments: Wallet,
+  ledger: BookOpen,
+  reports: FileText,
+}
+
 export default function CustomerDetails() {
   const { id } = useParams()
   const { token } = useAuth()
+  const { activeCompany } = useCompany()
   const navigate = useNavigate()
 
   const [customer, setCustomer] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
   const [refreshKey, setRefreshKey] = useState(0)
+  const [activeTab, setActiveTab] = useState("profile")
+  const usesTechnicalReports = companyUsesTechnicalReports(activeCompany)
 
   useEffect(() => {
     let cancelled = false
@@ -197,6 +227,14 @@ export default function CustomerDetails() {
     </div>
   )
 
+  const tabs = [
+    { key: "profile", label: "Profile" },
+    { key: "invoices", label: "Invoices" },
+    { key: "payments", label: "Payments" },
+    { key: "ledger", label: "Ledger" },
+    ...(usesTechnicalReports ? [{ key: "reports", label: "Technical Reports" }] : []),
+  ]
+
   return (
     <AdminLayout>
       {breadcrumb}
@@ -214,51 +252,86 @@ export default function CustomerDetails() {
         />
       </div>
 
-      <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <CustomerInfoCard
-          icon={<Building2 size={16} />}
-          title="Basic Information"
-          rows={[
-            { label: "Company Name", value: customer.companyName },
-            { label: "Contact Person", value: customer.contactPerson },
-            { label: "Email", value: customer.email },
-            { label: "Mobile", value: customer.mobile },
-          ]}
-        />
+      <div className="mt-8 flex flex-wrap gap-2 border-b border-gray-100 pb-px">
+        {tabs.map((tab) => {
+          const Icon = TAB_ICONS[tab.key]
+          const isActive = activeTab === tab.key
 
-        <CustomerInfoCard
-          icon={<Briefcase size={16} />}
-          title="Business Information"
-          rows={[
-            { label: "GST Number", value: customer.gstNumber },
-            {
-              label: "Status",
-              value: customer.isActive ? "Active" : "Inactive",
-            },
-            { label: "Created Date", value: formatDate(customer.createdAt) },
-            { label: "Last Updated", value: formatDate(customer.updatedAt) },
-          ]}
-        />
-
-        <CustomerInfoCard
-          icon={<MapPin size={16} />}
-          title="Address"
-          rows={[
-            { label: "Address", value: customer.address },
-            { label: "City", value: customer.city },
-            { label: "State", value: customer.state },
-            { label: "Pincode", value: customer.pincode },
-          ]}
-        />
-
-        <CustomerInfoCard icon={<StickyNote size={16} />} title="Notes">
-          <div className="px-6 py-4">
-            <p className="text-sm font-medium text-[#334155] leading-relaxed whitespace-pre-line">
-              {customer.notes || "No notes available."}
-            </p>
-          </div>
-        </CustomerInfoCard>
+          return (
+            <button
+              key={tab.key}
+              type="button"
+              onClick={() => setActiveTab(tab.key)}
+              className={`inline-flex items-center gap-2 px-4 h-11 rounded-t-[12px] text-sm font-semibold border border-b-0 -mb-px transition-colors ${
+                isActive
+                  ? "bg-white border-gray-100 text-[#0B2D5C]"
+                  : "bg-transparent border-transparent text-[#94A3B8] hover:text-[#0B2D5C]"
+              }`}
+            >
+              <Icon size={16} />
+              {tab.label}
+            </button>
+          )
+        })}
       </div>
+
+      {activeTab === "profile" && (
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <CustomerInfoCard
+            icon={<Building2 size={16} />}
+            title="Basic Information"
+            rows={[
+              { label: "Company Name", value: customer.companyName },
+              { label: "Contact Person", value: customer.contactPerson },
+              { label: "Email", value: customer.email },
+              { label: "Mobile", value: customer.mobile },
+            ]}
+          />
+
+          <CustomerInfoCard
+            icon={<Briefcase size={16} />}
+            title="Business Information"
+            rows={[
+              { label: "GST Number", value: customer.gstNumber },
+              {
+                label: "Status",
+                value: customer.isActive ? "Active" : "Inactive",
+              },
+              { label: "Created Date", value: formatDate(customer.createdAt) },
+              { label: "Last Updated", value: formatDate(customer.updatedAt) },
+            ]}
+          />
+
+          <CustomerInfoCard
+            icon={<MapPin size={16} />}
+            title="Address"
+            rows={[
+              { label: "Address", value: customer.address },
+              { label: "City", value: customer.city },
+              { label: "State", value: customer.state },
+              { label: "Pincode", value: customer.pincode },
+            ]}
+          />
+
+          <CustomerInfoCard icon={<StickyNote size={16} />} title="Notes">
+            <div className="px-6 py-4">
+              <p className="text-sm font-medium text-[#334155] leading-relaxed whitespace-pre-line">
+                {customer.notes || "No notes available."}
+              </p>
+            </div>
+          </CustomerInfoCard>
+        </div>
+      )}
+
+      {activeTab === "invoices" && <CustomerInvoicesTab token={token} customerId={customer._id} />}
+
+      {activeTab === "payments" && <CustomerPaymentsTab token={token} customerId={customer._id} />}
+
+      {activeTab === "ledger" && <LedgerTab token={token} customerId={customer._id} />}
+
+      {activeTab === "reports" && usesTechnicalReports && (
+        <CustomerTechnicalReportsTab token={token} customerId={customer._id} />
+      )}
     </AdminLayout>
   )
 }

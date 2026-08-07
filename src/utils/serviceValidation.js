@@ -11,27 +11,8 @@ export function validateServiceForm(values) {
     errors.serviceName = "Service name is required"
   }
 
-  if (!values.serviceCode?.trim()) {
-    errors.serviceCode = "Service code is required"
-  } else if (!SERVICE_CODE_REGEX.test(values.serviceCode.trim())) {
-    errors.serviceCode = "Please provide a valid service code"
-  }
-
   if (!values.description?.trim()) {
     errors.description = "Description is required"
-  }
-
-  if (!values.unit) {
-    errors.unit = "Unit is required"
-  }
-
-  if (values.defaultRate === "" || values.defaultRate === null || values.defaultRate === undefined) {
-    errors.defaultRate = "Default rate is required"
-  } else {
-    const rate = Number(values.defaultRate)
-    if (Number.isNaN(rate) || rate < 0) {
-      errors.defaultRate = "Default rate must be a non-negative number"
-    }
   }
 
   if (values.gstPercentage === "" || values.gstPercentage === null || values.gstPercentage === undefined) {

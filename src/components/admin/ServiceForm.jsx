@@ -1,6 +1,8 @@
-import { useState } from "react"
-import { LoaderCircle, Save, X } from "lucide-react"
+import { useState, useEffect } from "react"
+import { LoaderCircle, Save, X, Info } from "lucide-react"
+import { useAuth } from "../../context/authContext"
 import { useCompany } from "../../context/companyContext"
+import { getCompanySettings } from "../../services/settings"
 import { validateServiceForm, trimServiceValues } from "../../utils/serviceValidation"
 import FormSection from "./FormSection"
 import InputField from "./InputField"
@@ -12,15 +14,14 @@ const emptyValues = {
   serviceName: "",
   serviceCode: "",
   description: "",
-  unit: "",
-  defaultRate: "",
   gstPercentage: 18,
   status: true,
 }
 
-const UNITS = ["Sq.M", "Nos", "Job", "Kg", "Hour", "Visit", "Lot"]
+const GST_OPTIONS = [5, 12, 18, 28]
 
 export default function ServiceForm({ initialValues, onSubmit, onCancel, submitLabel = "Save Service" }) {
+  const { token } = useAuth()
   const { activeCompany } = useCompany()
   const [values, setValues] = useState({
     ...emptyValues,
@@ -31,12 +32,36 @@ export default function ServiceForm({ initialValues, onSubmit, onCancel, submitL
   const [serverError, setServerError] = useState("")
   const [submitting, setSubmitting] = useState(false)
 
+  useEffect(() => {
+    if (initialValues?.gstPercentage != null) return
+
+    let cancelled = false
+
+    async function loadDefaultGst() {
+      try {
+        const settings = await getCompanySettings({ token, division: activeCompany })
+        const defaultGst = Number(settings?.documentDefaults?.defaultGst)
+        if (!cancelled && defaultGst > 0) {
+          setValues((prev) => ({ ...prev, gstPercentage: defaultGst }))
+        }
+      } catch {
+        // keep the default 18 when company settings cannot be loaded
+      }
+    }
+
+    loadDefaultGst()
+
+    return () => {
+      cancelled = true
+    }
+  }, [token, activeCompany, initialValues?.gstPercentage])
+
   const handleChange = (e) => {
-    const { name, value, type } = e.target
+    const { name, type } = e.target
 
     setValues((prev) => ({
       ...prev,
-      [name]: name === "serviceCode" ? value.toUpperCase() : type === "number" ? value : value,
+      [name]: type === "number" ? e.target.value : e.target.value,
     }))
 
     if (errors[name]) {
@@ -65,9 +90,11 @@ export default function ServiceForm({ initialValues, onSubmit, onCancel, submitL
 
     const payload = {
       ...trimServiceValues(values),
-      defaultRate: Number(values.defaultRate),
       gstPercentage: Number(values.gstPercentage),
     }
+
+    delete payload.defaultRate
+    delete payload.unit
 
     try {
       await onSubmit(payload)
@@ -86,17 +113,12 @@ export default function ServiceForm({ initialValues, onSubmit, onCancel, submitL
       )}
 
       <FormSection title="Service Details" description="Describe the service being offered by the active company.">
-        <InputField
-          id="serviceCode"
-          name="serviceCode"
-          label="Service Code"
-          required
-          value={values.serviceCode}
-          onChange={handleChange}
-          error={errors.serviceCode}
-          placeholder="e.g. INS-001"
-          className="sm:col-span-2"
-        />
+        <div className="sm:col-span-2 flex items-start gap-3 bg-[#F8FAFC] border border-gray-100 rounded-[12px] px-4 py-3">
+          <Info size={16} className="text-[#F4B400] shrink-0 mt-0.5" />
+          <p className="text-sm text-[#0F172A]">
+            A service code is generated automatically from the service name after saving.
+          </p>
+        </div>
         <InputField
           id="serviceName"
           name="serviceName"
@@ -121,50 +143,23 @@ export default function ServiceForm({ initialValues, onSubmit, onCancel, submitL
         />
       </FormSection>
 
-      <FormSection title="Pricing & Status" description="Set the default billing rate and current availability.">
+      <FormSection title="Pricing & Status" description="GST is applied from the active company's default rate.">
         <SelectField
-          id="unit"
-          name="unit"
-          label="Unit"
-          required
-          value={values.unit}
-          onChange={handleChange}
-          error={errors.unit}
-        >
-          <option value="">Select Unit</option>
-          {UNITS.map((unit) => (
-            <option key={unit} value={unit}>
-              {unit}
-            </option>
-          ))}
-        </SelectField>
-        <InputField
-          id="defaultRate"
-          name="defaultRate"
-          type="number"
-          label="Default Rate"
-          required
-          min="0"
-          step="any"
-          value={values.defaultRate}
-          onChange={handleChange}
-          error={errors.defaultRate}
-          placeholder="e.g. 450"
-        />
-        <InputField
           id="gstPercentage"
           name="gstPercentage"
-          type="number"
           label="GST Percentage"
           required
-          min="0"
-          max="100"
-          step="any"
           value={values.gstPercentage}
           onChange={handleChange}
           error={errors.gstPercentage}
-          placeholder="e.g. 18"
-        />
+        >
+          <option value="">Select GST</option>
+          {GST_OPTIONS.map((gst) => (
+            <option key={gst} value={gst}>
+              {gst}%
+            </option>
+          ))}
+        </SelectField>
         <div>
           <label htmlFor="status" className="block text-sm font-semibold text-[#0F172A] mb-1.5">
             Status
