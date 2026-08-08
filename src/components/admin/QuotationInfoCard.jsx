@@ -1,5 +1,5 @@
-import ServiceInfoCard from "./ServiceInfoCard"
+import InfoCard from "./InfoCard"
 
 export default function QuotationInfoCard(props) {
-  return <ServiceInfoCard {...props} />
+  return <InfoCard {...props} />
 }

@@ -9,10 +9,6 @@ export function validateQuotationForm(values, items) {
     errors.division = "Division is required"
   }
 
-  if (!values.service) {
-    errors.service = "Service is required"
-  }
-
   if (values.discount !== "" && values.discount !== null && values.discount !== undefined) {
     const discount = Number(values.discount)
     if (Number.isNaN(discount) || discount < 0) {

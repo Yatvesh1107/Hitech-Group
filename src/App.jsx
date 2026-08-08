@@ -22,10 +22,6 @@ import Customers from "./pages/admin/customer/CustomerList"
 import AddCustomer from "./pages/admin/customer/AddCustomer"
 import EditCustomer from "./pages/admin/customer/EditCustomer"
 import CustomerDetails from "./pages/admin/customer/CustomerDetails"
-import ServiceList from "./pages/admin/service/ServiceList"
-import AddService from "./pages/admin/service/AddService"
-import ServiceDetails from "./pages/admin/service/ServiceDetails"
-import EditService from "./pages/admin/service/EditService"
 import QuotationList from "./pages/admin/quotation/QuotationList"
 import CreateQuotation from "./pages/admin/quotation/CreateQuotation"
 import QuotationDetails from "./pages/admin/quotation/QuotationDetails"
@@ -98,38 +94,6 @@ function App() {
             element={
               <ProtectedRoute>
                 <CustomerDetails />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin/services"
-            element={
-              <ProtectedRoute>
-                <ServiceList />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin/services/new"
-            element={
-              <ProtectedRoute>
-                <AddService />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin/services/:id"
-            element={
-              <ProtectedRoute>
-                <ServiceDetails />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin/services/:id/edit"
-            element={
-              <ProtectedRoute>
-                <EditService />
               </ProtectedRoute>
             }
           />

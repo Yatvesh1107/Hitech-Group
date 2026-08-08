@@ -11,7 +11,7 @@ function InfoRow({ label, value }) {
   )
 }
 
-export default function ServiceInfoCard({ icon, title, rows = [], children }) {
+export default function InfoCard({ icon, title, rows = [], children }) {
   return (
     <div className="bg-white border border-gray-100 rounded-[22px] shadow-sm overflow-hidden">
       <SectionHeader icon={icon} title={title} />

@@ -510,7 +510,6 @@ export default function QuotationDetails() {
           title="Business Information"
           rows={[
             { label: "Division", value: quotation.division },
-            { label: "Service", value: quotation.service?.serviceName || "—" },
             { label: "Created By", value: quotation.createdBy?.name || quotation.createdBy?.email || "—" },
             { label: "Created Date", value: formatDate(quotation.createdAt) },
             { label: "Last Updated", value: formatDate(quotation.updatedAt) },

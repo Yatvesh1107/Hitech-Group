@@ -15,8 +15,7 @@ import {
   Search,
   Wallet,
 } from "lucide-react"
-import { getCustomerLedger, getCustomerLedgerInvoiceWise, getLedgerPdf } from "../../services/ledger"
-import { getInvoicePdf } from "../../services/invoices"
+import { getCustomerLedger, getCustomerLedgerInvoiceWise, getLedgerPdf, getInvoiceLedgerPdf } from "../../services/ledger"
 import { useCompany } from "../../context/companyContext"
 import { useToast } from "../../context/toastContext"
 import EmptyState from "./EmptyState"
@@ -325,11 +324,17 @@ export default function LedgerTab({ token, customerId }) {
     setInvoicePdfBusyId(invoice.invoiceId)
 
     try {
-      const blob = await getInvoicePdf({ token, id: invoice.invoiceId, download: true })
+      const blob = await getInvoiceLedgerPdf({
+        token,
+        customerId,
+        invoiceId: invoice.invoiceId,
+        division: activeCompany,
+        download: true,
+      })
       const url = URL.createObjectURL(blob)
       const link = document.createElement("a")
       link.href = url
-      link.download = `${invoice.invoiceNumber}.pdf`
+      link.download = `Invoice_Ledger_${invoice.invoiceNumber}.pdf`
       document.body.appendChild(link)
       link.click()
       link.remove()

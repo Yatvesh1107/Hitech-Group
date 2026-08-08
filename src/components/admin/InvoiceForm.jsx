@@ -7,7 +7,6 @@ import FormSection from "./FormSection"
 import InputField from "./InputField"
 import SelectField from "./SelectField"
 import CustomerSelector from "./CustomerSelector"
-import ServiceSelector from "./ServiceSelector"
 import QuotationItemsTable from "./QuotationItemsTable"
 import SummaryCard from "./SummaryCard"
 import TermsSection from "./TermsSection"
@@ -117,7 +116,6 @@ export default function InvoiceForm({
   const [values, setValues] = useState(() => ({
     customer: initialValues?.customer?._id || initialValues?.customer || "",
     division: initialValues?.division || activeCompany,
-    service: initialValues?.service?._id || initialValues?.service || "",
     invoiceDate: toDateInputValueOrEmpty(initialValues?.invoiceDate) || toDateInputValue(today),
     dueDate: toDateInputValueOrEmpty(initialValues?.dueDate) || toDateInputValue(addDays(today, 30)),
     discount: String(initialValues?.discount ?? 0),
@@ -178,7 +176,6 @@ export default function InvoiceForm({
     setValues((prev) => ({
       ...prev,
       [name]: value,
-      ...(name === "division" ? { service: "" } : {}),
     }))
     setErrors((prev) => ({ ...prev, [name]: undefined }))
   }
@@ -206,7 +203,6 @@ export default function InvoiceForm({
   const buildPayload = () => {
     const payload = {
       division: values.division,
-      service: values.service,
       invoiceDate: values.invoiceDate,
       dueDate: values.dueDate,
       discount: Number(values.discount) || 0,
@@ -558,47 +554,7 @@ export default function InvoiceForm({
       </FormSection>
 
       <FormSection
-        title="3. Business Information"
-        description={`The active company (${values.division || "—"}) and the service for this invoice.`}
-      >
-        <ServiceSelector
-          token={token}
-          division={values.division}
-          value={values.service}
-          onSelect={(service) => {
-            if (!customerModeEditable) return
-            if (!service) {
-              setValues((prev) => ({ ...prev, service: "" }))
-              return
-            }
-            setValues((prev) => ({
-              ...prev,
-              service: service._id,
-              gstPercentage: service.gstPercentage ?? prev.gstPercentage,
-            }))
-            setErrors((prev) => ({ ...prev, service: undefined, gstPercentage: undefined }))
-
-            const autoFill = {
-              unit: service.unit || "",
-              rate: service.defaultRate ?? "",
-            }
-
-            setItems((prevItems) => {
-              const isEmptyFirstRow =
-                prevItems.length === 1 && !prevItems[0].description && !prevItems[0].rate
-              if (isEmptyFirstRow) {
-                return [{ ...prevItems[0], ...autoFill }]
-              }
-              return [...prevItems, { key: `item-${Date.now()}`, quantity: "1", ...autoFill }]
-            })
-          }}
-          error={errors.service}
-          disabled={formReadOnly || mode !== "create"}
-        />
-      </FormSection>
-
-      <FormSection
-        title="4. Invoice Items"
+        title="3. Invoice Items"
         description="Line items with automatic amount calculation (Amount = Qty × Rate)."
       >
         <div className="sm:col-span-2">
@@ -615,7 +571,7 @@ export default function InvoiceForm({
       </FormSection>
 
       <FormSection
-        title="5. Summary"
+        title="4. Summary"
         description="Totals are calculated automatically and also validated by the backend."
       >
         {financialsLocked ? (
@@ -650,7 +606,7 @@ export default function InvoiceForm({
 
       {mode === "create" && (
         <FormSection
-          title="6. Advance Payment"
+          title="5. Advance Payment"
           description="Optionally record an advance or partial payment received at the time of billing."
         >
           <InputField
@@ -713,7 +669,7 @@ export default function InvoiceForm({
       )}
 
       <FormSection
-        title="7. Terms & Conditions"
+        title="6. Terms & Conditions"
         description="Default company terms are pre-filled. Edit before saving if needed."
       >
         <TermsSection
@@ -725,7 +681,7 @@ export default function InvoiceForm({
       </FormSection>
 
       <FormSection
-        title="8. Internal Notes"
+        title="7. Internal Notes"
         description="Visible only inside admin. Will not appear in the invoice PDF."
       >
         <NotesSection

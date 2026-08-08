@@ -39,7 +39,6 @@ export default function QuotationTable({
             <th className="px-6 py-4 font-semibold">Quotation No.</th>
             <th className="px-6 py-4 font-semibold">Customer</th>
             <th className="px-6 py-4 font-semibold">Division</th>
-            <th className="px-6 py-4 font-semibold">Service</th>
             <th className="px-6 py-4 font-semibold">Quotation Date</th>
             <th className="px-6 py-4 font-semibold">Valid Till</th>
             <th className="px-6 py-4 font-semibold">Grand Total</th>
@@ -67,9 +66,6 @@ export default function QuotationTable({
               </td>
               <td className="px-6 py-4">
                 <DivisionBadge division={quotation.division} />
-              </td>
-              <td className="px-6 py-4 text-sm text-[#334155]">
-                {quotation.service?.serviceName || "—"}
               </td>
               <td className="px-6 py-4 text-sm text-[#334155]">
                 {formatDate(quotation.quotationDate)}

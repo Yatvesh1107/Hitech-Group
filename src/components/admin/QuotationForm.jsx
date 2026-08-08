@@ -7,7 +7,6 @@ import FormSection from "./FormSection"
 import InputField from "./InputField"
 import SelectField from "./SelectField"
 import CustomerSelector from "./CustomerSelector"
-import ServiceSelector from "./ServiceSelector"
 import QuotationItemsTable from "./QuotationItemsTable"
 import SummaryCard from "./SummaryCard"
 import TermsSection from "./TermsSection"
@@ -76,7 +75,6 @@ export default function QuotationForm({
       return {
         customer: initialValues.customer?._id || initialValues.customer || "",
         division: initialValues.division || "",
-        service: initialValues.service?._id || initialValues.service || "",
         quotationDate: toDateInputValueOrEmpty(initialValues.quotationDate),
         validTill: toDateInputValueOrEmpty(initialValues.validTill),
         status: initialValues.status || "Draft",
@@ -91,7 +89,6 @@ export default function QuotationForm({
     return {
       customer: "",
       division: activeCompany,
-      service: "",
       quotationDate: toDateInputValue(today),
       validTill: toDateInputValue(addDays(today, 30)),
       status: "Draft",
@@ -150,12 +147,10 @@ export default function QuotationForm({
     setValues((prev) => ({
       ...prev,
       [name]: value,
-      ...(name === "division" ? { service: "" } : {}),
     }))
 
     setErrors((prev) => {
       const next = { ...prev, [name]: undefined }
-      if (name === "division") next.service = undefined
       return next
     })
   }
@@ -164,36 +159,6 @@ export default function QuotationForm({
     setValues((prev) => ({ ...prev, customer: customer._id }))
     setSelectedCustomer(customer)
     setErrors((prev) => ({ ...prev, customer: undefined }))
-  }
-
-  const handleServiceSelect = (service) => {
-    if (!service) {
-      setValues((prev) => ({ ...prev, service: "" }))
-      return
-    }
-
-    setValues((prev) => ({
-      ...prev,
-      service: service._id,
-      gstPercentage: service.gstPercentage ?? prev.gstPercentage,
-    }))
-    setErrors((prev) => ({ ...prev, service: undefined, gstPercentage: undefined }))
-
-    const autoFill = {
-      unit: service.unit || "",
-      rate: service.defaultRate ?? "",
-    }
-
-    setItems((prevItems) => {
-      const isEmptyFirstRow =
-        prevItems.length === 1 && !prevItems[0].description && !prevItems[0].rate
-
-      if (isEmptyFirstRow) {
-        return [{ ...prevItems[0], ...autoFill }]
-      }
-
-      return [...prevItems, { key: `item-${Date.now()}`, quantity: "1", ...autoFill }]
-    })
   }
 
   const handleAddRow = () => {
@@ -208,7 +173,6 @@ export default function QuotationForm({
   const buildPayload = (status) => ({
     customer: values.customer,
     division: values.division,
-    service: values.service,
     quotationDate: values.quotationDate,
     validTill: values.validTill,
     status,
@@ -379,21 +343,7 @@ export default function QuotationForm({
       </FormSection>
 
       <FormSection
-        title="3. Business Information"
-        description={`The active company (${values.division || "—"}) and the service being quoted.`}
-      >
-        <ServiceSelector
-          token={token}
-          division={values.division}
-          value={values.service}
-          onSelect={handleServiceSelect}
-          error={errors.service}
-          disabled={readOnly}
-        />
-      </FormSection>
-
-      <FormSection
-        title="4. Quotation Items"
+        title="3. Quotation Items"
         description="Line items with automatic amount calculation (Amount = Qty × Rate)."
       >
         <div className="sm:col-span-2">
@@ -410,7 +360,7 @@ export default function QuotationForm({
       </FormSection>
 
       <FormSection
-        title="5. Summary"
+        title="4. Summary"
         description="Totals are calculated automatically and also validated by the backend."
       >
         <SummaryCard
@@ -434,7 +384,7 @@ export default function QuotationForm({
       </FormSection>
 
       <FormSection
-        title="6. Terms & Conditions"
+        title="5. Terms & Conditions"
         description="Default company terms are pre-filled. Edit before saving if needed."
       >
         <TermsSection
@@ -449,7 +399,7 @@ export default function QuotationForm({
       </FormSection>
 
       <FormSection
-        title="7. Internal Notes"
+        title="6. Internal Notes"
         description="Visible only inside admin. Will not appear in the quotation PDF."
       >
         <NotesSection

@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { NavLink, useNavigate } from "react-router-dom"
-import { LayoutDashboard, Users, Wrench, FileText, Settings, LogOut, X, ChevronDown } from "lucide-react"
+import { LayoutDashboard, Users, FileText, Settings, LogOut, X, ChevronDown } from "lucide-react"
 import { useAuth } from "../../context/authContext"
 import { useCompany } from "../../context/companyContext"
 import { companyUsesTechnicalReports } from "../../constants/companies"
@@ -9,7 +9,6 @@ import CompanySwitcher from "./CompanySwitcher"
 const navItems = [
   { to: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard, end: false },
   { to: "/admin/customers", label: "Customers", icon: Users, end: false },
-  { to: "/admin/services", label: "Services", icon: Wrench, end: false },
 ]
 
 const navLinkClass = ({ isActive }) =>

@@ -85,3 +85,29 @@ export async function getLedgerPdf({
 
   return response.blob()
 }
+
+export async function getInvoiceLedgerPdf({
+  token,
+  customerId,
+  invoiceId,
+  division = "",
+  download = false,
+}) {
+  const params = new URLSearchParams()
+  if (division) params.set("division", division)
+  if (download) params.set("download", "1")
+
+  const response = await fetch(
+    `${API_BASE}/customers/${customerId}/ledger/invoice/${invoiceId}/pdf?${params.toString()}`,
+    { headers: { Authorization: `Bearer ${token}` } }
+  )
+
+  if (!response.ok) {
+    const data = await response.json().catch(() => ({}))
+    throw new Error(
+      data.message || data.error || "Failed to generate the invoice ledger PDF. Please try again."
+    )
+  }
+
+  return response.blob()
+}

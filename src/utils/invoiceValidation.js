@@ -5,10 +5,6 @@ export function validateInvoiceForm(values, items) {
     errors.division = "Division is required"
   }
 
-  if (!values.service) {
-    errors.service = "Service is required"
-  }
-
   if (values.invoiceDate && Number.isNaN(new Date(values.invoiceDate).getTime())) {
     errors.invoiceDate = "Please provide a valid invoice date"
   }

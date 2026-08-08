@@ -82,9 +82,6 @@ function InvoiceCard({
               {invoice.invoiceNumber}
             </span>
             <InvoiceStatusBadge status={invoice.paymentStatus} />
-            {invoice.serviceName && (
-              <span className="text-xs font-medium text-[#94A3B8]">{invoice.serviceName}</span>
-            )}
           </div>
           <p className="mt-2 text-xs text-[#64748B]">
             Invoice Date: <span className="font-semibold text-[#0F172A]">{formatDate(invoice.invoiceDate)}</span>
@@ -114,7 +111,7 @@ function InvoiceCard({
             className="inline-flex items-center gap-2 h-10 px-4 rounded-[12px] border border-gray-200 bg-white text-sm font-semibold text-[#0B2D5C] hover:bg-[#F8FAFC] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {pdfBusy ? <LoaderCircle size={15} className="animate-spin" /> : <FileDown size={15} />}
-            Download PDF
+            Statement PDF
           </button>
           {!isFullyPaid && (
             <button
