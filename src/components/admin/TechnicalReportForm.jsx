@@ -24,8 +24,6 @@ const REPORT_TYPE_OPTIONS = [
   },
 ]
 
-const REPORT_TYPES_BY_VALUE = Object.fromEntries(REPORT_TYPE_OPTIONS.map((option) => [option.value, option]))
-
 const REPORT_TYPE_DIVISION = {
   [ACTIVE_REPORT_TYPE]: "Experts in Ultrasonics",
   VSR: "Precision Tech Engineering",
@@ -34,8 +32,6 @@ const REPORT_TYPE_DIVISION = {
 const FORM_CONFIG = {
   VSR: {
     component: VSRForm,
-    rowsKey: "parameters",
-    rowsLabel: "parameter",
   },
 }
 
@@ -55,16 +51,6 @@ function toDateInputValueOrEmpty(value) {
 
 function newPartRow() {
   return { key: `part-${Date.now()}`, partName: "", materialSpecification: "", drawingNumber: "" }
-}
-
-function toNumberOrEmpty(value) {
-  if (value === "" || value == null) return ""
-  const num = Number(value)
-  return Number.isNaN(num) ? "" : num
-}
-
-function isEmptyRow(row) {
-  return Object.values(row).every((value) => value === "" || value == null)
 }
 
 function normalizeParts(rows) {
@@ -149,15 +135,91 @@ function initialUltrasonicData(reportData) {
 }
 
 function initialVsrData(reportData) {
-  const parameters = Array.isArray(reportData?.parameters) ? reportData.parameters : []
+  const data = reportData || {}
+
+  // Legacy VSR records store machine/operator/parameter data without shafts.
+  // Migrate them into the new structured shape best-effort so a legacy draft
+  // can be opened, reviewed and saved in the new format.
+  if (!Array.isArray(data.shafts)) {
+    const processParameters = {
+      ...(data.processParameters || {}),
+      vibratoryMachineId: data.processParameters?.vibratoryMachineId || data.machineName || "",
+    }
+
+    const hasLegacyContent =
+      data.machineName ||
+      data.operator ||
+      data.startTime ||
+      data.endTime ||
+      data.duration ||
+      (Array.isArray(data.parameters) && data.parameters.length > 0)
+
+    const shafts = []
+
+    if (hasLegacyContent) {
+      const shaft = {
+        key: "shaft-legacy-0",
+        shaftName: data.machineName || "",
+        startTime: data.startTime || "",
+        endTime: data.endTime || "",
+        duration: data.duration ?? "",
+        frequencyMin: "",
+        frequencyMax: "",
+        frequencyAvg: "",
+        amplitudeMin: "",
+        amplitudeMax: "",
+        amplitudeAvg: "",
+        beforeAfterGraph: "",
+        frequencyReadings: [],
+      }
+
+      for (const row of Array.isArray(data.parameters) ? data.parameters : []) {
+        const name = String(row?.parameter || "").toLowerCase()
+        if (name.includes("freq")) {
+          shaft.frequencyMin = row.minimum ?? shaft.frequencyMin
+          shaft.frequencyMax = row.maximum ?? shaft.frequencyMax
+          shaft.frequencyAvg = row.average ?? shaft.frequencyAvg
+        } else if (name.includes("amp")) {
+          shaft.amplitudeMin = row.minimum ?? shaft.amplitudeMin
+          shaft.amplitudeMax = row.maximum ?? shaft.amplitudeMax
+          shaft.amplitudeAvg = row.average ?? shaft.amplitudeAvg
+        }
+      }
+
+      shafts.push(shaft)
+    }
+
+    return {
+      customerJobDetails: { ...(data.customerJobDetails || {}) },
+      preInspection: { ...(data.preInspection || {}) },
+      processParameters,
+      monitoringControl: { ...(data.monitoringControl || {}) },
+      postInspection: { ...(data.postInspection || {}) },
+      operatorRemarks: data.operatorRemarks || data.operator || "",
+      conclusion: { ...(data.conclusion || {}) },
+      signOff: { ...(data.signOff || {}) },
+      shafts,
+    }
+  }
+
   return {
-    ...(reportData || {}),
-    parameters: parameters.map((row, index) => ({
-      key: `param-${index}`,
-      parameter: row.parameter || "",
-      minimum: row.minimum == null ? "" : row.minimum,
-      maximum: row.maximum == null ? "" : row.maximum,
-      average: row.average == null ? "" : row.average,
+    ...data,
+    customerJobDetails: { ...(data.customerJobDetails || {}) },
+    preInspection: { ...(data.preInspection || {}) },
+    processParameters: { ...(data.processParameters || {}) },
+    monitoringControl: { ...(data.monitoringControl || {}) },
+    postInspection: { ...(data.postInspection || {}) },
+    conclusion: { ...(data.conclusion || {}) },
+    signOff: { ...(data.signOff || {}) },
+    shafts: data.shafts.map((shaft, index) => ({
+      ...shaft,
+      key: shaft.key || `shaft-${index}`,
+      frequencyReadings: (Array.isArray(shaft.frequencyReadings) ? shaft.frequencyReadings : []).map(
+        (reading, readingIndex) => ({
+          ...reading,
+          key: reading.key || `reading-${index}-${readingIndex}`,
+        })
+      ),
     })),
   }
 }
@@ -172,6 +234,119 @@ function initialFormData(reportType, reportData) {
   }
 
   return {}
+}
+
+function computeVsrDuration(startTime, endTime) {
+  if (!startTime || !endTime) return ""
+  const start = new Date(startTime)
+  const end = new Date(endTime)
+  if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) return ""
+
+  const diffMs = Math.max(0, end.getTime() - start.getTime())
+  const totalSeconds = Math.floor(diffMs / 1000)
+  const hours = Math.floor(totalSeconds / 3600)
+  const minutes = Math.floor((totalSeconds % 3600) / 60)
+  const seconds = totalSeconds % 60
+
+  return [hours, minutes, seconds].map((value) => String(value).padStart(2, "0")).join(":")
+}
+
+function vsrTrimValue(value) {
+  return String(value ?? "").trim()
+}
+
+function buildVsrReportData(formData) {
+  const groupFieldKeys = {
+    customerJobDetails: [
+      "customerName",
+      "purchaseOrderNo",
+      "componentDescription",
+      "materialSpecification",
+      "quantity",
+      "weightPerUnit",
+      "overallDimensions",
+    ],
+    preInspection: ["visualInspection", "surfaceCondition"],
+    processParameters: [
+      "vibratoryMachineId",
+      "fixtureType",
+      "frequencyRange",
+      "amplitudeRange",
+      "duration",
+      "modeOfExcitation",
+      "sensor",
+    ],
+    monitoringControl: [
+      "dynamicResponseMonitoring",
+      "resonanceAchieved",
+      "frequencyShiftObserved",
+      "graphRecorded",
+    ],
+    postInspection: ["visualInspection", "methodUsed", "dimensionalCheck", "finalComments"],
+    conclusion: ["conclusion", "result"],
+    signOff: ["name", "designation", "signature"],
+  }
+
+  const buildGroup = (group, source = formData) => {
+    const raw = source[group] || {}
+    const result = {}
+    for (const key of groupFieldKeys[group]) {
+      result[key] = vsrTrimValue(raw[key])
+    }
+    return result
+  }
+
+  const shafts = (Array.isArray(formData.shafts) ? formData.shafts : [])
+    .map((shaft) => {
+      const frequencyReadings = (Array.isArray(shaft.frequencyReadings) ? shaft.frequencyReadings : [])
+        .map((reading) => ({
+          time: vsrTrimValue(reading?.time),
+          frequency: reading?.frequency === "" || reading?.frequency == null ? "" : Number(reading.frequency),
+        }))
+        .filter((reading) => reading.time || reading.frequency !== "")
+
+      const startTime = vsrTrimValue(shaft.startTime)
+      const endTime = vsrTrimValue(shaft.endTime)
+
+      return {
+        shaftName: vsrTrimValue(shaft.shaftName),
+        startTime,
+        endTime,
+        duration: computeVsrDuration(startTime, endTime) || vsrTrimValue(shaft.duration),
+        frequencyMin: vsrTrimValue(shaft.frequencyMin),
+        frequencyMax: vsrTrimValue(shaft.frequencyMax),
+        frequencyAvg: vsrTrimValue(shaft.frequencyAvg),
+        amplitudeMin: vsrTrimValue(shaft.amplitudeMin),
+        amplitudeMax: vsrTrimValue(shaft.amplitudeMax),
+        amplitudeAvg: vsrTrimValue(shaft.amplitudeAvg),
+        beforeAfterGraph: vsrTrimValue(shaft.beforeAfterGraph),
+        frequencyReadings,
+      }
+    })
+    .filter((shaft) => {
+      return (
+        shaft.shaftName ||
+        shaft.startTime ||
+        shaft.endTime ||
+        shaft.amplitudeMin ||
+        shaft.amplitudeMax ||
+        shaft.amplitudeAvg ||
+        shaft.beforeAfterGraph ||
+        shaft.frequencyReadings.length > 0
+      )
+    })
+
+  return {
+    customerJobDetails: buildGroup("customerJobDetails"),
+    preInspection: buildGroup("preInspection"),
+    processParameters: buildGroup("processParameters"),
+    monitoringControl: buildGroup("monitoringControl"),
+    postInspection: buildGroup("postInspection"),
+    operatorRemarks: vsrTrimValue(formData.operatorRemarks),
+    conclusion: buildGroup("conclusion"),
+    signOff: buildGroup("signOff"),
+    shafts,
+  }
 }
 
 export default function TechnicalReportForm({
@@ -285,15 +460,18 @@ export default function TechnicalReportForm({
       }
     }
 
-    const rows = Array.isArray(formData[config.rowsKey]) ? formData[config.rowsKey] : []
-    const normalizedRows = rows
-      .map((row) => ({
-        parameter: String(row.parameter || "").trim(),
-        minimum: toNumberOrEmpty(row.minimum),
-        maximum: toNumberOrEmpty(row.maximum),
-        average: toNumberOrEmpty(row.average),
-      }))
-      .filter((row) => !isEmptyRow(row))
+    if (reportType === "VSR") {
+      return {
+        reportType,
+        customer: selectedCustomer._id,
+        division: effectiveDivision,
+        quotation: selectedQuotation?._id,
+        reportDate,
+        status,
+        remarks: remarks.trim(),
+        reportData: buildVsrReportData(formData),
+      }
+    }
 
     return {
       reportType,
@@ -303,7 +481,7 @@ export default function TechnicalReportForm({
       reportDate,
       status,
       remarks: remarks.trim(),
-      reportData: { ...formData, [config.rowsKey]: normalizedRows },
+      reportData: formData,
     }
   }
 
@@ -325,10 +503,28 @@ export default function TechnicalReportForm({
       if (normalizeSections(formData.sections).length === 0) {
         nextErrors.sections = "Please add at least one inspection section."
       }
-    } else if (config && !isActiveType) {
-      const rows = Array.isArray(formData[config.rowsKey]) ? formData[config.rowsKey] : []
-      if (rows.filter((row) => !isEmptyRow(row)).length === 0) {
-        nextErrors.reportData = `Please add at least one ${config.rowsLabel} row.`
+    } else if (reportType === "VSR") {
+      const shafts = Array.isArray(formData.shafts) ? formData.shafts : []
+      const nonEmptyShafts = shafts.filter((shaft) => {
+        return (
+          String(shaft.shaftName || "").trim() ||
+          String(shaft.startTime || "").trim() ||
+          String(shaft.endTime || "").trim() ||
+          String(shaft.amplitudeMin || "").trim() ||
+          String(shaft.amplitudeMax || "").trim() ||
+          String(shaft.amplitudeAvg || "").trim() ||
+          String(shaft.beforeAfterGraph || "").trim() ||
+          (Array.isArray(shaft.frequencyReadings) &&
+            shaft.frequencyReadings.some(
+              (reading) => String(reading.time || "").trim() || reading.frequency !== ""
+            ))
+        )
+      })
+
+      if (nonEmptyShafts.length === 0) {
+        nextErrors.reportData = "Please add at least one shaft."
+      } else if (nonEmptyShafts.some((shaft) => !String(shaft.shaftName || "").trim())) {
+        nextErrors.reportData = "Every shaft requires a shaft name."
       }
     }
 
@@ -500,30 +696,34 @@ export default function TechnicalReportForm({
       ) : (
         config &&
         FormComponent && (
-          <FormSection
-            title="Report Details"
-            description="Fill in the inspection details and measured data for this report."
-          >
-            <div className="sm:col-span-2">
-              <FormComponent values={formData} onChange={setFormData} disabled={inputDisabled} />
-            </div>
+          <>
+            <FormComponent
+              values={formData}
+              onChange={setFormData}
+              disabled={inputDisabled}
+              token={token}
+            />
 
             {errors.reportData && (
-              <div className="sm:col-span-2 text-sm text-red-600">{errors.reportData}</div>
+              <div className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-[12px] px-5 py-4">
+                {errors.reportData}
+              </div>
             )}
 
-            <div className="sm:col-span-2">
-              <TextArea
-                id="remarks"
-                name="remarks"
-                label="Remarks"
-                value={remarks}
-                onChange={(e) => setRemarks(e.target.value)}
-                placeholder="Any additional notes about this report (optional)"
-                disabled={inputDisabled}
-              />
-            </div>
-          </FormSection>
+            <FormSection title="Report Remarks" description="Any additional notes for this report.">
+              <div className="sm:col-span-2">
+                <TextArea
+                  id="remarks"
+                  name="remarks"
+                  label="Remarks"
+                  value={remarks}
+                  onChange={(e) => setRemarks(e.target.value)}
+                  placeholder="Any additional notes about this report (optional)"
+                  disabled={inputDisabled}
+                />
+              </div>
+            </FormSection>
+          </>
         )
       )}
 

@@ -50,3 +50,15 @@ export async function uploadCompanyImage({ token, file }) {
 
   return data.data
 }
+
+export async function uploadReportImage({ token, file }) {
+  const formData = new FormData()
+  formData.append("file", file)
+
+  const data = await request("/upload/report-image", token, {
+    method: "POST",
+    body: formData,
+  })
+
+  return data.data
+}
