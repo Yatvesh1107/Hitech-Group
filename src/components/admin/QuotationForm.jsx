@@ -5,7 +5,6 @@ import { getCompanySettings } from "../../services/settings"
 import { useCompany } from "../../context/companyContext"
 import FormSection from "./FormSection"
 import InputField from "./InputField"
-import SelectField from "./SelectField"
 import CustomerSelector from "./CustomerSelector"
 import QuotationItemsTable from "./QuotationItemsTable"
 import SummaryCard from "./SummaryCard"
@@ -354,6 +353,7 @@ export default function QuotationForm({
             onAddRow={handleAddRow}
             onRemoveRow={handleRemoveRow}
             disabled={readOnly}
+            token={token}
           />
           {errors.items && <p className="mt-3 text-xs text-red-600">{errors.items}</p>}
         </div>

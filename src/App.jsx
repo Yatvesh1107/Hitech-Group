@@ -34,6 +34,9 @@ import TechnicalReportList from "./pages/admin/technicalReport/TechnicalReportLi
 import CreateTechnicalReport from "./pages/admin/technicalReport/CreateTechnicalReport"
 import TechnicalReportDetails from "./pages/admin/technicalReport/TechnicalReportDetails"
 import EditTechnicalReport from "./pages/admin/technicalReport/EditTechnicalReport"
+import ProductList from "./pages/admin/product/ProductList"
+import AddProduct from "./pages/admin/product/AddProduct"
+import EditProduct from "./pages/admin/product/EditProduct"
 import CompanySettings from "./pages/admin/settings/CompanySettings"
 
 function PublicLayout() {
@@ -190,6 +193,30 @@ function App() {
             element={
               <ProtectedRoute>
                 <EditTechnicalReport />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/products"
+            element={
+              <ProtectedRoute>
+                <ProductList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/products/new"
+            element={
+              <ProtectedRoute>
+                <AddProduct />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/products/:id/edit"
+            element={
+              <ProtectedRoute>
+                <EditProduct />
               </ProtectedRoute>
             }
           />

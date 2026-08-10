@@ -1,9 +1,14 @@
+import { useEffect, useState } from "react"
 import { Plus, Trash2 } from "lucide-react"
+import { getServices } from "../../services/services"
 
 const round2 = (value) => Math.round((value + Number.EPSILON) * 100) / 100
 
 const inputClass =
   "w-full h-10 px-3 rounded-[10px] border text-sm text-[#0F172A] bg-[#F8FAFC] outline-none transition-all focus:border-[#F4B400] focus:ring-2 focus:ring-[#F4B400]/30"
+
+const catalogSelectClass =
+  "w-full h-10 px-3 pr-8 rounded-[10px] border text-sm text-[#0F172A] bg-white outline-none appearance-none cursor-pointer transition-all focus:border-[#F4B400] focus:ring-2 focus:ring-[#F4B400]/30 mb-2"
 
 function inputErrorClass(hasError) {
   return hasError
@@ -18,18 +23,80 @@ export default function QuotationItemsTable({
   onAddRow,
   onRemoveRow,
   disabled = false,
+  token,
 }) {
+  const [catalog, setCatalog] = useState([])
+  const [catalogLoaded, setCatalogLoaded] = useState(false)
+
+  useEffect(() => {
+    if (!token || disabled) return
+
+    let cancelled = false
+
+    getServices({ token, page: 1, limit: 1000, status: "true" })
+      .then((data) => {
+        if (cancelled) return
+        setCatalog(data.services || [])
+        setCatalogLoaded(true)
+      })
+      .catch(() => {
+        if (cancelled) return
+        setCatalog([])
+        setCatalogLoaded(true)
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [token, disabled])
+
   const handleField = (index, field, value) => {
     onChange(items.map((item, i) => (i === index ? { ...item, [field]: value } : item)))
   }
 
+  const handleCatalogSelect = (index, productId) => {
+    const product = catalog.find((item) => item._id === productId)
+    if (!product) return
+
+    onChange(
+      items.map((item, i) =>
+        i === index
+          ? {
+              ...item,
+              productId: product._id,
+              description: product.serviceName,
+              unit: product.unit || item.unit || "",
+              rate: product.defaultRate != null ? String(product.defaultRate) : item.rate ?? "",
+            }
+          : item
+      )
+    )
+  }
+
+  const catalogLabel = (product) => {
+    const unitSuffix = product.unit ? ` (${product.unit})` : ""
+    const rate =
+      product.defaultRate != null && product.defaultRate !== ""
+        ? ` — ₹${Number(product.defaultRate).toLocaleString("en-IN")}`
+        : ""
+    return `${product.serviceName}${unitSuffix}${rate}`
+  }
+
   return (
     <div>
+      {!disabled && token && catalogLoaded && catalog.length === 0 && (
+        <p className="mb-3 text-xs text-[#94A3B8]">
+          No saved products yet. Add them once under Products &amp; Services so they auto-fill here.
+        </p>
+      )}
+
       <div className="overflow-x-auto">
         <table className="w-full min-w-[860px] text-left">
           <thead>
             <tr className="border-b border-gray-100 text-xs uppercase tracking-wider text-[#94A3B8]">
-              <th className="py-3 pr-4 font-semibold w-[34%]">Description</th>
+              <th className="py-3 pr-4 font-semibold w-[34%]">
+                Product / Description
+              </th>
               <th className="py-3 pr-4 font-semibold w-[12%]">Qty</th>
               <th className="py-3 pr-4 font-semibold w-[14%]">Unit</th>
               <th className="py-3 pr-4 font-semibold w-[14%]">Rate (₹)</th>
@@ -50,6 +117,28 @@ export default function QuotationItemsTable({
               return (
                 <tr key={item.key}>
                   <td className="py-3 pr-4 align-top">
+                    {!disabled && token && (
+                      <select
+                        value={item.productId || ""}
+                        onChange={(e) => handleCatalogSelect(index, e.target.value)}
+                        aria-label="Pick from saved products"
+                        className={catalogSelectClass}
+                        style={{
+                          backgroundImage:
+                            "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394A3B8' stroke-width='2'%3e%3cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3e%3c/svg%3e\")",
+                          backgroundRepeat: "no-repeat",
+                          backgroundPosition: "right 0.75rem center",
+                          backgroundSize: "1rem",
+                        }}
+                      >
+                        <option value="">Pick from saved products…</option>
+                        {catalog.map((product) => (
+                          <option key={product._id} value={product._id}>
+                            {catalogLabel(product)}
+                          </option>
+                        ))}
+                      </select>
+                    )}
                     <input
                       type="text"
                       value={item.description}

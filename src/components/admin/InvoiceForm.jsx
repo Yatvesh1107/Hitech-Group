@@ -565,6 +565,7 @@ export default function InvoiceForm({
             onAddRow={handleAddRow}
             onRemoveRow={handleRemoveRow}
             disabled={financialsLocked}
+            token={token}
           />
           {errors.items && <p className="mt-3 text-xs text-red-600">{errors.items}</p>}
         </div>
