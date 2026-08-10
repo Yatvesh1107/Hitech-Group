@@ -17,7 +17,7 @@ const services = [
     ],
   },
   {
-    title: "Experts in Ultrasonics",
+    title: "Altron Testing & Allieds",
     accent: "yellow",
     icon: Scan,
     items: [
