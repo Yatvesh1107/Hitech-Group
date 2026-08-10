@@ -13,11 +13,11 @@ function TopBar() {
             <span className="hidden sm:inline"> insulation.hitech777@gmail.com</span>
           </a>
           <a
-            href="tel:+918767814930"
+            href="tel:+919158854848"
             className="flex items-center gap-1.5 hover:text-[#F4B400] transition-colors"
           >
             <Phone size={14} />
-            <span className="hidden sm:inline">+91 87678 14930</span>
+            <span className="hidden sm:inline">+91 91588 54848</span>
           </a>
         </div>
 

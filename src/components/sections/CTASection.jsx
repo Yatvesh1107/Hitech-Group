@@ -6,8 +6,8 @@ const contacts = [
   {
     icon: Phone,
     label: "Phone",
-    value: "+91 87678 14930",
-    href: "tel:+918767814930",
+    value: "+91 91588 54848",
+    href: "tel:+919158854848",
   },
   {
     icon: Mail,

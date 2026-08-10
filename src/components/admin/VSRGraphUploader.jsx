@@ -60,7 +60,7 @@ export default function VSRGraphUploader({ value = "", onChange, token, disabled
               {uploading ? "Uploading…" : value ? "Replace" : "Upload"}
               <input
                 type="file"
-                accept="image/png,image/jpeg,image/webp,image/svg+xml,image/gif,image/bmp"
+                accept="image/png,image/jpeg"
                 className="hidden"
                 disabled={disabled || uploading}
                 onChange={(e) => {

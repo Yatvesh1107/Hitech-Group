@@ -45,7 +45,7 @@ export default function BrandingCard({ values = {}, onUpload, onRemove, uploadin
                     {uploading ? "Uploading…" : url ? "Replace" : "Upload"}
                     <input
                       type="file"
-                      accept="image/png,image/jpeg,image/webp,image/svg+xml,image/gif,image/bmp"
+                      accept="image/png,image/jpeg"
                       className="hidden"
                       disabled={uploading}
                       onChange={(e) => {

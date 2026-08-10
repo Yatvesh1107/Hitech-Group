@@ -20,9 +20,9 @@ const contactCards = [
   {
     icon: Phone,
     label: "Phone",
-    value: "+91 87678 14930",
+    value: "+91 91588 54848",
     sub: "Mon–Sat, 9 AM – 6 PM",
-    href: "tel:+918767814930",
+    href: "tel:+919158854848",
   },
   {
     icon: Mail,
@@ -359,8 +359,8 @@ function Contact() {
               <div className="bg-[#0B2D5C] rounded-[22px] p-7 mt-10">
                 <p className="text-[rgba(255,255,255,0.85)] text-sm leading-relaxed">
                   For urgent on-site requirements or emergency support, call us directly at{" "}
-                  <a href="tel:+918767814930" className="text-[#F4B400] font-semibold">
-                    +91 87678 14930
+                  <a href="tel:+919158854848" className="text-[#F4B400] font-semibold">
+                    +91 91588 54848
                   </a>
                 </p>
               </div>
