@@ -51,13 +51,18 @@ function Navbar() {
       >
         <div className="mx-auto h-full max-w-[1280px] flex items-center justify-between px-5 md:px-6">
           <Link to="/" className="flex items-center gap-3 shrink-0">
-            <div className="w-10 h-10 bg-[#0B2D5C] rounded-lg flex items-center justify-center text-white font-bold text-xl">
-              H
-            </div>
-            <div>
-              <div className="text-xl font-bold text-[#0B2D5C] leading-none">HITECH</div>
-              <div className="text-[11px] text-[#334155] tracking-[0.2em] leading-tight">GROUP</div>
-            </div>
+ <div className="flex items-center gap-3">
+  <img
+    src="/src/assets/logos/hitech-logo.png"
+    alt="HITECH GROUP"
+    className="w-12 h-12 object-contain"
+  />
+
+  <div className="leading-tight">
+    <div className="font-bold text-l text-[#0F172A]">HITECH</div>
+    <div className="text-xs tracking-widest text-[#64748B]">GROUP</div>
+  </div>
+</div>
           </Link>
 
           <div className="hidden lg:flex items-center gap-8">

@@ -12,7 +12,7 @@ const quickLinks = [
 
 const divisions = [
   "Industrial Insulation",
-  "Experts in Ultrasonics",
+  "Altron Testing & Allieds",
   "Precision Tech Engineering",
 ]
 
