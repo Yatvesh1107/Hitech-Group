@@ -1,4 +1,4 @@
-import { Routes, Route, Outlet } from "react-router-dom"
+import { Routes, Route, Outlet, Navigate } from "react-router-dom"
 import AuthProvider from "./context/AuthProvider"
 import CompanyProvider from "./context/CompanyProvider"
 import ToastProvider from "./context/ToastProvider"
@@ -60,6 +60,7 @@ function App() {
           <ScrollToTop />
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
           <Route
             path="/admin/dashboard"
             element={

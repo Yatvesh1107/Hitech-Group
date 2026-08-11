@@ -154,14 +154,14 @@ export default function CompanySettings() {
   }
 
   const handleCancel = () => {
-    navigate("/admin")
+    navigate("/admin/dashboard")
   }
 
   return (
     <AdminLayout>
       <div className="flex items-center gap-3 text-sm text-[#94A3B8]">
         <Link
-          to="/admin"
+          to="/admin/dashboard"
           className="inline-flex items-center gap-1.5 hover:text-[#0B2D5C] transition-colors"
         >
           <ArrowLeft size={14} />
