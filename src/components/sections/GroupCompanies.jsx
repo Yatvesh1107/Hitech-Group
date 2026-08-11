@@ -22,7 +22,7 @@ const divisions = [
     alt: "Industrial insulation pipes and equipment",
   },
   {
-    title: "Experts in Ultrasonics",
+    title: "Altron Testing & Allieds",
     path: "/divisions/experts-in-ultrasonics",
     description:
       "Advanced non-destructive testing and ultrasonic inspection services that verify material integrity and safety.",

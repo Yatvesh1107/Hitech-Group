@@ -50,9 +50,11 @@ export default function AdminSidebar({ open, onClose }) {
       >
         <div className="flex items-center justify-between px-5 md:px-6 py-5 border-b border-white/10">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#F4B400] rounded-xl flex items-center justify-center text-[#081F3F] font-bold text-xl">
-              H
-            </div>
+            <img
+    src="/src/assets/logos/hitech-logo.png"
+    alt="HITECH GROUP"
+    className="w-12 h-12 object-contain"
+  />
             <div>
               <div className="text-base font-bold text-white leading-none">HITECH GROUP</div>
               <div className="text-[10px] text-white/60 tracking-[0.2em] leading-tight mt-1">

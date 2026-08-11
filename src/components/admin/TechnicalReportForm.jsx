@@ -25,7 +25,7 @@ const REPORT_TYPE_OPTIONS = [
 ]
 
 const REPORT_TYPE_DIVISION = {
-  [ACTIVE_REPORT_TYPE]: "Experts in Ultrasonics",
+  [ACTIVE_REPORT_TYPE]: "Altron Testing & Allieds",
   VSR: "Precision Tech Engineering",
 }
 

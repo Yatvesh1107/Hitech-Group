@@ -1,6 +1,6 @@
 export const PRODUCT_DIVISIONS = [
   "Industrial Insulation",
-  "Experts in Ultrasonics",
+  "Altron Testing & Allieds",
   "Precision Tech Engineering",
   "New Hitech",
 ]

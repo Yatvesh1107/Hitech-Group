@@ -20,7 +20,7 @@ const expertise = [
   },
   {
     icon: Search,
-    title: "Experts in Ultrasonics",
+    title: "Altron Testing & Allieds",
     description: "Advanced NDT, thickness gauging, and ultrasonic testing services.",
   },
   {

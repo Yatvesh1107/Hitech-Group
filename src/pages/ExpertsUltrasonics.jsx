@@ -94,7 +94,7 @@ function ExpertsUltrasonics() {
               variants={itemVariants}
               className="inline-block text-[#F4B400] text-sm font-semibold tracking-[2px] uppercase"
             >
-              Experts in Ultrasonics
+              Altron Testing & Allieds
             </motion.span>
 
             <motion.h1
@@ -108,7 +108,7 @@ function ExpertsUltrasonics() {
               variants={itemVariants}
               className="text-[rgba(255,255,255,0.85)] text-lg lg:text-xl leading-[1.7] max-w-[560px] mt-4 mx-auto lg:mx-0"
             >
-              Experts in Ultrasonics is HITECH GROUP&rsquo;s specialized non-destructive testing
+              Altron Testing & Allieds is HITECH GROUP&rsquo;s specialized non-destructive testing
               division. We provide advanced inspection and testing solutions that evaluate
               material integrity without causing damage — helping industries maintain quality,
               safety and reliability across their operations.
@@ -248,7 +248,7 @@ function ExpertsUltrasonics() {
               className="mt-6 space-y-4 text-[#334155] leading-[1.8]"
             >
               <p>
-                Experts in Ultrasonics is the non-destructive testing specialist within HITECH
+                Altron Testing & Allieds is the non-destructive testing specialist within HITECH
                 GROUP, focused on verifying the integrity of industrial materials and equipment.
                 Using advanced inspection techniques, we detect internal and surface defects
                 without causing any damage to the component under evaluation.
@@ -352,7 +352,7 @@ function ExpertsUltrasonics() {
           </motion.h2>
 
           <motion.p variants={itemVariants} className="text-[#334155] leading-[1.8] mt-4">
-            Experts in Ultrasonics provides accurate inspection services that help industries
+            Altron Testing & Allieds provides accurate inspection services that help industries
             ensure quality, detect defects and maintain operational reliability — without
             damaging components.
           </motion.p>

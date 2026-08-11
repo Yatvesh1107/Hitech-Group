@@ -1,6 +1,6 @@
 export const COMPANIES = [
   { id: "Industrial Insulation", name: "Industrial Insulation" },
-  { id: "Experts in Ultrasonics", name: "Experts in Ultrasonics" },
+  { id: "Altron Testing & Allieds", name: "Altron Testing & Allieds" },
   { id: "Precision Tech Engineering", name: "Precision Tech Engineering" },
   { id: "New Hitech", name: "New Hitech" },
 ]
@@ -15,13 +15,13 @@ export function isCompanyId(value) {
 
 // Technical reports always belong to a fixed company based on their report type.
 export const REPORT_TYPE_COMPANY = {
-  "Ultrasonic / D.P. / Thickness Test": "Experts in Ultrasonics",
+  "Ultrasonic / D.P. / Thickness Test": "Altron Testing & Allieds",
   VSR: "Precision Tech Engineering",
 }
 
 // Report types available per company. Companies not listed here do not use technical reports.
 export const COMPANY_REPORT_TYPES = {
-  "Experts in Ultrasonics": ["Ultrasonic / D.P. / Thickness Test"],
+  "Altron Testing & Allieds": ["Ultrasonic / D.P. / Thickness Test"],
   "Precision Tech Engineering": ["VSR"],
 }
 

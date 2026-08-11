@@ -34,7 +34,7 @@ const divisions = [
   },
   {
     icon: ScanSearch,
-    title: "Experts in Ultrasonics",
+    title: "Altron Testing & Allieds",
     subtitle: "Non-destructive testing and inspection services",
   },
   {
@@ -327,7 +327,7 @@ function Divisions() {
                 services: ["Thermal", "Cold", "Acoustic", "Roofing"],
               },
               {
-                title: "Experts in Ultrasonics",
+                title: "Altron Testing & Allieds",
                 description:
                   "Non-destructive testing and ultrasonic inspection services that verify material integrity and operational safety.",
                 image: ultrasonicBd,
@@ -578,7 +578,7 @@ function Divisions() {
               },
               {
                 icon: ScanSearch,
-                title: "Experts in Ultrasonics",
+                title: "Altron Testing & Allieds",
                 description:
                   "Inspection then verifies the quality and integrity of insulated and operational systems with reliable non-destructive testing.",
               },
