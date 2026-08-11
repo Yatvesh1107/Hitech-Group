@@ -30,9 +30,9 @@ export default function VSRGraphUploader({ value = "", onChange, token, disabled
     <div>
       <p className="text-sm font-semibold text-[#0F172A] mb-1.5">Before & After Stress Relief Graph</p>
 
-      <div className="flex items-start gap-4 rounded-[16px] border border-dashed border-gray-200 bg-[#F8FAFC] p-4">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-start gap-4 rounded-[16px] border border-dashed border-gray-200 bg-[#F8FAFC] p-4">
         {value ? (
-          <div className="relative w-36 h-24 shrink-0 rounded-[12px] border border-gray-200 bg-white overflow-hidden flex items-center justify-center">
+          <div className="w-full sm:w-36 h-36 sm:h-24 shrink-0 rounded-[12px] border border-gray-200 bg-white overflow-hidden flex items-center justify-center self-center sm:self-auto">
             <img
               src={assetUrl(value)}
               alt="Before & after stress relief graph"
@@ -40,7 +40,7 @@ export default function VSRGraphUploader({ value = "", onChange, token, disabled
             />
           </div>
         ) : (
-          <div className="w-36 h-24 shrink-0 rounded-[12px] border border-gray-200 bg-white flex items-center justify-center text-[#94A3B8]">
+          <div className="w-full sm:w-36 h-36 sm:h-24 shrink-0 rounded-[12px] border border-gray-200 bg-white flex items-center justify-center text-[#94A3B8] self-center sm:self-auto">
             <ImagePlus size={24} />
           </div>
         )}

@@ -49,30 +49,58 @@ export default function UltrasonicDpThicknessView({ report }) {
         {parts.length === 0 ? (
           <p className="text-sm text-[#94A3B8]">No parts recorded.</p>
         ) : (
-          <div className="overflow-x-auto border border-gray-100 rounded-[12px]">
-            <table className="w-full min-w-[640px] text-left">
-              <thead>
-                <tr className="bg-[#F8FAFC] text-xs uppercase tracking-wider text-[#94A3B8]">
-                  <th className="px-4 py-3 font-semibold">Sr No</th>
-                  <th className="px-4 py-3 font-semibold">Part Name</th>
-                  <th className="px-4 py-3 font-semibold">Material Specification</th>
-                  <th className="px-4 py-3 font-semibold">Drawing Number</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-50">
-                {parts.map((row, index) => (
-                  <tr key={row.key || index}>
-                    <td className="px-4 py-3 text-sm text-[#334155]">{index + 1}</td>
-                    <td className="px-4 py-3 text-sm text-[#334155]">{row.partName || "—"}</td>
-                    <td className="px-4 py-3 text-sm text-[#334155]">
-                      {row.materialSpecification || "—"}
-                    </td>
-                    <td className="px-4 py-3 text-sm text-[#334155]">{row.drawingNumber || "—"}</td>
+          <>
+            <div className="hidden lg:block overflow-x-auto border border-gray-100 rounded-[12px]">
+              <table className="w-full min-w-[640px] text-left">
+                <thead>
+                  <tr className="bg-[#F8FAFC] text-xs uppercase tracking-wider text-[#94A3B8]">
+                    <th className="px-4 py-3 font-semibold">Sr No</th>
+                    <th className="px-4 py-3 font-semibold">Part Name</th>
+                    <th className="px-4 py-3 font-semibold">Material Specification</th>
+                    <th className="px-4 py-3 font-semibold">Drawing Number</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody className="divide-y divide-gray-50">
+                  {parts.map((row, index) => (
+                    <tr key={row.key || index}>
+                      <td className="px-4 py-3 text-sm text-[#334155]">{index + 1}</td>
+                      <td className="px-4 py-3 text-sm text-[#334155]">{row.partName || "—"}</td>
+                      <td className="px-4 py-3 text-sm text-[#334155]">
+                        {row.materialSpecification || "—"}
+                      </td>
+                      <td className="px-4 py-3 text-sm text-[#334155]">{row.drawingNumber || "—"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="lg:hidden space-y-3">
+              {parts.map((row, index) => (
+                <div key={row.key || index} className="border border-gray-100 rounded-[12px] bg-[#FCFDFE] p-4">
+                  <p className="text-sm font-semibold text-[#0F172A]">
+                    {index + 1}. {row.partName || "—"}
+                  </p>
+                  <dl className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-sm">
+                    <div className="flex items-center justify-between gap-2">
+                      <dt className="text-xs font-semibold uppercase tracking-wider text-[#94A3B8]">
+                        Material
+                      </dt>
+                      <dd className="text-[#334155] text-right break-words">
+                        {row.materialSpecification || "—"}
+                      </dd>
+                    </div>
+                    <div className="flex items-center justify-between gap-2">
+                      <dt className="text-xs font-semibold uppercase tracking-wider text-[#94A3B8]">
+                        Drawing No.
+                      </dt>
+                      <dd className="text-[#334155] text-right break-words">{row.drawingNumber || "—"}</dd>
+                    </div>
+                  </dl>
+                </div>
+              ))}
+            </div>
+          </>
         )}
       </ContentCard>
 
@@ -107,26 +135,54 @@ export default function UltrasonicDpThicknessView({ report }) {
               {rows.length === 0 ? (
                 <p className="text-sm text-[#94A3B8]">No rows recorded for this section.</p>
               ) : (
-                <div className="overflow-x-auto border border-gray-100 rounded-[12px]">
-                  <table className="w-full min-w-[520px] text-left">
-                    <thead>
-                      <tr className="bg-[#F8FAFC] text-xs uppercase tracking-wider text-[#94A3B8]">
-                        <th className="px-4 py-3 font-semibold">Sr No</th>
-                        <th className="px-4 py-3 font-semibold">Description</th>
-                        <th className="px-4 py-3 font-semibold">Remark</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-50">
-                      {rows.map((row, index) => (
-                        <tr key={row.key || index}>
-                          <td className="px-4 py-3 text-sm text-[#334155]">{index + 1}</td>
-                          <td className="px-4 py-3 text-sm text-[#334155]">{row.description || "—"}</td>
-                          <td className="px-4 py-3 text-sm text-[#334155]">{row.remark || "—"}</td>
+                <>
+                  <div className="hidden lg:block overflow-x-auto border border-gray-100 rounded-[12px]">
+                    <table className="w-full min-w-[520px] text-left">
+                      <thead>
+                        <tr className="bg-[#F8FAFC] text-xs uppercase tracking-wider text-[#94A3B8]">
+                          <th className="px-4 py-3 font-semibold">Sr No</th>
+                          <th className="px-4 py-3 font-semibold">Description</th>
+                          <th className="px-4 py-3 font-semibold">Remark</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                      </thead>
+                      <tbody className="divide-y divide-gray-50">
+                        {rows.map((row, index) => (
+                          <tr key={row.key || index}>
+                            <td className="px-4 py-3 text-sm text-[#334155]">{index + 1}</td>
+                            <td className="px-4 py-3 text-sm text-[#334155]">{row.description || "—"}</td>
+                            <td className="px-4 py-3 text-sm text-[#334155]">{row.remark || "—"}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div className="lg:hidden space-y-3">
+                    {rows.map((row, index) => (
+                      <div key={row.key || index} className="border border-gray-100 rounded-[12px] bg-[#FCFDFE] p-4">
+                        <p className="text-xs font-bold uppercase tracking-wider text-[#94A3B8]">
+                          Row {index + 1}
+                        </p>
+                        <dl className="mt-2 space-y-2 text-sm">
+                          <div className="flex items-start justify-between gap-3">
+                            <dt className="text-xs font-semibold uppercase tracking-wider text-[#94A3B8] shrink-0">
+                              Description
+                            </dt>
+                            <dd className="text-[#334155] text-right break-words">
+                              {row.description || "—"}
+                            </dd>
+                          </div>
+                          <div className="flex items-start justify-between gap-3">
+                            <dt className="text-xs font-semibold uppercase tracking-wider text-[#94A3B8] shrink-0">
+                              Remark
+                            </dt>
+                            <dd className="text-[#334155] text-right break-words">{row.remark || "—"}</dd>
+                          </div>
+                        </dl>
+                      </div>
+                    ))}
+                  </div>
+                </>
               )}
             </ContentCard>
           )

@@ -82,6 +82,45 @@ export default function QuotationItemsTable({
     return `${product.serviceName}${unitSuffix}${rate}`
   }
 
+  const itemAmount = (item) => {
+    const qty = Number(item.quantity)
+    const rate = Number(item.rate)
+    return Number.isFinite(qty) && Number.isFinite(rate)
+      ? round2((Number.isFinite(qty) ? qty : 0) * (Number.isFinite(rate) ? rate : 0))
+      : 0
+  }
+
+  const formatAmount = (amount) =>
+    `₹${amount.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+
+  const renderCatalogSelect = (index, item) =>
+    !disabled &&
+    token && (
+      <select
+        value={item.productId || ""}
+        onChange={(e) => handleCatalogSelect(index, e.target.value)}
+        aria-label="Pick from saved products"
+        className={catalogSelectClass}
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394A3B8' stroke-width='2'%3e%3cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3e%3c/svg%3e\")",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "right 0.75rem center",
+          backgroundSize: "1rem",
+        }}
+      >
+        <option value="">Pick from saved products…</option>
+        {catalog.map((product) => (
+          <option key={product._id} value={product._id}>
+            {catalogLabel(product)}
+          </option>
+        ))}
+      </select>
+    )
+
+  const descriptionLabelClass =
+    "block text-xs font-semibold text-[#64748B] mb-1"
+
   return (
     <div>
       {!disabled && token && catalogLoaded && catalog.length === 0 && (
@@ -90,7 +129,7 @@ export default function QuotationItemsTable({
         </p>
       )}
 
-      <div className="overflow-x-auto">
+      <div className="hidden xl:block overflow-x-auto">
         <table className="w-full min-w-[860px] text-left">
           <thead>
             <tr className="border-b border-gray-100 text-xs uppercase tracking-wider text-[#94A3B8]">
@@ -107,38 +146,12 @@ export default function QuotationItemsTable({
           <tbody className="divide-y divide-gray-50">
             {items.map((item, index) => {
               const rowError = errors[index] || {}
-              const qty = Number(item.quantity)
-              const rate = Number(item.rate)
-              const amount =
-                Number.isFinite(qty) && Number.isFinite(rate)
-                  ? round2((Number.isFinite(qty) ? qty : 0) * (Number.isFinite(rate) ? rate : 0))
-                  : 0
+              const amount = itemAmount(item)
 
               return (
                 <tr key={item.key}>
                   <td className="py-3 pr-4 align-top">
-                    {!disabled && token && (
-                      <select
-                        value={item.productId || ""}
-                        onChange={(e) => handleCatalogSelect(index, e.target.value)}
-                        aria-label="Pick from saved products"
-                        className={catalogSelectClass}
-                        style={{
-                          backgroundImage:
-                            "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394A3B8' stroke-width='2'%3e%3cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3e%3c/svg%3e\")",
-                          backgroundRepeat: "no-repeat",
-                          backgroundPosition: "right 0.75rem center",
-                          backgroundSize: "1rem",
-                        }}
-                      >
-                        <option value="">Pick from saved products…</option>
-                        {catalog.map((product) => (
-                          <option key={product._id} value={product._id}>
-                            {catalogLabel(product)}
-                          </option>
-                        ))}
-                      </select>
-                    )}
+                    {renderCatalogSelect(index, item)}
                     <input
                       type="text"
                       value={item.description}
@@ -189,11 +202,7 @@ export default function QuotationItemsTable({
                   </td>
                   <td className="py-3 pr-4 align-top">
                     <div className="h-10 flex items-center text-sm font-semibold text-[#0F172A]">
-                      ₹
-                      {amount.toLocaleString("en-IN", {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })}
+                      {formatAmount(amount)}
                     </div>
                   </td>
                   <td className="py-3 align-top">
@@ -213,6 +222,100 @@ export default function QuotationItemsTable({
             })}
           </tbody>
         </table>
+      </div>
+
+      <div className="xl:hidden space-y-4">
+        {items.map((item, index) => {
+          const rowError = errors[index] || {}
+          const amount = itemAmount(item)
+
+          return (
+            <div
+              key={item.key}
+              className="border border-gray-200 rounded-[14px] bg-white p-4"
+            >
+              <div className="flex items-center justify-between gap-3 mb-3">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#94A3B8]">
+                  Item {index + 1}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => onRemoveRow?.(index)}
+                  disabled={disabled || items.length <= 1}
+                  aria-label="Remove row"
+                  title="Remove row"
+                  className="p-2 rounded-[10px] text-[#94A3B8] hover:text-red-600 hover:bg-red-50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                >
+                  <Trash2 size={16} />
+                </button>
+              </div>
+
+              {renderCatalogSelect(index, item)}
+
+              <label className={descriptionLabelClass}>Product / Description</label>
+              <input
+                type="text"
+                value={item.description}
+                onChange={(e) => handleField(index, "description", e.target.value)}
+                placeholder="Item description"
+                disabled={disabled}
+                className={`${inputClass} ${inputErrorClass(Boolean(rowError.description))} ${disabled ? "opacity-60 cursor-not-allowed" : ""}`}
+              />
+              {rowError.description && (
+                <p className="mt-1 text-xs text-red-600">{rowError.description}</p>
+              )}
+
+              <div className="mt-3 grid grid-cols-2 gap-x-3 gap-y-3 sm:grid-cols-3">
+                <div>
+                  <label className={descriptionLabelClass}>Qty</label>
+                  <input
+                    type="number"
+                    min="0"
+                    step="any"
+                    value={item.quantity}
+                    onChange={(e) => handleField(index, "quantity", e.target.value)}
+                    disabled={disabled}
+                    className={`${inputClass} ${inputErrorClass(Boolean(rowError.quantity))} ${disabled ? "opacity-60 cursor-not-allowed" : ""}`}
+                  />
+                  {rowError.quantity && (
+                    <p className="mt-1 text-xs text-red-600">{rowError.quantity}</p>
+                  )}
+                </div>
+                <div>
+                  <label className={descriptionLabelClass}>Unit</label>
+                  <input
+                    type="text"
+                    value={item.unit}
+                    onChange={(e) => handleField(index, "unit", e.target.value)}
+                    placeholder="e.g. Sq.M"
+                    disabled={disabled}
+                    className={`${inputClass} ${disabled ? "opacity-60 cursor-not-allowed" : ""}`}
+                  />
+                </div>
+                <div>
+                  <label className={descriptionLabelClass}>Rate (₹)</label>
+                  <input
+                    type="number"
+                    min="0"
+                    step="any"
+                    value={item.rate}
+                    onChange={(e) => handleField(index, "rate", e.target.value)}
+                    disabled={disabled}
+                    className={`${inputClass} ${inputErrorClass(Boolean(rowError.rate))} ${disabled ? "opacity-60 cursor-not-allowed" : ""}`}
+                  />
+                  {rowError.rate && <p className="mt-1 text-xs text-red-600">{rowError.rate}</p>}
+                </div>
+              </div>
+
+              <div className="mt-3 flex items-center justify-between gap-3 border-t border-gray-100 pt-3">
+                <span className="text-xs font-semibold uppercase tracking-wider text-[#94A3B8]">
+                  Amount
+                </span>
+                <span className="text-sm font-semibold text-[#0F172A]">{formatAmount(amount)}</span>
+              </div>
+            </div>
+          )
+        })}
       </div>
 
       {!disabled && (

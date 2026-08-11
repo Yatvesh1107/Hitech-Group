@@ -1,10 +1,13 @@
 import { ArrowDown, ArrowUp, Plus, Trash2 } from "lucide-react"
 
-const inputClass =
-  "w-full h-9 px-3 rounded-[10px] border border-gray-200 bg-[#F8FAFC] text-sm text-[#0F172A] outline-none focus:border-[#F4B400] focus:ring-2 focus:ring-[#F4B400]/30 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+const titleInputClass =
+  "flex-1 min-w-[180px] h-9 px-3 rounded-[10px] border border-gray-200 bg-[#F8FAFC] text-sm text-[#0F172A] outline-none focus:border-[#F4B400] focus:ring-2 focus:ring-[#F4B400]/30 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
 
 const cellClass =
   "w-full h-10 px-3 rounded-[10px] border border-gray-200 bg-[#F8FAFC] text-sm text-[#0F172A] outline-none focus:border-[#F4B400] focus:ring-2 focus:ring-[#F4B400]/30 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+
+const fieldLabelClass =
+  "block text-xs font-semibold text-[#64748B] mb-1"
 
 function newSection() {
   return { key: `section-${Date.now()}`, title: "", rows: [newRow()] }
@@ -82,7 +85,7 @@ export default function InspectionSections({ sections = [], onChange, disabled =
               key={section.key}
               className="border border-gray-200 rounded-[16px] p-4 bg-[#FCFDFE]"
             >
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <span className="text-xs font-bold uppercase tracking-wider text-[#94A3B8]">
                   {sectionIndex + 1}.
                 </span>
@@ -92,41 +95,43 @@ export default function InspectionSections({ sections = [], onChange, disabled =
                   onChange={(e) => updateSection(sectionIndex, { title: e.target.value })}
                   disabled={disabled}
                   placeholder={`Section ${sectionIndex + 1} title (e.g. ${sectionTitleHint(sectionIndex)})`}
-                  className={inputClass}
+                  className={titleInputClass}
                 />
-                <button
-                  type="button"
-                  onClick={() => moveSection(sectionIndex, -1)}
-                  disabled={disabled || sectionIndex === 0}
-                  aria-label="Move section up"
-                  title="Move up"
-                  className="p-2 rounded-[8px] text-[#94A3B8] hover:text-[#0B2D5C] hover:bg-[#F8FAFC] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-                >
-                  <ArrowUp size={15} />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => moveSection(sectionIndex, 1)}
-                  disabled={disabled || sectionIndex === sections.length - 1}
-                  aria-label="Move section down"
-                  title="Move down"
-                  className="p-2 rounded-[8px] text-[#94A3B8] hover:text-[#0B2D5C] hover:bg-[#F8FAFC] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-                >
-                  <ArrowDown size={15} />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => removeSection(sectionIndex)}
-                  disabled={disabled}
-                  aria-label="Delete section"
-                  title="Delete section"
-                  className="p-2 rounded-[8px] text-[#94A3B8] hover:text-red-600 hover:bg-red-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <Trash2 size={15} />
-                </button>
+                <div className="flex items-center gap-1">
+                  <button
+                    type="button"
+                    onClick={() => moveSection(sectionIndex, -1)}
+                    disabled={disabled || sectionIndex === 0}
+                    aria-label="Move section up"
+                    title="Move up"
+                    className="p-2 rounded-[8px] text-[#94A3B8] hover:text-[#0B2D5C] hover:bg-[#F8FAFC] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                  >
+                    <ArrowUp size={15} />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => moveSection(sectionIndex, 1)}
+                    disabled={disabled || sectionIndex === sections.length - 1}
+                    aria-label="Move section down"
+                    title="Move down"
+                    className="p-2 rounded-[8px] text-[#94A3B8] hover:text-[#0B2D5C] hover:bg-[#F8FAFC] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                  >
+                    <ArrowDown size={15} />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => removeSection(sectionIndex)}
+                    disabled={disabled}
+                    aria-label="Delete section"
+                    title="Delete section"
+                    className="p-2 rounded-[8px] text-[#94A3B8] hover:text-red-600 hover:bg-red-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <Trash2 size={15} />
+                  </button>
+                </div>
               </div>
 
-              <div className="mt-3 overflow-x-auto border border-gray-100 rounded-[12px]">
+              <div className="mt-3 hidden lg:block overflow-x-auto border border-gray-100 rounded-[12px]">
                 <table className="w-full min-w-[520px] text-left">
                   <thead>
                     <tr className="bg-[#F8FAFC] text-xs uppercase tracking-wider text-[#94A3B8]">
@@ -178,6 +183,56 @@ export default function InspectionSections({ sections = [], onChange, disabled =
                     ))}
                   </tbody>
                 </table>
+              </div>
+
+              <div className="mt-3 lg:hidden space-y-3">
+                {(Array.isArray(section.rows) ? section.rows : []).map((row, rowIndex) => (
+                  <div
+                    key={row.key || rowIndex}
+                    className="border border-gray-100 rounded-[12px] bg-[#FCFDFE] p-4"
+                  >
+                    <div className="flex items-center justify-between gap-3 mb-3">
+                      <span className="text-xs font-bold uppercase tracking-wider text-[#94A3B8]">
+                        Row {rowIndex + 1}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => removeRow(sectionIndex, rowIndex)}
+                        disabled={disabled}
+                        aria-label="Remove row"
+                        title="Remove row"
+                        className="p-2 rounded-[8px] text-[#94A3B8] hover:text-red-600 hover:bg-red-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <Trash2 size={15} />
+                      </button>
+                    </div>
+
+                    <div className="space-y-3">
+                      <div>
+                        <label className={fieldLabelClass}>Description</label>
+                        <input
+                          type="text"
+                          value={row.description || ""}
+                          onChange={(e) => updateRow(sectionIndex, rowIndex, "description", e.target.value)}
+                          disabled={disabled}
+                          placeholder="Description"
+                          className={cellClass}
+                        />
+                      </div>
+                      <div>
+                        <label className={fieldLabelClass}>Remark</label>
+                        <input
+                          type="text"
+                          value={row.remark || ""}
+                          onChange={(e) => updateRow(sectionIndex, rowIndex, "remark", e.target.value)}
+                          disabled={disabled}
+                          placeholder="Remark"
+                          className={cellClass}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
 
               <button

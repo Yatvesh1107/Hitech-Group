@@ -36,19 +36,80 @@ export default function FrequencyReadingsTable({ rows = [], onChange, disabled =
           No frequency readings recorded yet. Click "Add Reading" to begin.
         </div>
       ) : (
-        <div className="mt-3 overflow-x-auto border border-gray-100 rounded-[12px]">
-          <table className="w-full min-w-[420px] text-left">
-            <thead>
-              <tr className="bg-[#F8FAFC] text-xs uppercase tracking-wider text-[#94A3B8]">
-                <th className="px-4 py-3 font-semibold w-[38%]">Time</th>
-                <th className="px-4 py-3 font-semibold w-[38%]">Frequency</th>
-                <th className="px-4 py-3 font-semibold w-12"></th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-50">
-              {rows.map((row, index) => (
-                <tr key={row.key || index}>
-                  <td className="px-3 py-2">
+        <>
+          <div className="mt-3 hidden lg:block overflow-x-auto border border-gray-100 rounded-[12px]">
+            <table className="w-full min-w-[420px] text-left">
+              <thead>
+                <tr className="bg-[#F8FAFC] text-xs uppercase tracking-wider text-[#94A3B8]">
+                  <th className="px-4 py-3 font-semibold w-[38%]">Time</th>
+                  <th className="px-4 py-3 font-semibold w-[38%]">Frequency</th>
+                  <th className="px-4 py-3 font-semibold w-12"></th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-50">
+                {rows.map((row, index) => (
+                  <tr key={row.key || index}>
+                    <td className="px-3 py-2">
+                      <input
+                        type="text"
+                        value={row.time || ""}
+                        onChange={(e) => updateRow(index, "time", e.target.value)}
+                        disabled={disabled}
+                        placeholder="HH:MM:SS"
+                        className={cellClass}
+                      />
+                    </td>
+                    <td className="px-3 py-2">
+                      <input
+                        type="number"
+                        step="any"
+                        value={row.frequency ?? ""}
+                        onChange={(e) => updateRow(index, "frequency", e.target.value)}
+                        disabled={disabled}
+                        placeholder="0.00"
+                        className={cellClass}
+                      />
+                    </td>
+                    <td className="px-2 py-2 text-right">
+                      <button
+                        type="button"
+                        onClick={() => removeRow(index)}
+                        disabled={disabled}
+                        aria-label="Remove reading"
+                        title="Remove reading"
+                        className="p-2 rounded-[8px] text-[#94A3B8] hover:text-red-600 hover:bg-red-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <Trash2 size={15} />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="mt-3 lg:hidden space-y-3">
+            {rows.map((row, index) => (
+              <div key={row.key || index} className="border border-gray-100 rounded-[12px] bg-[#FCFDFE] p-4">
+                <div className="flex items-center justify-between gap-3 mb-3">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#94A3B8]">
+                    Reading {index + 1}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => removeRow(index)}
+                    disabled={disabled}
+                    aria-label="Remove reading"
+                    title="Remove reading"
+                    className="p-2 rounded-[8px] text-[#94A3B8] hover:text-red-600 hover:bg-red-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <Trash2 size={15} />
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-semibold text-[#64748B] mb-1">Time</label>
                     <input
                       type="text"
                       value={row.time || ""}
@@ -57,8 +118,11 @@ export default function FrequencyReadingsTable({ rows = [], onChange, disabled =
                       placeholder="HH:MM:SS"
                       className={cellClass}
                     />
-                  </td>
-                  <td className="px-3 py-2">
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-[#64748B] mb-1">
+                      Frequency
+                    </label>
                     <input
                       type="number"
                       step="any"
@@ -68,24 +132,12 @@ export default function FrequencyReadingsTable({ rows = [], onChange, disabled =
                       placeholder="0.00"
                       className={cellClass}
                     />
-                  </td>
-                  <td className="px-2 py-2 text-right">
-                    <button
-                      type="button"
-                      onClick={() => removeRow(index)}
-                      disabled={disabled}
-                      aria-label="Remove reading"
-                      title="Remove reading"
-                      className="p-2 rounded-[8px] text-[#94A3B8] hover:text-red-600 hover:bg-red-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      <Trash2 size={15} />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
       )}
 
       <p className="mt-1.5 text-xs text-[#94A3B8]">

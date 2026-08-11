@@ -141,7 +141,7 @@ export default function ShaftEditor({
             <p className="text-xs text-[#94A3B8] mb-3">
               Calculated automatically from the frequency readings below.
             </p>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {minMaxAvgFields.map((field) => (
                 <div key={field.label}>
                   <label className="block text-xs font-semibold text-[#64748B] mb-1">
@@ -165,7 +165,7 @@ export default function ShaftEditor({
           <p className="text-xs text-[#94A3B8] mb-3">
             Enter these values manually. No amplitude-reading dataset is required.
           </p>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {[
               { field: "amplitudeMin", label: "Min" },
               { field: "amplitudeMax", label: "Max" },

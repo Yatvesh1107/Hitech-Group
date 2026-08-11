@@ -38,22 +38,94 @@ export default function PartTable({ rows = [], onChange, disabled = false }) {
           No parts yet. Click "Add Row" to begin.
         </div>
       ) : (
-        <div className="mt-3 overflow-x-auto border border-gray-100 rounded-[12px]">
-          <table className="w-full min-w-[720px] text-left">
-            <thead>
-              <tr className="bg-[#F8FAFC] text-xs uppercase tracking-wider text-[#94A3B8]">
-                <th className="px-4 py-3 font-semibold w-14">Sr No</th>
-                <th className="px-4 py-3 font-semibold w-[32%]">Part Name</th>
-                <th className="px-4 py-3 font-semibold w-[32%]">Material Specification</th>
-                <th className="px-4 py-3 font-semibold">Drawing Number</th>
-                <th className="px-4 py-3 font-semibold w-12"></th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-50">
-              {rows.map((row, index) => (
-                <tr key={row.key || index}>
-                  <td className="px-4 py-2 text-sm font-medium text-[#334155]">{index + 1}</td>
-                  <td className="px-3 py-2">
+        <>
+          <div className="mt-3 hidden lg:block overflow-x-auto border border-gray-100 rounded-[12px]">
+            <table className="w-full min-w-[720px] text-left">
+              <thead>
+                <tr className="bg-[#F8FAFC] text-xs uppercase tracking-wider text-[#94A3B8]">
+                  <th className="px-4 py-3 font-semibold w-14">Sr No</th>
+                  <th className="px-4 py-3 font-semibold w-[32%]">Part Name</th>
+                  <th className="px-4 py-3 font-semibold w-[32%]">Material Specification</th>
+                  <th className="px-4 py-3 font-semibold">Drawing Number</th>
+                  <th className="px-4 py-3 font-semibold w-12"></th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-50">
+                {rows.map((row, index) => (
+                  <tr key={row.key || index}>
+                    <td className="px-4 py-2 text-sm font-medium text-[#334155]">{index + 1}</td>
+                    <td className="px-3 py-2">
+                      <input
+                        type="text"
+                        value={row.partName || ""}
+                        onChange={(e) => updateRow(index, "partName", e.target.value)}
+                        disabled={disabled}
+                        placeholder="e.g. Pump Shaft"
+                        className={cellClass}
+                      />
+                    </td>
+                    <td className="px-3 py-2">
+                      <input
+                        type="text"
+                        value={row.materialSpecification || ""}
+                        onChange={(e) => updateRow(index, "materialSpecification", e.target.value)}
+                        disabled={disabled}
+                        placeholder="e.g. SS 316"
+                        className={cellClass}
+                      />
+                    </td>
+                    <td className="px-3 py-2">
+                      <input
+                        type="text"
+                        value={row.drawingNumber || ""}
+                        onChange={(e) => updateRow(index, "drawingNumber", e.target.value)}
+                        disabled={disabled}
+                        placeholder="e.g. DRG-102"
+                        className={cellClass}
+                      />
+                    </td>
+                    <td className="px-2 py-2 text-right">
+                      <button
+                        type="button"
+                        onClick={() => removeRow(index)}
+                        disabled={disabled}
+                        aria-label="Remove row"
+                        title="Remove row"
+                        className="p-2 rounded-[8px] text-[#94A3B8] hover:text-red-600 hover:bg-red-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <Trash2 size={15} />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="mt-3 lg:hidden space-y-4">
+            {rows.map((row, index) => (
+              <div key={row.key || index} className="border border-gray-100 rounded-[12px] bg-[#FCFDFE] p-4">
+                <div className="flex items-center justify-between gap-3 mb-3">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#94A3B8]">
+                    Part {index + 1}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => removeRow(index)}
+                    disabled={disabled}
+                    aria-label="Remove row"
+                    title="Remove row"
+                    className="p-2 rounded-[8px] text-[#94A3B8] hover:text-red-600 hover:bg-red-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <Trash2 size={15} />
+                  </button>
+                </div>
+
+                <div className="space-y-3">
+                  <div>
+                    <label className="block text-xs font-semibold text-[#64748B] mb-1">
+                      Part Name
+                    </label>
                     <input
                       type="text"
                       value={row.partName || ""}
@@ -62,8 +134,11 @@ export default function PartTable({ rows = [], onChange, disabled = false }) {
                       placeholder="e.g. Pump Shaft"
                       className={cellClass}
                     />
-                  </td>
-                  <td className="px-3 py-2">
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-[#64748B] mb-1">
+                      Material Specification
+                    </label>
                     <input
                       type="text"
                       value={row.materialSpecification || ""}
@@ -72,8 +147,11 @@ export default function PartTable({ rows = [], onChange, disabled = false }) {
                       placeholder="e.g. SS 316"
                       className={cellClass}
                     />
-                  </td>
-                  <td className="px-3 py-2">
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-[#64748B] mb-1">
+                      Drawing Number
+                    </label>
                     <input
                       type="text"
                       value={row.drawingNumber || ""}
@@ -82,24 +160,12 @@ export default function PartTable({ rows = [], onChange, disabled = false }) {
                       placeholder="e.g. DRG-102"
                       className={cellClass}
                     />
-                  </td>
-                  <td className="px-2 py-2 text-right">
-                    <button
-                      type="button"
-                      onClick={() => removeRow(index)}
-                      disabled={disabled}
-                      aria-label="Remove row"
-                      title="Remove row"
-                      className="p-2 rounded-[8px] text-[#94A3B8] hover:text-red-600 hover:bg-red-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      <Trash2 size={15} />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
       )}
 
       <p className="mt-1.5 text-xs text-[#94A3B8]">Add at least one part row.</p>
