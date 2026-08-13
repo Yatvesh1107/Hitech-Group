@@ -88,14 +88,14 @@ export default function CustomerTable({ customers, onView, onEdit, onDeactivate,
                       )}
                     </button>
                   )}
-                  <button
+                  {/* <button
                     type="button"
                     aria-label="Delete"
                     title="Delete"
                     className="p-2 rounded-[10px] text-[#94A3B8] hover:text-red-500 hover:bg-red-50 transition-colors"
                   >
                     <Trash2 size={16} />
-                  </button>
+                  </button> */}
                 </div>
               </td>
             </tr>
