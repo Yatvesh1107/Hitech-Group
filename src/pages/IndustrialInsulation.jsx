@@ -22,6 +22,8 @@ import {
   Layers,
 } from "lucide-react"
 import hitechBd from "@/assets/images/home/hitech-bd.png"
+import insulationbigimg from "@/assets/images/insulation/abtDivbig.jpeg"
+import insulationsmallimg from "@/assets/images/insulation/abtDivsmall.jpeg"
 import aboutSmall from "@/assets/images/home/home-about-small.png"
 import rockwool from "@/assets/images/bd/rockwool.png"
 import glasswool from "@/assets/images/bd/glasswool.png"
@@ -193,7 +195,7 @@ function IndustrialInsulation() {
             <div className="relative">
               <div className="rounded-[24px] overflow-hidden">
                 <img
-                  src={hitechBd}
+                  src={insulationbigimg}
                   alt="Hitech Industrial Insulation operations"
                   className="w-full h-[420px] md:h-[500px] object-cover"
                 />
@@ -201,7 +203,7 @@ function IndustrialInsulation() {
 
               <div className="absolute -top-4 -right-4 rounded-[20px] overflow-hidden shadow-lg w-[160px] md:w-[200px]">
                 <img
-                  src={aboutSmall}
+                  src={insulationsmallimg}
                   alt="Insulation detail"
                   className="w-full h-[110px] md:h-[140px] object-cover"
                 />

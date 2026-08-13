@@ -21,7 +21,8 @@ import {
 } from "lucide-react"
 import ultrasonicsHero from "@/assets/images/ultrasonics/hero.png"
 import ultraAbout from "@/assets/images/ultrasonics/ultra-about.png"
-import aboutSmall from "@/assets/images/home/home-about-small.png"
+import aboutSmall from "@/assets/images/ultrasonics/abtultrasmall.jpeg"
+import aboutbig from "@/assets/images/ultrasonics/abtultrabig.jpeg"
 
 const expertise = [
   {
@@ -186,7 +187,7 @@ function ExpertsUltrasonics() {
             <div className="relative">
               <div className="rounded-[24px] overflow-hidden">
                 <img
-                  src={ultraAbout}
+                  src={aboutbig}
                   alt="Ultrasonic testing operations"
                   className="w-full h-[420px] md:h-[500px] object-cover"
                 />
