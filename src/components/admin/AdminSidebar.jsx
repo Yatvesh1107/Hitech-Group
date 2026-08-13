@@ -5,6 +5,7 @@ import { useAuth } from "../../context/authContext"
 import { useCompany } from "../../context/companyContext"
 import { companyUsesTechnicalReports } from "../../constants/companies"
 import CompanySwitcher from "./CompanySwitcher"
+import companyLogo from "@/assets/logos/hitech-logo.png"
 
 const navItems = [
   { to: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard, end: false },
@@ -51,7 +52,7 @@ export default function AdminSidebar({ open, onClose }) {
         <div className="flex items-center justify-between px-5 md:px-6 py-5 border-b border-white/10">
           <div className="flex items-center gap-3">
             <img
-    src="/src/assets/logos/hitech-logo.png"
+    src={companyLogo}
     alt="HITECH GROUP"
     className="w-12 h-12 object-contain"
   />

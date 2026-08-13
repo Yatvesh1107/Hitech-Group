@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import { Link, NavLink, useLocation } from "react-router-dom"
 import { Menu, X, ChevronDown } from "lucide-react"
+import companyLogo from "@/assets/logos/hitech-logo.png"
 
 const navLinks = [
   { label: "Home", path: "/" },
@@ -53,7 +54,7 @@ function Navbar() {
           <Link to="/" className="flex items-center gap-3 shrink-0">
  <div className="flex items-center gap-3">
   <img
-    src="/src/assets/logos/hitech-logo.png"
+    src={companyLogo}
     alt="HITECH GROUP"
     className="w-12 h-12 object-contain"
   />
