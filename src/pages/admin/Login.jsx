@@ -147,7 +147,7 @@ export default function Login() {
               </div>
 
               <div className="flex items-center justify-between gap-3">
-                <label className="flex items-center gap-2.5 cursor-pointer select-none">
+                {/* <label className="flex items-center gap-2.5 cursor-pointer select-none">
                   <input
                     type="checkbox"
                     checked={remember}
@@ -155,7 +155,7 @@ export default function Login() {
                     className="w-4 h-4 rounded border-gray-300 accent-[#F4B400] cursor-pointer"
                   />
                   <span className="text-sm text-[#334155]">Remember Me</span>
-                </label>
+                </label> */}
                 <span className="text-xs text-[#94A3B8]">Admin access only</span>
               </div>
 
