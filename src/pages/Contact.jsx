@@ -164,7 +164,7 @@ function Contact() {
 
               <motion.h1
                 variants={itemVariants}
-                className="text-white text-[38px] leading-[1.1] lg:text-[60px] lg:leading-[1.05] font-extrabold max-w-[680px] mt-3 mx-auto lg:mx-0"
+                className="text-white text-[32px] leading-[1.15] sm:text-[38px] sm:leading-[1.1] lg:text-[60px] lg:leading-[1.05] font-extrabold max-w-[680px] mt-3 mx-auto lg:mx-0"
               >
                 Let&apos;s Discuss Your Industrial Project
               </motion.h1>
@@ -198,7 +198,7 @@ function Contact() {
             </div>
 
             <motion.div variants={cardVariants} className="max-lg:mt-8">
-              <div className="bg-white/90 backdrop-blur-md rounded-[24px] shadow-2xl p-8 max-w-[480px] mx-auto lg:mx-0 lg:ml-auto">
+              <div className="bg-white/90 backdrop-blur-md rounded-[24px] shadow-2xl p-6 sm:p-8 max-w-[480px] mx-auto lg:mx-0 lg:ml-auto">
                 <h3 className="text-lg font-bold text-[#0B2D5C] mb-6">Get in Touch</h3>
                 <div className="space-y-5">
                   {contactCards.slice(0, 2).map((item) => {
@@ -212,9 +212,9 @@ function Contact() {
                         <div className="w-10 h-10 rounded-lg bg-[#F4B400]/10 flex items-center justify-center shrink-0">
                           <Icon size={20} className="text-[#F4B400]" />
                         </div>
-                        <div>
+                        <div className="min-w-0">
                           <h4 className="font-semibold text-[#0F172A]">{item.label}</h4>
-                          <p className="text-sm text-[#334155] mt-0.5">{item.value}</p>
+                          <p className="text-sm text-[#334155] mt-0.5 [overflow-wrap:anywhere]">{item.value}</p>
                           <p className="text-xs text-[#94A3B8] mt-0.5">{item.sub}</p>
                         </div>
                       </a>
