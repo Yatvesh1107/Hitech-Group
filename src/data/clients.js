@@ -7,6 +7,16 @@ import murugappa from "@/assets/images/clients/murugappa.svg"
 import nsl from "@/assets/images/clients/nsl.png"
 import shahu from "@/assets/images/clients/shahu.png"
 import adm from "@/assets/images/clients/adm.png"
+import gokul from "@/assets/images/clients/gokul.png"
+import coromandel from "@/assets/images/clients/coromandel.png"
+import isgec from "@/assets/images/clients/isgec.png"
+import mylar from "@/assets/images/clients/mylarsugar.png"
+import olam from "@/assets/images/clients/olam-logo-new.png"
+import shirguppi from "@/assets/images/clients/Shirguppisugar.png"
+import thermax from "@/assets/images/clients/thermax-logo.svg"
+import uttam from "@/assets/images/clients/uttamgroup.png"
+import vishwaraj from "@/assets/images/clients/viswarajSugar.png"
+
 
 const clients = [
   {
@@ -33,7 +43,12 @@ const clients = [
     domain: "Sugar & Fertilizers",
     logo: eidparrys,
   },
-  { name: "Gokul", initials: "GK", domain: "Sugar Industry" },
+  { 
+    name: "Gokul", 
+    initials: "GK", 
+    domain: "Sugar Industry",
+    logo: gokul,
+  },
   {
     name: "Satish Sugars",
     initials: "SS",
@@ -64,12 +79,61 @@ const clients = [
     domain: "Food Processing",
     logo: adm,
   },
-  { name: "Sound Casting", initials: "SC", domain: "Foundry" },
   {
-    name: "National Heavy Engineering Co-op",
-    initials: "NHEC",
-    domain: "Heavy Engineering",
+    name: "Coromandel",
+    initials: "coromandel",
+    domain: "Fertilizers",
+    logo: coromandel,
   },
+  {
+    name: "ISGEC Heavy Engineering Ltd",
+    initials: "ISGEC",
+    domain: "Manufacturing",
+    logo: isgec,
+  },
+  {
+    name: "MyLar Sugars ltd",
+    initials: "Mylar",
+    domain: "Sugar Industry",
+    logo: mylar,
+  },
+  {
+    name: "Olam Group",
+    initials: "olam",
+    domain: "Food and Agriculture",
+    logo: olam,
+  },
+  {
+    name: "Shirguppi Sugar Works Ltd",
+    initials: "Shirguppi",
+    domain: "Food and Agriculture",
+    logo: shirguppi,
+  },
+  {
+    name: "Thermax",
+    initials: "thermax",
+    domain: "Energy and Environment Sectors",
+    logo: thermax,
+  },
+  {
+    name: "Uttam Group",
+    initials: "uttam",
+    domain: "Textile and Lifestyle",
+    logo: uttam,
+  },
+  {
+    name: "Vishwaraj Sugar Industries Ltd ",
+    initials: "Vishwaraj",
+    domain: "Sugar Industry",
+    logo: vishwaraj,
+  },
+  
+  // { name: "Sound Casting", initials: "SC", domain: "Foundry" },
+  // {
+  //   name: "National Heavy Engineering Co-op",
+  //   initials: "NHEC",
+  //   domain: "Heavy Engineering",
+  // },
 ]
 
 export default clients
