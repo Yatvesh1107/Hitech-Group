@@ -10,16 +10,25 @@ const contacts = [
     href: "tel:+919158854848",
   },
   {
-    icon: Mail,
-    label: "Email",
-    value: " insulation.hitech777@gmail.com",
-    href: "mailto: insulation.hitech777@gmail.com",
-  },
-  {
     icon: MapPin,
     label: "Location",
     value: "Kolhapur, Maharashtra",
     href: "#",
+  },
+]
+
+const divisionEmails = [
+  {
+    division: "Hitech Insulation",
+    email: "insulation.hitech777@gmail.com",
+  },
+  {
+    division: "Altron Testing",
+    email: "testing.altron@gmail.com",
+  },
+  {
+    division: "Precision Tech",
+    email: "precisiontechenggservices@gmail.com",
   },
 ]
 
@@ -68,7 +77,7 @@ function CTASection() {
               dependable, results-driven outcomes.
             </p>
 
-            <div className="grid sm:grid-cols-3 gap-4 mt-8">
+            <div className="grid sm:grid-cols-2 gap-4 mt-8">
               {contacts.map((contact) => {
                 const Icon = contact.icon
                 return (
@@ -87,6 +96,26 @@ function CTASection() {
                   </a>
                 )
               })}
+            </div>
+
+            <div className="bg-white/5 rounded-[18px] p-5 mt-4">
+              <span className="block text-xs font-semibold text-[rgba(255,255,255,0.6)] uppercase tracking-[1px] mb-3">
+                Division Emails
+              </span>
+              <div className="space-y-2.5">
+                {divisionEmails.map((item) => (
+                  <a
+                    key={item.division}
+                    href={`mailto:${item.email}`}
+                    className="flex items-center gap-2.5 hover:text-[#F4B400] transition-colors"
+                  >
+                    <Mail size={15} className="text-[#F4B400] shrink-0" />
+                    <span className="block text-sm font-medium text-white break-all">
+                      {item.division} — {item.email}
+                    </span>
+                  </a>
+                ))}
+              </div>
             </div>
           </motion.div>
 

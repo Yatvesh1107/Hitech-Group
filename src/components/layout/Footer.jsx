@@ -133,6 +133,24 @@ function Footer() {
                   <span>insulation.hitech777@gmail.com</span>
                 </a>
               </li>
+              <li>
+                <a
+                  href="mailto:testing.altron@gmail.com"
+                  className="flex items-start gap-3 text-sm text-[rgba(255,255,255,0.7)] hover:text-[#F4B400] transition-colors"
+                >
+                  <Mail size={16} className="text-[#F4B400] shrink-0 mt-0.5" />
+                  <span>testing.altron@gmail.com</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="mailto:precisiontechenggservices@gmail.com"
+                  className="flex items-start gap-3 text-sm text-[rgba(255,255,255,0.7)] hover:text-[#F4B400] transition-colors"
+                >
+                  <Mail size={16} className="text-[#F4B400] shrink-0 mt-0.5" />
+                  <span>precisiontechenggservices@gmail.com</span>
+                </a>
+              </li>
               <li className="flex items-start gap-3 text-sm text-[rgba(255,255,255,0.7)]">
                 <Clock size={16} className="text-[#F4B400] shrink-0 mt-0.5" />
                 <span>

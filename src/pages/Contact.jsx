@@ -54,6 +54,12 @@ const divisionOptions = [
   "General Enquiry",
 ]
 
+const divisionEmails = {
+  "Industrial Insulation": "insulation.hitech777@gmail.com",
+  "Altron Testing & Allieds": "testing.altron@gmail.com",
+  "Precision Tech Engineering": "precisiontechenggservices@gmail.com",
+}
+
 const bottomStrip = [
   { icon: Factory, label: "Industrial Solutions" },
   { icon: BadgeCheck, label: "Responsive Support" },
@@ -201,7 +207,7 @@ function Contact() {
               <div className="bg-white/90 backdrop-blur-md rounded-[24px] shadow-2xl p-6 sm:p-8 max-w-[480px] mx-auto lg:mx-0 lg:ml-auto">
                 <h3 className="text-lg font-bold text-[#0B2D5C] mb-6">Get in Touch</h3>
                 <div className="space-y-5">
-                  {contactCards.slice(0, 2).map((item) => {
+                  {contactCards.slice(0, 1).map((item) => {
                     const Icon = item.icon
                     return (
                       <a
@@ -220,6 +226,36 @@ function Contact() {
                       </a>
                     )
                   })}
+
+                  {(() => {
+                    const selectedEmail =
+                      divisionEmails[form.division] || " insulation.hitech777@gmail.com"
+                    return (
+                      <a
+                        href={`mailto:${selectedEmail.trim()}`}
+                        className="flex gap-4 hover:bg-[#F8FAFC] p-2 rounded-xl transition-colors"
+                      >
+                        <div className="w-10 h-10 rounded-lg bg-[#F4B400]/10 flex items-center justify-center shrink-0">
+                          <Mail size={20} className="text-[#F4B400]" />
+                        </div>
+                        <div className="min-w-0">
+                          <h4 className="font-semibold text-[#0F172A]">
+                            {form.division && form.division !== "General Enquiry"
+                              ? `${form.division} Email`
+                              : "Email"}
+                          </h4>
+                          <p className="text-sm text-[#334155] mt-0.5 [overflow-wrap:anywhere]">
+                            {selectedEmail.trim()}
+                          </p>
+                          <p className="text-xs text-[#94A3B8] mt-0.5">
+                            {form.division && form.division !== "General Enquiry"
+                              ? "Direct line for this division"
+                              : "We reply within 24 hours"}
+                          </p>
+                        </div>
+                      </a>
+                    )
+                  })()}
                 </div>
                 <p className="text-sm text-[#334155] leading-relaxed mt-5">
                   Our team typically responds within 24 hours. For urgent requirements, please call

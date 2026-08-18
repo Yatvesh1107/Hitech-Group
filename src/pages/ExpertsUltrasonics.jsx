@@ -18,6 +18,7 @@ import {
   Wrench,
   Hammer,
   Search,
+  Mail,
 } from "lucide-react"
 import ultrasonicsHero from "@/assets/images/ultrasonics/hero.png"
 import ultraAbout from "@/assets/images/ultrasonics/ultra-about.png"
@@ -131,6 +132,19 @@ function ExpertsUltrasonics() {
               >
                 Contact Us
               </Link>
+            </motion.div>
+
+            <motion.div
+              variants={itemVariants}
+              className="mt-5 flex items-center gap-2.5 justify-center lg:justify-start"
+            >
+              <Mail size={18} className="text-[#F4B400] shrink-0" />
+              <a
+                href="mailto:testing.altron@gmail.com"
+                className="text-white/90 hover:text-[#F4B400] transition-colors break-all"
+              >
+                testing.altron@gmail.com
+              </a>
             </motion.div>
           </div>
 

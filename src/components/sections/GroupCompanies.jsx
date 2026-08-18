@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
-import { Flame, ScanSearch, Settings, ArrowRight, Check } from "lucide-react"
+import { Flame, ScanSearch, Settings, ArrowRight, Check, Mail } from "lucide-react"
 import hitechBd from "@/assets/images/home/hitech-bd.png"
 import ultrasonicBd from "@/assets/images/home/ultrasonic-bd.png"
 import precisionBd from "@/assets/images/home/precision-bd.png"
@@ -20,6 +20,7 @@ const divisions = [
     icon: Flame,
     image: hitechBd,
     alt: "Industrial insulation pipes and equipment",
+    email: "insulation.hitech777@gmail.com",
   },
   {
     title: "Altron Testing & Allieds",
@@ -35,6 +36,7 @@ const divisions = [
     icon: ScanSearch,
     image: ultrasonicBd,
     alt: "Ultrasonic testing and NDT inspection",
+    email: "testing.altron@gmail.com",
   },
   {
     title: "Precision Tech Engineering Services",
@@ -50,6 +52,7 @@ const divisions = [
     icon: Settings,
     image: precisionBd,
     alt: "Industrial engineering and machinery",
+    email: "precisiontechenggservices@gmail.com",
   },
 ]
 
@@ -143,6 +146,14 @@ function GroupCompanies() {
 
                   <div className="mt-auto pt-6">
                     <div className="border-t border-gray-100 mb-6" />
+
+                    <a
+                      href={`mailto:${division.email}`}
+                      className="inline-flex items-center gap-2 mb-4 text-sm font-medium text-[#334155] hover:text-[#0B2D5C] transition-colors"
+                    >
+                      <Mail size={16} className="text-[#F4B400] shrink-0" />
+                      <span className="break-all">{division.email}</span>
+                    </a>
 
                     <Link
                       to={division.path}

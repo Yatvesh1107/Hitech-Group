@@ -20,6 +20,7 @@ import {
   Cog,
   Hammer,
   Layers,
+  Mail,
 } from "lucide-react"
 import hitechBd from "@/assets/images/home/hitech-bd.png"
 import insulationbigimg from "@/assets/images/insulation/abtDivbig.jpeg"
@@ -139,6 +140,19 @@ function IndustrialInsulation() {
               >
                 Contact Us
               </Link>
+            </motion.div>
+
+            <motion.div
+              variants={itemVariants}
+              className="mt-5 flex items-center gap-2.5 justify-center lg:justify-start"
+            >
+              <Mail size={18} className="text-[#F4B400] shrink-0" />
+              <a
+                href="mailto: insulation.hitech777@gmail.com"
+                className="text-white/90 hover:text-[#F4B400] transition-colors break-all"
+              >
+                insulation.hitech777@gmail.com
+              </a>
             </motion.div>
           </div>
 

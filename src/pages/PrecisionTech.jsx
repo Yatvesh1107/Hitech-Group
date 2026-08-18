@@ -34,6 +34,7 @@ import {
   Waves,
   Weight,
   Zap,
+  Mail,
 } from "lucide-react"
 import precisionBd from "@/assets/images/home/precision-bd.png"
 import aboutSmall from "@/assets/images/home/home-about-small.png"
@@ -145,6 +146,19 @@ function PrecisionTech() {
               >
                 Contact Us
               </Link>
+            </motion.div>
+
+            <motion.div
+              variants={itemVariants}
+              className="mt-5 flex items-center gap-2.5 justify-center lg:justify-start"
+            >
+              <Mail size={18} className="text-[#F4B400] shrink-0" />
+              <a
+                href="mailto:precisiontechenggservices@gmail.com"
+                className="text-white/90 hover:text-[#F4B400] transition-colors break-all"
+              >
+                precisiontechenggservices@gmail.com
+              </a>
             </motion.div>
           </div>
 
