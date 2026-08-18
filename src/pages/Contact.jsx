@@ -523,13 +523,14 @@ function Contact() {
                           htmlFor="division"
                           className="block text-sm font-semibold text-[#0F172A] mb-1.5"
                         >
-                          I&apos;m Interested In
+                          I&apos;m Interested In <span className="text-[#F4B400]">*</span>
                         </label>
                         <select
                           id="division"
                           name="division"
                           value={form.division}
                           onChange={handleChange}
+                          required
                           className={`${inputClass} appearance-none`}
                         >
                           <option value="">Select a service</option>
