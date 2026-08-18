@@ -16,6 +16,8 @@ import shirguppi from "@/assets/images/clients/Shirguppisugar.png"
 import thermax from "@/assets/images/clients/thermax-logo.svg"
 import uttam from "@/assets/images/clients/uttamgroup.png"
 import vishwaraj from "@/assets/images/clients/viswarajSugar.png"
+import enmas from "@/assets/images/clients/enmusEpc.png"
+import bluecraft from "@/assets/images/clients/bluecraft.png"
 
 
 const clients = [
@@ -127,7 +129,18 @@ const clients = [
     domain: "Sugar Industry",
     logo: vishwaraj,
   },
-  
+  {
+    name: "Enmas Epc Power Projects",
+    initials: "EEPP",
+    domain: "Power Generation",
+    logo: enmas,
+  },
+  {
+    name: "Bluecraft Agro",
+    initials: "Bluecraft",
+    domain: "Manufacturing ",
+    logo:bluecraft ,
+  },
   // { name: "Sound Casting", initials: "SC", domain: "Foundry" },
   // {
   //   name: "National Heavy Engineering Co-op",
