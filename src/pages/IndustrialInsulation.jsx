@@ -36,6 +36,7 @@ import alusheetplain from "@/assets/images/bd/aluminsheet.png"
 import fiberglassroll from "@/assets/images/bd/fiberglassroll.png"
 import rockwoolmatt from "@/assets/images/bd/rockwookmatt.png"
 import rockwoolslab from "@/assets/images/bd/rockwoolslab.png"
+import turbineinsu from "@/assets/images/bd/turbineinsulation.png"
 
 
 const expertise = [
@@ -568,11 +569,18 @@ function IndustrialInsulation() {
 
               image:rockwoolslab
             },
-            {
+{
               name: "Rockwool Lightly Resin bonded mattresses",
               description:
                 "Rockwool mattress is lightly resin bonded mineral fibers faced one side with hexagonal galvanized or stainless steel wire netting. It is a flexible material having firm structure reinforced due to wire mesh. It is non-combustible in nature.",
               image:rockwoolmatt
+            },
+            {
+              name: "Turbine Insulation",
+              description:
+                "Turbine insulation consists of custom-fit, removable, and reusable multi-layered blankets or jackets designed to cover high-temperature gas and steam turbine casings.",
+              image:turbineinsu
+              
             },
           ].map((product) => (
             <motion.div
