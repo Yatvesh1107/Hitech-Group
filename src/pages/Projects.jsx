@@ -48,6 +48,54 @@ const projects = [
   },
 ]
 
+const completedProjects = [
+  { name: "Renuka Sugar Group Ltd.", note: "Complete full plant" },
+  { name: "Shree Chhatrapati Shahu S.S.K. Ltd.", location: "Kagal, Maharashtra" },
+  { name: "Chhatrapati Rajaram S.S.K. Ltd.", location: "Maharashtra" },
+  { name: "Satish Sugar Ltd.", location: "Gokak, Karnataka", note: "Complete full plant" },
+  { name: "Cane Agro Energy India Ltd.", location: "Raigaon, Maharashtra", note: "Complete full plant" },
+  { name: "Ajara S.S.K. Ltd.", location: "Gavase" },
+  { name: "Riddhi Siddhi Gluco Biols Ltd.", location: "Gokak, Karnataka", note: "Complete full plant" },
+  { name: "West Coast Paper Mills Ltd.", location: "Dandeli, Karnataka" },
+  { name: "Government Milk Scheme", location: "Miraj, Maharashtra" },
+  { name: "Nalawade Sugar Ltd." },
+  { name: "Ambai Sugar Ltd.", location: "Jainapur" },
+  { name: "Mysore Paper Mills Ltd.", location: "Bhadravati, Karnataka" },
+  { name: "Venkateshwara Power Project Ltd.", location: "Bedkihal" },
+  { name: "S.S. Engineers", location: "Pune, Maharashtra", note: "2 complete co-generation plants" },
+  { name: "Gokak Sugars Ltd.", location: "Kolavi, Karnataka" },
+  { name: "Shree Doodhaganga Krishna S.S.K. Ltd.", location: "Chikodi, Karnataka" },
+  { name: "Mallaprabha S.S.K. Ltd.", location: "M. K. Hubli, Karnataka" },
+  { name: "Jamkhandi Sugars Ltd.", location: "Hirepadasalgi, Karnataka" },
+  { name: "I.C.P. Ltd.", location: "Uttur, Mudhol, Karnataka" },
+  { name: "Gokak Sugar Ltd.", location: "Gokak, Karnataka" },
+  { name: "GEM Sugars Ltd." },
+  { name: "Chamundeshwari Sugars Ltd." },
+  { name: "Shri Nidhi Paper Mills Pvt. Ltd." },
+  { name: "E.I.D. Parry Sugar", location: "Karnataka" },
+  { name: "Bhairavnath Sugar Works Ltd.", location: "Sonari, Osmanabad, Maharashtra" },
+  { name: "Mysore Sugar Company Ltd.", location: "Mandya, Karnataka" },
+  { name: "Kumbhi-Kasari S.S.K. Ltd.", location: "Kuditre, Maharashtra" },
+  { name: "Vijayanagar Sugar Ltd.", note: "3 units" },
+  { name: "SEDL Engineering", location: "Changigraha" },
+  { name: "Lunar Engineers" },
+  { name: "Kay-Bauvet Pvt. Ltd.", location: "Satara" },
+  { name: "Meru Industries", note: "All projects" },
+  { name: "Gangamai Industries & Construction Ltd.", location: "Maharashtra" },
+  { name: "Shri Gurudatta Sugars Ltd.", location: "Maharashtra" },
+  { name: "Sanjivani S.S.K. Ltd.", location: "Goa" },
+  { name: "M.P. Engineers Works" },
+  { name: "Sri Sri Sadguru S.S.K. Ltd." },
+  { name: "Shri Chhatrapati S.S.K. Ltd.", location: "Bhavaninagar, Maharashtra" },
+  { name: "K.P.R. Sugar", location: "Karnataka" },
+  { name: "N.S.L. Sugar", location: "Karnataka", note: "2 units" },
+  { name: "E.I.D. Parry Sugar" },
+  { name: "Shirguppi Sugar Ltd." },
+  { name: "Indiana Sucrotech Pvt. Ltd." },
+  { name: "Mahadik Sugars Ltd." },
+  { name: "Utech Sugar Ltd." },
+]
+
 const processSteps = [
   {
     icon: ClipboardList,
@@ -306,6 +354,55 @@ function Projects() {
                   </p>
                 </div>
               </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      <section className="bg-[#EEF4FA] relative overflow-hidden">
+        <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-14 lg:py-18">
+          <div className="text-center max-w-[760px] mx-auto mb-10">
+            <span className="inline-block text-[#F4B400] text-sm font-semibold tracking-[2px] uppercase">
+              Completed Projects
+            </span>
+            <h2 className="text-[#0B2D5C] text-[34px] md:text-[42px] font-extrabold leading-[1.1] mt-3">
+              Trusted Delivery Across Industry
+            </h2>
+            <p className="text-[#334155] text-lg leading-[1.7] mt-4">
+              A selection of completed industrial projects delivered for leading sugar, paper,
+              power and engineering organisations.
+            </p>
+          </div>
+
+          <motion.div
+            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"
+            variants={gridContainerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+          >
+            {completedProjects.map((project, index) => (
+              <motion.article
+                key={`${project.name}-${index}`}
+                variants={gridCardVariants}
+                className="bg-white border border-[#DCE6F0] rounded-2xl p-5 shadow-sm hover:-translate-y-1 hover:shadow-lg hover:border-[#F4B400] transition-all duration-300"
+              >
+                <div className="flex items-start gap-4">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#0B2D5C] text-xs font-bold text-white">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <h3 className="text-base font-bold leading-snug text-[#0B2D5C]">
+                      {project.name}
+                    </h3>
+                    {(project.location || project.note) && (
+                      <p className="mt-2 text-sm leading-relaxed text-[#526275]">
+                        {[project.location, project.note].filter(Boolean).join(" · ")}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </motion.article>
             ))}
           </motion.div>
         </div>
