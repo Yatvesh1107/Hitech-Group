@@ -1,14 +1,14 @@
 import { motion } from "framer-motion"
 import { Briefcase, GraduationCap, Users, Award, BadgeCheck } from "lucide-react"
-import aboutMain from "@/assets/images/home/home-about-main.png"
-import aboutSmall from "@/assets/images/home/home-about-small.png"
+import rdpatil from "@/assets/images/about/rdpatil.jpeg"
+import ajinkya from "@/assets/images/about/ajinkyapatil.jpeg"
 
 const leaders = [
   {
     name: "Mr. Raghunath Patil",
     role: "CEO",
     company: "Hitech Industrial Insulation",
-    image: aboutMain,
+    image: rdpatil,
     imageAlt: "Portrait placeholder – Mr. Raghunath Patil",
     credentials: "DME, BE(Mech) – UT Level 3",
     bio: "With a strong engineering vision and a hands-on understanding of industrial processes, Mr. Raghunath Patil leads HITECH GROUP with an unwavering commitment to quality, dependable customer relationships and industrial excellence across every division.",
@@ -23,7 +23,7 @@ const leaders = [
     name: "Mr. Ajinkya Patil",
     role: "Director",
     company: "Hitech Industrial Insulation",
-    image: aboutSmall,
+    image: ajinkya,
     imageAlt: "Portrait placeholder – Mr. Ajinkya Patil",
     credentials: "DME, BE(Mech) – UT Level 3",
     bio: "Mr. Ajinkya Patil directs the group's business growth and future development, championing innovation, operational excellence and the long-term evolution of HITECH GROUP's capabilities and client partnerships.",
@@ -79,6 +79,7 @@ function Leadership() {
 
         <motion.div
           className="grid md:grid-cols-2 gap-6 mt-8"
+          // className="grid md:grid-cols-2 gap-6 max-w-[1000px] mx-auto mt-8"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -94,7 +95,7 @@ function Leadership() {
                 <img
                   src={leader.image}
                   alt={leader.imageAlt}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
                 <div className="absolute bottom-5 left-7">

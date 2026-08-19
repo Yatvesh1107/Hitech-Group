@@ -32,6 +32,11 @@ import mineralwool from "@/assets/images/bd/mineralwool.png"
 import armaflex from "@/assets/images/bd/armaflex.png"
 import alusheet from "@/assets/images/bd/alusheet.png"
 import cold from "@/assets/images/bd/cold.png"
+import alusheetplain from "@/assets/images/bd/aluminsheet.png"
+import fiberglassroll from "@/assets/images/bd/fiberglassroll.png"
+import rockwoolmatt from "@/assets/images/bd/rockwookmatt.png"
+import rockwoolslab from "@/assets/images/bd/rockwoolslab.png"
+
 
 const expertise = [
   {
@@ -542,6 +547,33 @@ function IndustrialInsulation() {
               image: cold,
               alt: "Cold insulation materials",
             },
+            {
+              name: "Fiberglass Insulation Roll",
+              description:
+                "Fiberglass Insulation Roll is a lightweight compressible insulation material consisting of fine long inorganic fibers bonded together by a high temperature binder. It contains many small pockets of air between the glass fibers, and these small air pockets result in high thermal and acoustic insulation properties. Fiberglass wool is produced in rolls with different thermal and mechanical properties.",
+
+              image: fiberglassroll
+            },
+            {
+              name: "Aluminum plain Sheet",
+              description:
+                "Aluminum sheets are widely used in fabricating metal insulation jacketing. Aluminum is lightweight, flexible to fabricate easily at site and has good resistance to corrosion. Apart from this Aluminum has many characteristics due to which it is commonly used as an insulation jacketing metal.",
+
+              image:alusheetplain
+            },
+            {
+              name: "Rockwool Lightly Resin bonded Slab",
+              description:
+                "Rockwool Slabs are semi rigid and rigid boards manufactured from stable stone fiber bonded with thermosetting resin binder. It can resist temperature up to 750 Deg C. It is lightweight, strong, malleable, easy to handle and cut to suit intricate shape. Rockwool Slabs are available unfaced or faced with Glass reinforced Aluminum Foil / Kraft paper laminated facing and Black Fiber Glass Tissue.",
+
+              image:rockwoolslab
+            },
+            {
+              name: "Rockwool Lightly Resin bonded mattresses",
+              description:
+                "Rockwool mattress is lightly resin bonded mineral fibers faced one side with hexagonal galvanized or stainless steel wire netting. It is a flexible material having firm structure reinforced due to wire mesh. It is non-combustible in nature.",
+              image:rockwoolmatt
+            },
           ].map((product) => (
             <motion.div
               key={product.name}
@@ -549,11 +581,20 @@ function IndustrialInsulation() {
               className="group bg-white rounded-[24px] border border-gray-100 shadow-sm overflow-hidden hover:-translate-y-1 hover:shadow-xl hover:border-[#F4B400] transition-all duration-300"
             >
               <div className="relative h-[200px] overflow-hidden">
-                <img
-                  src={product.image}
-                  alt={product.alt}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+                {product.image ? (
+                  <img
+                    src={product.image}
+                    alt={product.alt}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                ) : (
+                  <div className="w-full h-full flex flex-col items-center justify-center gap-3 bg-[#F1F5F9]">
+                    <Layers className="w-10 h-10 text-[#94A3B8]" />
+                    <span className="text-sm font-semibold text-[#94A3B8] tracking-wide uppercase">
+                      Image Coming Soon
+                    </span>
+                  </div>
+                )}
               </div>
               <div className="p-6">
                 <h3 className="font-bold text-[#0B2D5C] text-lg">{product.name}</h3>
