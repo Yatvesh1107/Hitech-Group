@@ -48,7 +48,7 @@ const clients = [
   { 
     name: "Gokul", 
     initials: "GK", 
-    domain: "Sugar Industry",
+    domain: "Milk Processing Plant",
     logo: gokul,
   },
   {
