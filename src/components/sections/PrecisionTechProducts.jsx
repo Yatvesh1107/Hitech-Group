@@ -16,9 +16,7 @@ import {
   Cpu,
   Gauge,
   BadgeCheck,
-  Mail,
 } from "lucide-react"
-import precisionBd from "@/assets/images/home/precision-bd.png"
 
 const containerVariants = {
   hidden: {},
@@ -29,6 +27,13 @@ const itemVariants = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
 }
+
+const productStats = [
+  { icon: Clock3, label: "Since 1962" },
+  { icon: Globe, label: "74+ Countries" },
+  { icon: Users, label: "1000+ Machines" },
+  { icon: Cpu, label: "High-Amplitude Resonance" },
+]
 
 const technicalSteps = [
   {
@@ -104,52 +109,33 @@ const products = [
   { name: "Machined Job (Casting)" },
 ]
 
-const heroStats = [
-  // { icon: Clock3, label: "Since 1962" },
-  // { icon: Globe, label: "74+ Countries" },
-  { icon: Users, label: "1000+ Machines" },
-  { icon: Cpu, label: "High-Amplitude Resonance" },
-]
-
-function Products() {
+function PrecisionTechProducts() {
   return (
     <>
-      <section className="relative bg-[#082A57] overflow-hidden">
-        <div className="absolute inset-0">
-          <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{
-              backgroundImage: `url(${precisionBd})`,
-            }}
-          />
-          <div className="absolute inset-0 bg-[rgba(8,42,87,0.85)]" />
-        </div>
-
-        <div className="relative z-10 mx-auto max-w-[1280px] px-5 md:px-8 min-h-[calc(100svh-124px)] flex flex-col justify-center pt-10 pb-20">
+      <section className="bg-white">
+        <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-8 lg:py-10">
           <motion.div
+            className="max-w-[760px] mx-auto text-center"
             variants={containerVariants}
             initial="hidden"
-            animate="visible"
-            className="max-w-[820px]"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
           >
             <motion.span
               variants={itemVariants}
               className="inline-block text-[#F4B400] text-sm font-semibold tracking-[2px] uppercase"
             >
-              Products &amp; Services
+              Formula 62 Vibratory Stress Relieving
             </motion.span>
 
-            <motion.h1
+            <motion.h2
               variants={itemVariants}
-              className="text-white text-[38px] leading-[1.1] lg:text-[60px] lg:leading-[1.05] font-extrabold max-w-[720px] mt-2"
+              className="text-[#0B2D5C] text-[32px] md:text-[40px] lg:text-[48px] font-extrabold leading-[1.1] mt-3"
             >
               Vibratory Stress Relieving Services
-            </motion.h1>
+            </motion.h2>
 
-            <motion.p
-              variants={itemVariants}
-              className="text-[rgba(255,255,255,0.85)] text-lg lg:text-xl leading-[1.7] max-w-[680px] mt-4"
-            >
+            <motion.p variants={itemVariants} className="text-[#334155] leading-[1.8] mt-4">
               Formula 62 Vibratory Stress Relieving Machines are widely used, since 1962, in
               more than 74 countries, with over 1000 machines working for diverse
               applications in different climatic conditions — delivering sustained quality,
@@ -157,55 +143,37 @@ function Products() {
               resonance frequency to effectively reduce peak residual stresses in metal
               fabrications, castings and machined components.
             </motion.p>
-
-            <motion.div
-              variants={itemVariants}
-              className="flex flex-col sm:flex-row gap-4 mt-6"
-            >
-              <Link
-                to="/contact"
-                className="h-14 px-8 bg-[#F4B400] text-[#0F172A] font-semibold rounded-xl inline-flex items-center justify-center hover:bg-[#d9a000] transition-colors"
-              >
-                Get a Quote
-              </Link>
-              <Link
-                to="/divisions/precision-tech"
-                className="h-14 px-8 border-2 border-white text-white font-semibold rounded-xl inline-flex items-center justify-center hover:bg-white/10 transition-colors"
-              >
-                Explore Services
-              </Link>
-            </motion.div>
-
-            <motion.div variants={itemVariants} className="mt-5 flex items-center gap-2.5">
-              <Mail size={18} className="text-[#F4B400] shrink-0" />
-              <a
-                href="mailto:precisiontechenggservices@gmail.com"
-                className="text-white/90 hover:text-[#F4B400] transition-colors break-all"
-              >
-                precisiontechenggservices@gmail.com
-              </a>
-            </motion.div>
           </motion.div>
-        </div>
 
-        <div className="absolute bottom-0 left-0 right-0 bg-black/30 backdrop-blur-sm">
-          <div className="max-w-[1280px] mx-auto px-5 md:px-8">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-y-2.5 gap-x-5 py-4">
-              {heroStats.map((stat) => {
-                const Icon = stat.icon
-                return (
-                  <div key={stat.label} className="flex items-center gap-3 text-white/80">
-                    <Icon size={18} className="text-[#F4B400] shrink-0" />
-                    <span className="text-sm font-medium">{stat.label}</span>
+          <motion.div
+            className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-8"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+          >
+            {productStats.map((stat) => {
+              const Icon = stat.icon
+              return (
+                <motion.div
+                  key={stat.label}
+                  variants={itemVariants}
+                  className="bg-[#F8FAFC] border border-gray-100 rounded-[20px] p-5 flex items-center gap-3"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-[#F4B400]/10 flex items-center justify-center shrink-0">
+                    <Icon size={20} className="text-[#F4B400]" />
                   </div>
-                )
-              })}
-            </div>
-          </div>
+                  <span className="text-sm font-semibold text-[#0B2D5C] leading-snug">
+                    {stat.label}
+                  </span>
+                </motion.div>
+              )
+            })}
+          </motion.div>
         </div>
       </section>
 
-      <section className="bg-white">
+      <section className="bg-[#F8FAFC]">
         <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-8 lg:py-10">
           <motion.div
             className="max-w-[720px] mx-auto text-center"
@@ -263,7 +231,7 @@ function Products() {
         </div>
       </section>
 
-      <section className="bg-[#F8FAFC]">
+      <section className="bg-white">
         <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-8 lg:py-10">
           <motion.div
             className="max-w-[720px] mx-auto text-center"
@@ -316,7 +284,7 @@ function Products() {
         </div>
       </section>
 
-      <section className="bg-white">
+      <section className="bg-[#F8FAFC]">
         <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-8 lg:py-10">
           <motion.div
             className="max-w-[720px] mx-auto text-center"
@@ -388,7 +356,7 @@ function Products() {
         </div>
       </section>
 
-      <section className="bg-[#F8FAFC]">
+      <section className="bg-white">
         <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-8 lg:py-10">
           <motion.div
             className="max-w-[720px] mx-auto text-center"
@@ -437,7 +405,7 @@ function Products() {
         </div>
       </section>
 
-      <section className="bg-white">
+      <section className="bg-[#F8FAFC]">
         <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-8 lg:py-10">
           <motion.div
             className="max-w-[720px] mx-auto text-center"
@@ -534,4 +502,4 @@ function Products() {
   )
 }
 
-export default Products
+export default PrecisionTechProducts

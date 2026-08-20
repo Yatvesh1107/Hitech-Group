@@ -1,5 +1,5 @@
 import { Fragment } from "react"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { motion } from "framer-motion"
 import {
   Scale,
@@ -37,6 +37,7 @@ import {
   Mail,
 } from "lucide-react"
 import precisionBd from "@/assets/images/home/precision-bd.png"
+import PrecisionTechProducts from "../components/sections/PrecisionTechProducts"
 import aboutSmall from "@/assets/images/home/home-about-small.png"
 
 const expertise = [
@@ -85,6 +86,9 @@ const cardVariants = {
 }
 
 function PrecisionTech() {
+  const location = useLocation()
+  const isProducts = location.pathname === "/divisions/precision-tech/products"
+
   return (
     <>
       <section className="relative bg-[#082A57] overflow-hidden">
@@ -203,6 +207,10 @@ function PrecisionTech() {
       </div>
     </section>
 
+    {isProducts ? (
+      <PrecisionTechProducts />
+    ) : (
+      <>
     <section className="bg-white">
       <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-8 lg:py-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -1488,6 +1496,8 @@ function PrecisionTech() {
         </motion.div>
       </div>
     </section>
+      </>
+    )}
     </>
   )
 }

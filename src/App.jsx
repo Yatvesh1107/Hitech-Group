@@ -14,7 +14,6 @@ import Projects from "./pages/Projects"
 import Clients from "./pages/Clients"
 import Contact from "./pages/Contact"
 import IndustrialInsulation from "./pages/IndustrialInsulation"
-import Products from "./pages/Products"
 import ExpertsUltrasonics from "./pages/ExpertsUltrasonics"
 import PrecisionTech from "./pages/PrecisionTech"
 import Login from "./pages/admin/Login"
@@ -237,7 +236,7 @@ function App() {
             <Route path="/divisions/industrial-insulation" element={<IndustrialInsulation />} />
             <Route path="/divisions/experts-in-ultrasonics" element={<ExpertsUltrasonics />} />
             <Route path="/divisions/precision-tech" element={<PrecisionTech />} />
-            <Route path="/products" element={<Products />} />
+            <Route path="/divisions/precision-tech/products" element={<PrecisionTech />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/clients" element={<Clients />} />
             <Route path="/contact" element={<Contact />} />

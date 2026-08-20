@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { Link, NavLink, useLocation } from "react-router-dom"
-import { Menu, X, ChevronDown } from "lucide-react"
+import { Menu, X, ChevronDown, ChevronRight } from "lucide-react"
 import companyLogo from "@/assets/logos/hitech-logo.png"
 
 const navLinks = [
@@ -12,10 +12,15 @@ const navLinks = [
     dropdown: [
       { label: "Industrial Insulation", path: "/divisions/industrial-insulation" },
       { label: "Altron Testing & Allieds", path: "/divisions/experts-in-ultrasonics" },
-      { label: "Precision Tech Engineering", path: "/divisions/precision-tech" },
+      {
+        label: "Precision Tech Engineering",
+        path: "/divisions/precision-tech",
+        children: [
+          { label: "Products", path: "/divisions/precision-tech/products" },
+        ],
+      },
     ],
   },
-  { label: "Products", path: "/products" },
   { label: "Projects", path: "/projects" },
   { label: "Clients", path: "/clients" },
   { label: "Contact", path: "/contact" },
@@ -26,6 +31,7 @@ function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [desktopDropdown, setDesktopDropdown] = useState(false)
   const [mobileDropdown, setMobileDropdown] = useState(false)
+  const [subDropdownOpen, setSubDropdownOpen] = useState(null)
   const location = useLocation()
 
   useEffect(() => {
@@ -99,15 +105,54 @@ function Navbar() {
                         : "opacity-0 invisible -translate-y-1"
                     }`}
                   >
-                    {link.dropdown.map((item) => (
-                      <Link
-                        key={item.label}
-                        to={item.path}
-                        className="block px-5 py-3 text-sm text-[#334155] hover:text-[#F4B400] hover:bg-gray-50 transition-colors"
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
+                    {link.dropdown.map((item, index) =>
+                      item.children ? (
+                        <div
+                          key={item.label}
+                          className="relative"
+                          onMouseEnter={() => setSubDropdownOpen(index)}
+                          onMouseLeave={() => setSubDropdownOpen(null)}
+                        >
+                          <Link
+                            to={item.path}
+                            className="flex items-center justify-between px-5 py-3 text-sm text-[#334155] hover:text-[#F4B400] hover:bg-gray-50 transition-colors"
+                          >
+                            {item.label}
+                            <ChevronRight
+                              size={14}
+                              className={`transition-transform duration-200 ${
+                                subDropdownOpen === index ? "rotate-90" : ""
+                              }`}
+                            />
+                          </Link>
+                          <div
+                            className={`absolute top-0 left-full ml-1 w-56 bg-white rounded-xl shadow-lg border border-gray-100 py-2 transition-all duration-200 ${
+                              subDropdownOpen === index
+                                ? "opacity-100 visible translate-x-0"
+                                : "opacity-0 invisible -translate-x-1"
+                            }`}
+                          >
+                            {item.children.map((child) => (
+                              <Link
+                                key={child.label}
+                                to={child.path}
+                                className="block px-5 py-3 text-sm text-[#334155] hover:text-[#F4B400] hover:bg-gray-50 transition-colors"
+                              >
+                                {child.label}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      ) : (
+                        <Link
+                          key={item.label}
+                          to={item.path}
+                          className="block px-5 py-3 text-sm text-[#334155] hover:text-[#F4B400] hover:bg-gray-50 transition-colors"
+                        >
+                          {item.label}
+                        </Link>
+                      )
+                    )}
                   </div>
                 </div>
               ) : (
@@ -177,15 +222,37 @@ function Navbar() {
                     mobileDropdown ? "max-h-60" : "max-h-0"
                   }`}
                 >
-                  {link.dropdown.map((item) => (
-                    <Link
-                      key={item.label}
-                      to={item.path}
-                      className="block py-3 pl-4 text-base text-[#334155] hover:text-[#F4B400] transition-colors"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
+                  {link.dropdown.map((item) =>
+                    item.children ? (
+                      <div key={item.label}>
+                        <Link
+                          to={item.path}
+                          className="block py-3 pl-4 text-base text-[#334155] hover:text-[#F4B400] transition-colors"
+                        >
+                          {item.label}
+                        </Link>
+                        <div className="pl-8 ml-4 border-l border-gray-200">
+                          {item.children.map((child) => (
+                            <Link
+                              key={child.label}
+                              to={child.path}
+                              className="block py-2.5 text-sm text-[#64748B] hover:text-[#F4B400] transition-colors"
+                            >
+                              {child.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      <Link
+                        key={item.label}
+                        to={item.path}
+                        className="block py-3 pl-4 text-base text-[#334155] hover:text-[#F4B400] transition-colors"
+                      >
+                        {item.label}
+                      </Link>
+                    )
+                  )}
                 </div>
               </div>
             ) : (
