@@ -15,6 +15,7 @@ const navLinks = [
       { label: "Precision Tech Engineering", path: "/divisions/precision-tech" },
     ],
   },
+  { label: "Products", path: "/products" },
   { label: "Projects", path: "/projects" },
   { label: "Clients", path: "/clients" },
   { label: "Contact", path: "/contact" },
