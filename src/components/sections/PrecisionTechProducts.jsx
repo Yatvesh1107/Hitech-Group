@@ -1,3 +1,10 @@
+import alum from "@/assets/images/precisionproducts/aluminium.jpeg"
+import fabstruct from "@/assets/images/precisionproducts/fabstruct.jpeg"
+import heavyfab from "@/assets/images/precisionproducts/heavyfab.jpeg"
+import machinejob from "@/assets/images/precisionproducts/Machinejob.jpeg"
+import stainless from "@/assets/images/precisionproducts/stainless.jpeg"
+import weldedmold from "@/assets/images/precisionproducts/weldedmold.jpeg"
+
 import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
 import {
@@ -101,12 +108,12 @@ const industries = [
 ]
 
 const products = [
-  { name: "Aluminium" },
-  { name: "Fabricated Structures" },
-  { name: "Stainless Steel" },
-  { name: "Welded Mold" },
-  { name: "Heavy Fabrications" },
-  { name: "Machined Job (Casting)" },
+  { name: "Aluminium", image: alum },
+  { name: "Fabricated Structures", image: fabstruct },
+  { name: "Stainless Steel", image: stainless },
+  { name: "Welded Mold", image: weldedmold },
+  { name: "Heavy Fabrications", image: heavyfab },
+  { name: "Machined Job (Casting)", image: machinejob },
 ]
 
 function PrecisionTechProducts() {
@@ -448,12 +455,20 @@ function PrecisionTechProducts() {
                 className="group bg-white rounded-[24px] border border-gray-100 shadow-sm overflow-hidden hover:-translate-y-1 hover:shadow-xl hover:border-[#F4B400] transition-all duration-300"
               >
                 <div className="relative h-[200px] overflow-hidden">
-                  <div className="w-full h-full flex flex-col items-center justify-center gap-3 bg-[#F1F5F9]">
-                    <Layers className="w-10 h-10 text-[#94A3B8]" />
-                    <span className="text-sm font-semibold text-[#94A3B8] tracking-wide uppercase">
-                      Image Coming Soon
-                    </span>
-                  </div>
+                  {product.image ? (
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-full h-full object group-hover:scale-105 transition-transform duration-500"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex flex-col items-center justify-center gap-3 bg-[#F1F5F9]">
+                      <Layers className="w-10 h-10 text-[#94A3B8]" />
+                      <span className="text-sm font-semibold text-[#94A3B8] tracking-wide uppercase">
+                        Image Coming Soon
+                      </span>
+                    </div>
+                  )}
                 </div>
                 <div className="p-6">
                   <h3 className="font-bold text-[#0B2D5C] text-lg">{product.name}</h3>

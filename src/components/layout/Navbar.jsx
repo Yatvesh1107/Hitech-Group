@@ -10,7 +10,13 @@ const navLinks = [
     label: "Business Divisions",
     path: "/divisions",
     dropdown: [
-      { label: "Industrial Insulation", path: "/divisions/industrial-insulation" },
+      {
+        label: "Industrial Insulation",
+        path: "/divisions/industrial-insulation",
+        children: [
+          { label: "Products", path: "/divisions/industrial-insulation/products" },
+        ],
+      },
       { label: "Altron Testing & Allieds", path: "/divisions/experts-in-ultrasonics" },
       {
         label: "Precision Tech Engineering",

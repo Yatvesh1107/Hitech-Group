@@ -234,6 +234,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/divisions" element={<Divisions />} />
             <Route path="/divisions/industrial-insulation" element={<IndustrialInsulation />} />
+            <Route path="/divisions/industrial-insulation/products" element={<IndustrialInsulation />} />
             <Route path="/divisions/experts-in-ultrasonics" element={<ExpertsUltrasonics />} />
             <Route path="/divisions/precision-tech" element={<PrecisionTech />} />
             <Route path="/divisions/precision-tech/products" element={<PrecisionTech />} />
