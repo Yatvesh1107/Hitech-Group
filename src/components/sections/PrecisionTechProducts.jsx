@@ -36,8 +36,8 @@ const itemVariants = {
 }
 
 const productStats = [
-  { icon: Clock3, label: "Since 1962" },
-  { icon: Globe, label: "74+ Countries" },
+  // { icon: Clock3, label: "Since 1962" },
+  // { icon: Globe, label: "74+ Countries" },
   { icon: Users, label: "1000+ Machines" },
   { icon: Cpu, label: "High-Amplitude Resonance" },
 ]
