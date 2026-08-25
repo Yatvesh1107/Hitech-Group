@@ -39,12 +39,12 @@ export default function ConfirmModal({
         <h2 className="text-xl font-bold text-[#0F172A]">{title}</h2>
         <p className="mt-2 text-sm text-[#64748B] leading-relaxed">{message}</p>
 
-        <div className="flex flex-col sm:flex-row justify-end gap-3 mt-8">
+        <div className="mt-8 text-right">
           <button
             type="button"
             onClick={onCancel}
             disabled={busy}
-            className="w-full sm:w-auto inline-flex items-center justify-center h-11 px-6 rounded-[12px] border border-gray-200 bg-white text-sm font-semibold text-[#0B2D5C] hover:bg-[#F8FAFC] transition-colors disabled:opacity-50"
+            className="mb-3 sm:mb-0 w-full sm:w-auto sm:mr-3 inline-flex items-center justify-center h-11 px-6 rounded-[12px] border border-gray-200 bg-white text-sm font-semibold text-[#0B2D5C] hover:bg-[#F8FAFC] transition-colors disabled:opacity-50"
           >
             Cancel
           </button>
@@ -52,9 +52,9 @@ export default function ConfirmModal({
             type="button"
             onClick={onConfirm}
             disabled={busy}
-            className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 h-11 px-6 rounded-[12px] text-sm font-semibold transition-colors disabled:opacity-60 disabled:cursor-not-allowed ${CONFIRM_VARIANTS[variant]}`}
+            className={`w-full sm:w-auto inline-flex items-center justify-center h-11 px-6 rounded-[12px] text-sm font-semibold transition-colors disabled:opacity-60 disabled:cursor-not-allowed ${CONFIRM_VARIANTS[variant]}`}
           >
-            {busy && <LoaderCircle size={16} className="animate-spin" />}
+            {busy && <LoaderCircle size={16} className="animate-spin mr-2" />}
             {confirmLabel}
           </button>
         </div>
