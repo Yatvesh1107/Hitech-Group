@@ -16,10 +16,11 @@ export default function ItemsTable({ items = [], title = "Quotation Items" }) {
       ) : (
         <>
           <div className="hidden lg:block overflow-x-auto">
-            <table className="w-full min-w-[640px] text-left">
+            <table className="w-full min-w-[700px] text-left">
               <thead>
                 <tr className="border-b border-gray-100 text-xs uppercase tracking-wider text-[#94A3B8]">
-                  <th className="px-6 py-4 font-semibold w-[42%]">Description</th>
+                  <th className="px-6 py-4 font-semibold w-[38%]">Description</th>
+                  <th className="px-6 py-4 font-semibold">HSN</th>
                   <th className="px-6 py-4 font-semibold">Qty</th>
                   <th className="px-6 py-4 font-semibold">Unit</th>
                   <th className="px-6 py-4 font-semibold">Rate</th>
@@ -32,6 +33,7 @@ export default function ItemsTable({ items = [], title = "Quotation Items" }) {
                     <td className="px-6 py-4 text-sm font-medium text-[#0F172A]">
                       {item.description}
                     </td>
+                    <td className="px-6 py-4 text-sm text-[#334155]">{item.hsnCode || "—"}</td>
                     <td className="px-6 py-4 text-sm text-[#334155]">{item.quantity}</td>
                     <td className="px-6 py-4 text-sm text-[#334155]">{item.unit || "—"}</td>
                     <td className="px-6 py-4 text-sm text-[#334155]">{formatINR(Number(item.rate) || 0)}</td>
@@ -51,6 +53,10 @@ export default function ItemsTable({ items = [], title = "Quotation Items" }) {
                   {item.description || "—"}
                 </p>
                 <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+                  <div className="flex items-center justify-between gap-2">
+                    <dt className="text-xs font-semibold uppercase tracking-wider text-[#94A3B8]">HSN</dt>
+                    <dd className="text-[#334155]">{item.hsnCode || "—"}</dd>
+                  </div>
                   <div className="flex items-center justify-between gap-2">
                     <dt className="text-xs font-semibold uppercase tracking-wider text-[#94A3B8]">Qty</dt>
                     <dd className="text-[#334155]">{item.quantity}</dd>

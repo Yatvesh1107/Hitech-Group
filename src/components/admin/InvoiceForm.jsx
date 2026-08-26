@@ -85,7 +85,7 @@ function addDays(date, days) {
 }
 
 function newItemRow() {
-  return { key: `item-${Date.now()}`, description: "", quantity: "1", unit: "", rate: "" }
+  return { key: `item-${Date.now()}`, hsnCode: "", description: "", quantity: "1", unit: "", rate: "" }
 }
 
 function InfoItem({ label, value }) {
@@ -116,6 +116,7 @@ export default function InvoiceForm({
   const [values, setValues] = useState(() => ({
     customer: initialValues?.customer?._id || initialValues?.customer || "",
     division: initialValues?.division || activeCompany,
+    poNumber: initialValues?.poNumber || "",
     invoiceDate: toDateInputValueOrEmpty(initialValues?.invoiceDate) || toDateInputValue(today),
     dueDate: toDateInputValueOrEmpty(initialValues?.dueDate) || toDateInputValue(addDays(today, 30)),
     discount: String(initialValues?.discount ?? 0),
@@ -152,6 +153,7 @@ export default function InvoiceForm({
     Array.isArray(initialValues?.items) && initialValues.items.length > 0
       ? initialValues.items.map((item, index) => ({
           key: item._id || `item-${index}-${Date.now()}`,
+          hsnCode: item.hsnCode || "",
           description: item.description || "",
           quantity: String(item.quantity ?? 1),
           unit: item.unit || "",
@@ -203,6 +205,7 @@ export default function InvoiceForm({
   const buildPayload = () => {
     const payload = {
       division: values.division,
+      poNumber: values.poNumber.trim(),
       invoiceDate: values.invoiceDate,
       dueDate: values.dueDate,
       discount: Number(values.discount) || 0,
@@ -210,6 +213,7 @@ export default function InvoiceForm({
       termsAndConditions: values.termsAndConditions.trim(),
       notes: values.notes.trim(),
       items: items.map((item) => ({
+        hsnCode: item.hsnCode.trim(),
         description: item.description.trim(),
         quantity: Number(item.quantity),
         unit: item.unit.trim(),
@@ -388,6 +392,15 @@ export default function InvoiceForm({
           value={values.dueDate}
           onChange={handleFieldChange}
           error={errors.dueDate}
+          disabled={formReadOnly}
+        />
+        <InputField
+          id="poNumber"
+          name="poNumber"
+          label="PO Number (Optional)"
+          value={values.poNumber}
+          onChange={handleFieldChange}
+          placeholder="e.g. PO-12345"
           disabled={formReadOnly}
         />
         <div>

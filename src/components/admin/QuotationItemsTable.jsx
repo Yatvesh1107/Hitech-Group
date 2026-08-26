@@ -130,15 +130,16 @@ export default function QuotationItemsTable({
       )}
 
       <div className="hidden xl:block overflow-x-auto">
-        <table className="w-full min-w-[860px] text-left">
+        <table className="w-full min-w-[920px] text-left">
           <thead>
             <tr className="border-b border-gray-100 text-xs uppercase tracking-wider text-[#94A3B8]">
-              <th className="py-3 pr-4 font-semibold w-[34%]">
+              <th className="py-3 pr-4 font-semibold w-[28%]">
                 Product / Description
               </th>
-              <th className="py-3 pr-4 font-semibold w-[12%]">Qty</th>
-              <th className="py-3 pr-4 font-semibold w-[14%]">Unit</th>
-              <th className="py-3 pr-4 font-semibold w-[14%]">Rate (₹)</th>
+              <th className="py-3 pr-4 font-semibold w-[10%]">HSN</th>
+              <th className="py-3 pr-4 font-semibold w-[10%]">Qty</th>
+              <th className="py-3 pr-4 font-semibold w-[12%]">Unit</th>
+              <th className="py-3 pr-4 font-semibold w-[12%]">Rate (₹)</th>
               <th className="py-3 pr-4 font-semibold w-[14%]">Amount</th>
               <th className="py-3 font-semibold w-10" />
             </tr>
@@ -163,6 +164,16 @@ export default function QuotationItemsTable({
                     {rowError.description && (
                       <p className="mt-1 text-xs text-red-600">{rowError.description}</p>
                     )}
+                  </td>
+                  <td className="py-3 pr-4 align-top">
+                    <input
+                      type="text"
+                      value={item.hsnCode || ""}
+                      onChange={(e) => handleField(index, "hsnCode", e.target.value)}
+                      placeholder="HSN"
+                      disabled={disabled}
+                      className={`${inputClass} ${disabled ? "opacity-60 cursor-not-allowed" : ""}`}
+                    />
                   </td>
                   <td className="py-3 pr-4 align-top">
                     <input
@@ -266,6 +277,17 @@ export default function QuotationItemsTable({
               )}
 
               <div className="mt-3 grid grid-cols-2 gap-x-3 gap-y-3 sm:grid-cols-3">
+                <div>
+                  <label className={descriptionLabelClass}>HSN</label>
+                  <input
+                    type="text"
+                    value={item.hsnCode || ""}
+                    onChange={(e) => handleField(index, "hsnCode", e.target.value)}
+                    placeholder="HSN"
+                    disabled={disabled}
+                    className={`${inputClass} ${disabled ? "opacity-60 cursor-not-allowed" : ""}`}
+                  />
+                </div>
                 <div>
                   <label className={descriptionLabelClass}>Qty</label>
                   <input

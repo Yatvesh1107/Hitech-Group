@@ -28,6 +28,7 @@ export default function InvoiceInfoCard({ invoice }) {
     { label: "Invoice Number", value: invoice?.invoiceNumber },
     { label: "Invoice Source", value: source },
     { label: "Division", value: invoice?.division },
+    { label: "PO Number", value: invoice?.poNumber },
     ...(invoice?.quotationId?._id
       ? [{ label: "Related Quotation Number", value: invoice?.quotationId?.quotationNumber }]
       : []),

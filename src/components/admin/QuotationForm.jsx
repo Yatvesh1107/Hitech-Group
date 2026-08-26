@@ -44,7 +44,7 @@ function addDays(date, days) {
 }
 
 function newItemRow() {
-  return { key: `item-${Date.now()}`, description: "", quantity: "1", unit: "", rate: "" }
+  return { key: `item-${Date.now()}`, hsnCode: "", description: "", quantity: "1", unit: "", rate: "" }
 }
 
 function InfoItem({ label, value }) {
@@ -106,6 +106,7 @@ export default function QuotationForm({
     initialValues && Array.isArray(initialValues.items) && initialValues.items.length > 0
       ? initialValues.items.map((item, index) => ({
           key: item._id || `item-${index}-${Date.now()}`,
+          hsnCode: item.hsnCode || "",
           description: item.description || "",
           quantity: String(item.quantity ?? 1),
           unit: item.unit || "",
@@ -180,6 +181,7 @@ export default function QuotationForm({
     termsAndConditions: values.termsAndConditions.trim(),
     notes: values.notes.trim(),
     items: items.map((item) => ({
+      hsnCode: item.hsnCode.trim(),
       description: item.description.trim(),
       quantity: Number(item.quantity),
       unit: item.unit.trim(),
