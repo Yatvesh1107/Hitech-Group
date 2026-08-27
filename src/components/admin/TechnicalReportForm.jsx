@@ -367,6 +367,7 @@ export default function TechnicalReportForm({
     if (companyReportTypes.length === 1) return companyReportTypes[0]
     return ""
   })
+  const [reportNumber, setReportNumber] = useState(() => initialValues?.reportNumber || "")
   const [selectedCustomer, setSelectedCustomer] = useState(() => initialValues?.customer || null)
   const [selectedQuotation, setSelectedQuotation] = useState(() => initialValues?.quotation || null)
   const [reportDate, setReportDate] = useState(() =>
@@ -450,6 +451,7 @@ export default function TechnicalReportForm({
 
       return {
         reportType,
+        reportNumber: reportNumber.trim(),
         customer: selectedCustomer._id,
         division: effectiveDivision,
         quotation: selectedQuotation?._id,
@@ -463,6 +465,7 @@ export default function TechnicalReportForm({
     if (reportType === "VSR") {
       return {
         reportType,
+        reportNumber: reportNumber.trim(),
         customer: selectedCustomer._id,
         division: effectiveDivision,
         quotation: selectedQuotation?._id,
@@ -475,6 +478,7 @@ export default function TechnicalReportForm({
 
     return {
       reportType,
+      reportNumber: reportNumber.trim(),
       customer: selectedCustomer._id,
       division: effectiveDivision,
       quotation: selectedQuotation?._id,
@@ -627,11 +631,10 @@ export default function TechnicalReportForm({
           </label>
           <input
             type="text"
-            value={initialValues?.reportNumber || "Auto-generated on save"}
-            readOnly
-            disabled
-            tabIndex={-1}
-            className="w-full h-[48px] px-4 rounded-[12px] border border-gray-200 bg-gray-50 text-sm text-[#94A3B8] cursor-not-allowed"
+            value={reportNumber}
+            onChange={(e) => setReportNumber(e.target.value)}
+            placeholder="Auto-generated if left blank"
+            className="w-full h-[48px] px-4 rounded-[12px] border border-gray-200 bg-white text-sm text-[#0F172A] placeholder:text-[#94A3B8] focus:border-[#0B2D5C] focus:ring-2 focus:ring-[#0B2D5C]/20 outline-none transition-colors"
           />
         </div>
         <InputField

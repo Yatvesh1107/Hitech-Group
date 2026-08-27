@@ -116,6 +116,7 @@ export default function InvoiceForm({
   const [values, setValues] = useState(() => ({
     customer: initialValues?.customer?._id || initialValues?.customer || "",
     division: initialValues?.division || activeCompany,
+    invoiceNumber: initialValues?.invoiceNumber || "",
     poNumber: initialValues?.poNumber || "",
     invoiceDate: toDateInputValueOrEmpty(initialValues?.invoiceDate) || toDateInputValue(today),
     dueDate: toDateInputValueOrEmpty(initialValues?.dueDate) || toDateInputValue(addDays(today, 30)),
@@ -205,6 +206,7 @@ export default function InvoiceForm({
   const buildPayload = () => {
     const payload = {
       division: values.division,
+      invoiceNumber: values.invoiceNumber.trim(),
       poNumber: values.poNumber.trim(),
       invoiceDate: values.invoiceDate,
       dueDate: values.dueDate,
@@ -367,11 +369,11 @@ export default function InvoiceForm({
           </label>
           <input
             type="text"
-            value={initialValues?.invoiceNumber || "Auto-generated on save"}
-            readOnly
-            disabled
-            tabIndex={-1}
-            className="w-full h-[48px] px-4 rounded-[12px] border border-gray-200 bg-gray-50 text-sm text-[#94A3B8] cursor-not-allowed"
+            name="invoiceNumber"
+            value={values.invoiceNumber}
+            onChange={handleFieldChange}
+            placeholder="Auto-generated if left blank"
+            className="w-full h-[48px] px-4 rounded-[12px] border border-gray-200 bg-white text-sm text-[#0F172A] placeholder:text-[#94A3B8] focus:border-[#0B2D5C] focus:ring-2 focus:ring-[#0B2D5C]/20 outline-none transition-colors"
           />
         </div>
         <InputField

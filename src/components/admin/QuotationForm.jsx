@@ -88,6 +88,7 @@ export default function QuotationForm({
     return {
       customer: "",
       division: activeCompany,
+      quotationNumber: initialValues?.quotationNumber || "",
       quotationDate: toDateInputValue(today),
       validTill: toDateInputValue(addDays(today, 30)),
       status: "Draft",
@@ -173,6 +174,7 @@ export default function QuotationForm({
   const buildPayload = (status) => ({
     customer: values.customer,
     division: values.division,
+    quotationNumber: values.quotationNumber.trim(),
     quotationDate: values.quotationDate,
     validTill: values.validTill,
     status,
@@ -243,17 +245,15 @@ export default function QuotationForm({
           </label>
           <input
             type="text"
-            value={initialValues?.quotationNumber || "Auto-generated on save"}
-            readOnly
-            disabled
-            tabIndex={-1}
-            className="w-full h-[48px] px-4 rounded-[12px] border border-gray-200 bg-gray-50 text-sm text-[#94A3B8] cursor-not-allowed"
+            name="quotationNumber"
+            value={values.quotationNumber}
+            onChange={handleFieldChange}
+            placeholder="Auto-generated if left blank"
+            className="w-full h-[48px] px-4 rounded-[12px] border border-gray-200 bg-white text-sm text-[#0F172A] placeholder:text-[#94A3B8] focus:border-[#0B2D5C] focus:ring-2 focus:ring-[#0B2D5C]/20 outline-none transition-colors"
           />
-          {!initialValues && (
-            <p className="mt-1.5 text-xs text-[#94A3B8]">
-              System will generate e.g. QT-20260803-0001
-            </p>
-          )}
+          <p className="mt-1.5 text-xs text-[#94A3B8]">
+            Leave blank to auto-generate e.g. QT-20260803-0001
+          </p>
         </div>
         <InputField
           id="quotationDate"
