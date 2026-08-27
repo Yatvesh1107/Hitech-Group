@@ -1,8 +1,14 @@
 import { LoaderCircle, X } from "lucide-react"
 
-const CONFIRM_VARIANTS = {
-  danger: "bg-red-500 text-white hover:bg-red-600",
-  primary: "bg-[#0B2D5C] text-white hover:bg-[#0B2D5C]/90",
+const CONFIRM_STYLES = {
+  danger: {
+    backgroundColor: "#EF4444",
+    color: "#FFFFFF",
+  },
+  primary: {
+    backgroundColor: "#0B2D5C",
+    color: "#FFFFFF",
+  },
 }
 
 export default function ConfirmModal({
@@ -18,33 +24,97 @@ export default function ConfirmModal({
   if (!open) return null
 
   return (
-    <div className="fixed inset-0 z-[90] flex items-center justify-center p-5">
+    <div
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 90,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "20px",
+      }}
+    >
       <div
-        className="absolute inset-0 bg-black/50"
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+        }}
         onClick={busy ? undefined : onCancel}
         aria-hidden="true"
       />
 
-      <div className="relative w-full max-w-[420px] bg-white rounded-[22px] shadow-2xl p-6 md:p-8">
+      <div
+        style={{
+          position: "relative",
+          width: "100",
+          maxWidth: "420px",
+          backgroundColor: "#FFFFFF",
+          borderRadius: "22px",
+          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+          padding: "24px",
+        }}
+      >
         <button
           type="button"
           onClick={onCancel}
           disabled={busy}
-          className="absolute top-4 right-4 text-[#94A3B8] hover:text-[#0F172A] transition-colors"
+          style={{
+            position: "absolute",
+            top: "16px",
+            right: "16px",
+            color: "#94A3B8",
+            cursor: busy ? "not-allowed" : "pointer",
+            background: "none",
+            border: "none",
+            padding: "4px",
+          }}
           aria-label="Close"
         >
           <X size={20} />
         </button>
 
-        <h2 className="text-xl font-bold text-[#0F172A]">{title}</h2>
-        <p className="mt-2 text-sm text-[#64748B] leading-relaxed">{message}</p>
+        <h2 style={{ fontSize: "20px", fontWeight: 700, color: "#0F172A", margin: 0 }}>
+          {title}
+        </h2>
+        <p
+          style={{
+            marginTop: "8px",
+            fontSize: "14px",
+            color: "#64748B",
+            lineHeight: 1.6,
+          }}
+        >
+          {message}
+        </p>
 
-        <div className="mt-8 text-right">
+        <div style={{ marginTop: "32px", textAlign: "right" }}>
           <button
             type="button"
             onClick={onCancel}
             disabled={busy}
-            className="mb-3 sm:mb-0 w-full sm:w-auto sm:mr-3 inline-flex items-center justify-center h-11 px-6 rounded-[12px] border border-gray-200 bg-white text-sm font-semibold text-[#0B2D5C] hover:bg-[#F8FAFC] transition-colors disabled:opacity-50"
+            style={{
+              marginBottom: "12px",
+              width: "100%",
+              height: "44px",
+              paddingLeft: "24px",
+              paddingRight: "24px",
+              borderRadius: "12px",
+              border: "1px solid #E2E8F0",
+              backgroundColor: "#FFFFFF",
+              fontSize: "14px",
+              fontWeight: 600,
+              color: "#0B2D5C",
+              cursor: busy ? "not-allowed" : "pointer",
+              opacity: busy ? 0.5 : 1,
+            }}
           >
             Cancel
           </button>
@@ -52,9 +122,21 @@ export default function ConfirmModal({
             type="button"
             onClick={onConfirm}
             disabled={busy}
-            className={`w-full sm:w-auto inline-flex items-center justify-center h-11 px-6 rounded-[12px] text-sm font-semibold transition-colors disabled:opacity-60 disabled:cursor-not-allowed ${CONFIRM_VARIANTS[variant]}`}
+            style={{
+              width: "100%",
+              height: "44px",
+              paddingLeft: "24px",
+              paddingRight: "24px",
+              borderRadius: "12px",
+              border: "none",
+              fontSize: "14px",
+              fontWeight: 600,
+              cursor: busy ? "not-allowed" : "pointer",
+              opacity: busy ? 0.6 : 1,
+              ...CONFIRM_STYLES[variant],
+            }}
           >
-            {busy && <LoaderCircle size={16} className="animate-spin mr-2" />}
+            {busy && <LoaderCircle size={16} className="animate-spin" style={{ marginRight: "8px" }} />}
             {confirmLabel}
           </button>
         </div>
