@@ -34,7 +34,6 @@ import PaymentCard from "../../../components/admin/PaymentCard"
 import PaymentHistoryCard from "../../../components/admin/PaymentHistoryCard"
 import PaymentFormModal from "../../../components/admin/PaymentFormModal"
 import TimelineCard from "../../../components/admin/TimelineCard"
-import ConfirmModal from "../../../components/admin/ConfirmModal"
 import ErrorState from "../../../components/admin/ErrorState"
 
 const formatINR = (value) =>
@@ -246,13 +245,21 @@ export default function InvoiceDetails() {
     }
   }
 
-  const confirmDeletePayment = async () => {
-    if (!deletePaymentTarget) return
+  const confirmDeletePayment = async (target) => {
+    if (!target || deletePaymentBusy) return
+
+    if (
+      !window.confirm(
+        `Are you sure you want to delete this payment? The invoice payment status will be recalculated.`
+      )
+    ) {
+      return
+    }
 
     setDeletePaymentBusy(true)
 
     try {
-      await deletePayment({ token, id: deletePaymentTarget._id })
+      await deletePayment({ token, id: target._id })
       showToast("Payment deleted successfully.")
       setDeletePaymentTarget(null)
       setRefreshKey((key) => key + 1)
@@ -485,7 +492,7 @@ export default function InvoiceDetails() {
           payments={payments}
           loading={paymentsLoading}
           onEdit={handleEditPayment}
-          onDelete={setDeletePaymentTarget}
+          onDelete={confirmDeletePayment}
         />
       </div>
 
@@ -502,21 +509,6 @@ export default function InvoiceDetails() {
           setPaymentError("")
         }}
         onConfirm={handlePaymentSubmit}
-      />
-
-      <ConfirmModal
-        open={Boolean(deletePaymentTarget)}
-        title="Delete Payment?"
-        message={
-          deletePaymentTarget
-            ? `Are you sure you want to delete the payment of ${formatINR(deletePaymentTarget.amount)} received on ${formatDate(deletePaymentTarget.paymentDate)}? The invoice payment status will be recalculated.`
-            : ""
-        }
-        confirmLabel="Delete"
-        variant="danger"
-        busy={deletePaymentBusy}
-        onConfirm={confirmDeletePayment}
-        onCancel={() => setDeletePaymentTarget(null)}
       />
     </AdminLayout>
   )

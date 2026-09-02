@@ -14,7 +14,6 @@ import InvoiceTable from "../../../components/admin/InvoiceTable"
 import LoadingSkeleton from "../../../components/admin/LoadingSkeleton"
 import EmptyState from "../../../components/admin/EmptyState"
 import ErrorState from "../../../components/admin/ErrorState"
-import ConfirmModal from "../../../components/admin/ConfirmModal"
 
 const PAGE_SIZE = 10
 const SEARCH_DEBOUNCE_MS = 400
@@ -161,18 +160,20 @@ export default function InvoiceList() {
     }
   }
 
-  const handleDelete = (invoice) => {
-    setDeleteTarget(invoice)
-  }
-
-  const confirmDelete = async () => {
-    if (!deleteTarget) return
+  const handleDelete = async (invoice) => {
+    if (
+      !window.confirm(
+        `Are you sure you want to delete invoice ${invoice.invoiceNumber}? This action cannot be undone.`
+      )
+    ) {
+      return
+    }
 
     setDeleteBusy(true)
 
     try {
-      await deleteInvoice({ token, id: deleteTarget._id })
-      showToast(`Invoice ${deleteTarget.invoiceNumber} deleted.`)
+      await deleteInvoice({ token, id: invoice._id })
+      showToast(`Invoice ${invoice.invoiceNumber} deleted.`)
       setDeleteTarget(null)
       setRefreshKey((key) => key + 1)
     } catch (err) {
@@ -287,17 +288,6 @@ export default function InvoiceList() {
           </>
         )}
       </div>
-
-      <ConfirmModal
-        open={Boolean(deleteTarget)}
-        title="Delete Invoice"
-        message={`Are you sure you want to delete invoice ${deleteTarget?.invoiceNumber}? This action cannot be undone.`}
-        confirmLabel="Delete"
-        variant="danger"
-        busy={deleteBusy}
-        onConfirm={confirmDelete}
-        onCancel={() => setDeleteTarget(null)}
-      />
     </AdminLayout>
   )
 }

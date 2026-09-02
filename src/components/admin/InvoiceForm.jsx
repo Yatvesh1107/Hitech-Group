@@ -1,7 +1,8 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { LoaderCircle, Save, X, ArrowLeft, Info, AlertTriangle } from "lucide-react"
 import { validateInvoiceForm } from "../../utils/invoiceValidation"
 import { createCustomer } from "../../services/customers"
+import { getCompanySettings } from "../../services/settings"
 import { useCompany } from "../../context/companyContext"
 import FormSection from "./FormSection"
 import InputField from "./InputField"
@@ -39,14 +40,6 @@ function formatINR(value) {
     maximumFractionDigits: 2,
   })}`
 }
-
-const DEFAULT_TERMS = [
-  "1. Payment Terms: 50% advance along with confirmed order, balance before dispatch or as mutually agreed.",
-  "2. Delivery: Delivery schedule will be intimated after receipt of confirmed order.",
-  "3. Taxes: GST and other statutory levies will be charged as applicable at the time of billing.",
-  "4. Rates: Rates quoted are exclusive of freight, loading/unloading and transit insurance unless otherwise stated.",
-  "5. Jurisdiction: Subject to the jurisdiction of local courts.",
-].join("\n")
 
 const FULLY_PAID_MESSAGE = "This invoice has been fully paid and can no longer be edited."
 
@@ -123,10 +116,32 @@ export default function InvoiceForm({
     discount: String(initialValues?.discount ?? 0),
     gstPercentage:
       initialValues?.gstPercentage != null ? String(initialValues.gstPercentage) : "",
-    termsAndConditions:
-      initialValues?.termsAndConditions || (mode === "create" ? DEFAULT_TERMS : ""),
+    termsAndConditions: initialValues?.termsAndConditions || "",
     notes: initialValues?.notes || "",
   }))
+
+  const [termsDirty, setTermsDirty] = useState(() => mode === "edit")
+
+  useEffect(() => {
+    if (mode !== "create") return
+    if (!values.division || termsDirty) return
+
+    let cancelled = false
+
+    getCompanySettings({ token, division: values.division })
+      .then((settings) => {
+        if (cancelled) return
+        const defaultTerms = settings?.defaultTerms?.invoice?.trim()
+        if (defaultTerms) {
+          setValues((prev) => ({ ...prev, termsAndConditions: defaultTerms }))
+        }
+      })
+      .catch(() => {})
+
+    return () => {
+      cancelled = true
+    }
+  }, [mode, token, values.division, termsDirty])
 
   const [selectedCustomer, setSelectedCustomer] = useState(() =>
     initialValues?.customer?._id ? initialValues.customer : null
@@ -690,7 +705,10 @@ export default function InvoiceForm({
       >
         <TermsSection
           value={values.termsAndConditions}
-          onChange={(value) => setValues((prev) => ({ ...prev, termsAndConditions: value }))}
+          onChange={(value) => {
+            setTermsDirty(true)
+            setValues((prev) => ({ ...prev, termsAndConditions: value }))
+          }}
           className="sm:col-span-2"
           disabled={formReadOnly}
         />

@@ -37,7 +37,6 @@ import TermsCard from "../../../components/admin/TermsCard"
 import NotesCard from "../../../components/admin/NotesCard"
 import TimelineCard from "../../../components/admin/TimelineCard"
 import StatusChangeModal from "../../../components/admin/StatusChangeModal"
-import ConfirmModal from "../../../components/admin/ConfirmModal"
 import ErrorState from "../../../components/admin/ErrorState"
 
 const EDITABLE_STATUSES = ["Draft", "Sent"]
@@ -210,6 +209,9 @@ export default function QuotationDetails() {
   }
 
   const handleDelete = async () => {
+    if (!window.confirm("Are you sure you want to delete this quotation? This action cannot be undone.")) {
+      return
+    }
     setDeleteBusy(true)
 
     try {
@@ -259,6 +261,9 @@ export default function QuotationDetails() {
   }
 
   const handleConvertToInvoice = async () => {
+    if (!window.confirm("Convert this quotation into an Invoice? A new invoice will be created using the quotation details.")) {
+      return
+    }
     setConvertBusy(true)
 
     try {
@@ -380,7 +385,7 @@ export default function QuotationDetails() {
       {canDelete && (
         <button
           type="button"
-          onClick={() => setDeleteConfirm(true)}
+          onClick={handleDelete}
           className={`${buttonBase} border border-red-200 bg-white text-red-600 hover:bg-red-50`}
         >
           <Trash2 size={16} />
@@ -452,7 +457,7 @@ export default function QuotationDetails() {
       {canInvoice && !hasInvoice && (
         <button
           type="button"
-          onClick={() => setConvertConfirm(true)}
+          onClick={handleConvertToInvoice}
           className={`${buttonBase} bg-[#0B2D5C] text-white hover:bg-[#0B2D5C]/90`}
         >
           <Receipt size={16} className="text-[#F4B400]" />
@@ -559,27 +564,6 @@ export default function QuotationDetails() {
           onConfirm={handleStatusConfirm}
         />
       )}
-
-      <ConfirmModal
-        open={deleteConfirm}
-        title="Delete Quotation?"
-        message="Are you sure you want to delete this quotation? This action cannot be undone."
-        confirmLabel="Delete"
-        busy={deleteBusy}
-        onConfirm={handleDelete}
-        onCancel={() => setDeleteConfirm(false)}
-      />
-
-      <ConfirmModal
-        open={convertConfirm}
-        title="Convert this quotation into an Invoice?"
-        message="A new invoice will be created using the quotation details."
-        confirmLabel="Convert"
-        variant="primary"
-        busy={convertBusy}
-        onConfirm={handleConvertToInvoice}
-        onCancel={() => setConvertConfirm(false)}
-      />
     </AdminLayout>
   )
 }

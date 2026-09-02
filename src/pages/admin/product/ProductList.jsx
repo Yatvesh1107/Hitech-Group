@@ -11,7 +11,6 @@ import ProductTable from "../../../components/admin/ProductTable"
 import LoadingSkeleton from "../../../components/admin/LoadingSkeleton"
 import EmptyState from "../../../components/admin/EmptyState"
 import ErrorState from "../../../components/admin/ErrorState"
-import ConfirmModal from "../../../components/admin/ConfirmModal"
 
 const PAGE_SIZE = 10
 const SEARCH_DEBOUNCE_MS = 400
@@ -80,17 +79,21 @@ export default function ProductList() {
     navigate(`/admin/products/${product._id}/edit`)
   }
 
-  const handleDeactivateClick = (product) => {
-    setDeactivating(product)
-  }
+  const handleDeactivateClick = async (product) => {
+    if (deactivateBusy) return
 
-  const handleDeactivateConfirm = async () => {
-    if (!deactivating || deactivateBusy) return
+    if (
+      !window.confirm(
+        "This product will stop appearing in the autofill dropdown of new quotations and invoices until restored."
+      )
+    ) {
+      return
+    }
 
     setDeactivateBusy(true)
 
     try {
-      await deactivateService({ token, id: deactivating._id })
+      await deactivateService({ token, id: product._id })
       showToast("Product deactivated successfully.")
       setDeactivating(null)
       setRefreshKey((key) => key + 1)
@@ -197,18 +200,6 @@ export default function ProductList() {
           </>
         )}
       </div>
-
-      <ConfirmModal
-        open={Boolean(deactivating)}
-        title="Deactivate Product/Service?"
-        message="This product will stop appearing in the autofill dropdown of new quotations and invoices until restored."
-        confirmLabel="Deactivate"
-        busy={deactivateBusy}
-        onConfirm={handleDeactivateConfirm}
-        onCancel={() => {
-          if (!deactivateBusy) setDeactivating(null)
-        }}
-      />
     </AdminLayout>
   )
 }

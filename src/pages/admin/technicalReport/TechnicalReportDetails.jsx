@@ -27,7 +27,6 @@ import DivisionBadge from "../../../components/admin/DivisionBadge"
 import CustomerInfoCard from "../../../components/admin/CustomerInfoCard"
 import QuotationInfoCard from "../../../components/admin/QuotationInfoCard"
 import TimelineCard from "../../../components/admin/TimelineCard"
-import ConfirmModal from "../../../components/admin/ConfirmModal"
 import ErrorState from "../../../components/admin/ErrorState"
 import UltrasonicDpThicknessView from "../../../components/admin/UltrasonicDpThicknessView"
 import VSRView from "../../../components/admin/VSRView"
@@ -183,8 +182,12 @@ export default function TechnicalReportDetails() {
     }
   }
 
-  const handleConfirmStatus = async () => {
-    if (!statusAction) return
+  const handleConfirmStatus = async (action) => {
+    if (!action || statusBusy) return
+
+    if (!window.confirm(action.message)) {
+      return
+    }
 
     setStatusBusy(true)
 
@@ -192,7 +195,7 @@ export default function TechnicalReportDetails() {
       const data = await changeTechnicalReportStatus({
         token,
         id,
-        status: statusAction.status,
+        status: action.status,
       })
       setStatusAction(null)
       setReport(data)
@@ -294,7 +297,7 @@ export default function TechnicalReportDetails() {
         <button
           key={action.status}
           type="button"
-          onClick={() => setStatusAction(action)}
+          onClick={() => handleConfirmStatus(action)}
           className={
             action.variant === "danger"
               ? `${buttonBase} border border-red-200 bg-white text-red-600 hover:bg-red-50`
@@ -450,17 +453,6 @@ export default function TechnicalReportDetails() {
 
         <TimelineCard activities={activities} type="report" />
       </div>
-
-      <ConfirmModal
-        open={!!statusAction}
-        title={statusAction ? `${statusAction.label}` : ""}
-        message={statusAction?.message || ""}
-        confirmLabel={statusAction?.label || "Confirm"}
-        variant={statusAction?.variant || "primary"}
-        onConfirm={handleConfirmStatus}
-        onCancel={() => setStatusAction(null)}
-        busy={statusBusy}
-      />
     </AdminLayout>
   )
 }

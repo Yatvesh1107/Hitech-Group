@@ -11,7 +11,6 @@ import CustomerTable from "../../../components/admin/CustomerTable"
 import LoadingSkeleton from "../../../components/admin/LoadingSkeleton"
 import EmptyState from "../../../components/admin/EmptyState"
 import ErrorState from "../../../components/admin/ErrorState"
-import ConfirmModal from "../../../components/admin/ConfirmModal"
 
 const PAGE_SIZE = 10
 const SEARCH_DEBOUNCE_MS = 400
@@ -84,17 +83,21 @@ export default function Customers() {
     navigate(`/admin/customers/${customer._id}`)
   }
 
-  const handleDeactivateClick = (customer) => {
-    setDeactivating(customer)
-  }
+  const handleDeactivateClick = async (customer) => {
+    if (deactivateBusy) return
 
-  const handleDeactivateConfirm = async () => {
-    if (!deactivating || deactivateBusy) return
+    if (
+      !window.confirm(
+        "This customer will become inactive and cannot be selected in new quotations until restored."
+      )
+    ) {
+      return
+    }
 
     setDeactivateBusy(true)
 
     try {
-      await deactivateCustomer({ token, id: deactivating._id })
+      await deactivateCustomer({ token, id: customer._id })
       showToast("Customer deactivated successfully.")
       setDeactivating(null)
       setRefreshKey((key) => key + 1)
@@ -202,18 +205,6 @@ export default function Customers() {
           </>
         )}
       </div>
-
-      <ConfirmModal
-        open={Boolean(deactivating)}
-        title="Deactivate Customer?"
-        message="This customer will become inactive and cannot be selected in new quotations until restored."
-        confirmLabel="Deactivate"
-        busy={deactivateBusy}
-        onConfirm={handleDeactivateConfirm}
-        onCancel={() => {
-          if (!deactivateBusy) setDeactivating(null)
-        }}
-      />
     </AdminLayout>
   )
 }

@@ -15,7 +15,6 @@ import TechnicalReportTable from "../../../components/admin/TechnicalReportTable
 import LoadingSkeleton from "../../../components/admin/LoadingSkeleton"
 import EmptyState from "../../../components/admin/EmptyState"
 import ErrorState from "../../../components/admin/ErrorState"
-import ConfirmModal from "../../../components/admin/ConfirmModal"
 
 const PAGE_SIZE = 10
 const SEARCH_DEBOUNCE_MS = 400
@@ -151,8 +150,27 @@ export default function TechnicalReportList() {
     setRefreshKey((key) => key + 1)
   }
 
-  const handleDelete = (report) => {
-    setDeleteTarget(report)
+  const handleDelete = async (report) => {
+    if (
+      !window.confirm(
+        `Are you sure you want to delete technical report ${report.reportNumber}? This action cannot be undone.`
+      )
+    ) {
+      return
+    }
+
+    setDeleteBusy(true)
+
+    try {
+      await deleteTechnicalReport({ token, id: report._id })
+      showToast(`Technical report ${report.reportNumber} deleted.`)
+      setDeleteTarget(null)
+      setRefreshKey((key) => key + 1)
+    } catch (err) {
+      showToast(err.message || "Failed to delete technical report.", "error")
+    } finally {
+      setDeleteBusy(false)
+    }
   }
 
   const handleDownloadPdf = async (report) => {
@@ -175,23 +193,6 @@ export default function TechnicalReportList() {
       showToast(err.message || "Failed to generate the PDF. Please try again.", "error")
     } finally {
       setPdfBusyId(null)
-    }
-  }
-
-  const confirmDelete = async () => {
-    if (!deleteTarget) return
-
-    setDeleteBusy(true)
-
-    try {
-      await deleteTechnicalReport({ token, id: deleteTarget._id })
-      showToast(`Technical report ${deleteTarget.reportNumber} deleted.`)
-      setDeleteTarget(null)
-      setRefreshKey((key) => key + 1)
-    } catch (err) {
-      showToast(err.message || "Failed to delete technical report. Please try again.", "error")
-    } finally {
-      setDeleteBusy(false)
     }
   }
 
@@ -309,17 +310,6 @@ export default function TechnicalReportList() {
           </>
         )}
       </div>
-
-      <ConfirmModal
-        open={Boolean(deleteTarget)}
-        title="Delete Technical Report?"
-        message={`Are you sure you want to delete technical report ${deleteTarget?.reportNumber}? This action cannot be undone.`}
-        confirmLabel="Delete"
-        variant="danger"
-        busy={deleteBusy}
-        onConfirm={confirmDelete}
-        onCancel={() => setDeleteTarget(null)}
-      />
     </AdminLayout>
   )
 }

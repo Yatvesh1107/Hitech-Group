@@ -136,7 +136,7 @@ export default function QuotationItemsTable({
               <th className="py-3 pr-4 font-semibold w-[28%]">
                 Product / Description
               </th>
-              <th className="py-3 pr-4 font-semibold w-[10%]">HSN</th>
+              <th className="py-3 pr-4 font-semibold w-[10%]">HSN/SAC</th>
               <th className="py-3 pr-4 font-semibold w-[10%]">Qty</th>
               <th className="py-3 pr-4 font-semibold w-[12%]">Unit</th>
               <th className="py-3 pr-4 font-semibold w-[12%]">Rate (₹)</th>
@@ -170,7 +170,7 @@ export default function QuotationItemsTable({
                       type="text"
                       value={item.hsnCode || ""}
                       onChange={(e) => handleField(index, "hsnCode", e.target.value)}
-                      placeholder="HSN"
+                      placeholder="HSN/SAC"
                       disabled={disabled}
                       className={`${inputClass} ${disabled ? "opacity-60 cursor-not-allowed" : ""}`}
                     />
@@ -278,12 +278,12 @@ export default function QuotationItemsTable({
 
               <div className="mt-3 grid grid-cols-2 gap-x-3 gap-y-3 sm:grid-cols-3">
                 <div>
-                  <label className={descriptionLabelClass}>HSN</label>
+                  <label className={descriptionLabelClass}>HSN/SAC</label>
                   <input
                     type="text"
                     value={item.hsnCode || ""}
                     onChange={(e) => handleField(index, "hsnCode", e.target.value)}
-                    placeholder="HSN"
+                    placeholder="HSN/SAC"
                     disabled={disabled}
                     className={`${inputClass} ${disabled ? "opacity-60 cursor-not-allowed" : ""}`}
                   />
