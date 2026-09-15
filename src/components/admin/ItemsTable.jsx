@@ -4,6 +4,17 @@ import SectionHeader from "./SectionHeader"
 const formatINR = (value) =>
   `₹${value.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
 
+const round2 = (v) => Math.round((Number(v) + Number.EPSILON) * 100) / 100
+
+const inclusiveAmount = (item) => {
+  const taxable = Number(item.amount) || 0
+  const gstP = Number(item.gstPercentage)
+  if (Number.isFinite(gstP) && gstP > 0) {
+    return taxable + round2((taxable * gstP) / 100)
+  }
+  return taxable
+}
+
 export default function ItemsTable({ items = [], title = "Quotation Items" }) {
   return (
     <div className="bg-white border border-gray-100 rounded-[22px] shadow-sm overflow-hidden">
@@ -23,6 +34,7 @@ export default function ItemsTable({ items = [], title = "Quotation Items" }) {
                   <th className="px-6 py-4 font-semibold">HSN</th>
                   <th className="px-6 py-4 font-semibold">Qty</th>
                   <th className="px-6 py-4 font-semibold">Unit</th>
+                  <th className="px-6 py-4 font-semibold">GST %</th>
                   <th className="px-6 py-4 font-semibold">Rate</th>
                   <th className="px-6 py-4 font-semibold text-right">Amount</th>
                 </tr>
@@ -36,9 +48,12 @@ export default function ItemsTable({ items = [], title = "Quotation Items" }) {
                     <td className="px-6 py-4 text-sm text-[#334155]">{item.hsnCode || "—"}</td>
                     <td className="px-6 py-4 text-sm text-[#334155]">{item.quantity}</td>
                     <td className="px-6 py-4 text-sm text-[#334155]">{item.unit || "—"}</td>
+                    <td className="px-6 py-4 text-sm text-[#334155]">
+                      {item.gstPercentage != null ? `${item.gstPercentage}%` : "—"}
+                    </td>
                     <td className="px-6 py-4 text-sm text-[#334155]">{formatINR(Number(item.rate) || 0)}</td>
                     <td className="px-6 py-4 text-sm font-semibold text-[#334155] text-right">
-                      {formatINR(Number(item.amount) || 0)}
+                      {formatINR(inclusiveAmount(item))}
                     </td>
                   </tr>
                 ))}
@@ -66,13 +81,19 @@ export default function ItemsTable({ items = [], title = "Quotation Items" }) {
                     <dd className="text-[#334155]">{item.unit || "—"}</dd>
                   </div>
                   <div className="flex items-center justify-between gap-2">
+                    <dt className="text-xs font-semibold uppercase tracking-wider text-[#94A3B8]">GST %</dt>
+                    <dd className="text-[#334155]">
+                      {item.gstPercentage != null ? `${item.gstPercentage}%` : "—"}
+                    </dd>
+                  </div>
+                  <div className="flex items-center justify-between gap-2">
                     <dt className="text-xs font-semibold uppercase tracking-wider text-[#94A3B8]">Rate</dt>
                     <dd className="text-[#334155]">{formatINR(Number(item.rate) || 0)}</dd>
                   </div>
                   <div className="flex items-center justify-between gap-2">
                     <dt className="text-xs font-semibold uppercase tracking-wider text-[#94A3B8]">Amount</dt>
                     <dd className="text-[#334155] font-semibold">
-                      {formatINR(Number(item.amount) || 0)}
+                      {formatINR(inclusiveAmount(item))}
                     </dd>
                   </div>
                 </dl>

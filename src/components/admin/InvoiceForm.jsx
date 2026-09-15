@@ -18,7 +18,7 @@ const PAYMENT_METHODS = ["Cash", "Cheque", "Bank Transfer", "UPI", "NEFT", "RTGS
 
 const round2 = (value) => Math.round((value + Number.EPSILON) * 100) / 100
 
-function computeTotals(items, discount, gstPercentage) {
+function computeTotals(items, discount) {
   const subtotal = round2(
     items.reduce((sum, item) => {
       const qty = Number(item.quantity)
@@ -28,9 +28,21 @@ function computeTotals(items, discount, gstPercentage) {
     }, 0)
   )
   const discountValue = Number(discount) || 0
-  const gst = Number(gstPercentage) || 0
   const taxableValue = subtotal - discountValue
-  const gstAmount = round2((taxableValue * gst) / 100)
+
+  const totalItemGst = round2(
+    items.reduce((sum, item) => {
+      const qty = Number(item.quantity)
+      const rate = Number(item.rate)
+      const gstP = Number(item.gstPercentage)
+      if (!Number.isFinite(qty) || !Number.isFinite(rate)) return sum
+      if (!Number.isFinite(gstP) || gstP <= 0) return sum
+      return sum + qty * rate * (gstP / 100)
+    }, 0)
+  )
+  const gstAmount =
+    subtotal > 0 ? round2(totalItemGst * (taxableValue / subtotal)) : round2(totalItemGst)
+
   return { subtotal, gstAmount, grandTotal: round2(taxableValue + gstAmount) }
 }
 
@@ -78,7 +90,7 @@ function addDays(date, days) {
 }
 
 function newItemRow() {
-  return { key: `item-${Date.now()}`, hsnCode: "", description: "", quantity: "1", unit: "", rate: "" }
+  return { key: `item-${Date.now()}`, hsnCode: "", description: "", quantity: "1", unit: "", rate: "", gstPercentage: "18" }
 }
 
 function InfoItem({ label, value }) {
@@ -114,8 +126,6 @@ export default function InvoiceForm({
     invoiceDate: toDateInputValueOrEmpty(initialValues?.invoiceDate) || toDateInputValue(today),
     dueDate: toDateInputValueOrEmpty(initialValues?.dueDate) || toDateInputValue(addDays(today, 30)),
     discount: String(initialValues?.discount ?? 0),
-    gstPercentage:
-      initialValues?.gstPercentage != null ? String(initialValues.gstPercentage) : "",
     termsAndConditions: initialValues?.termsAndConditions || "",
     notes: initialValues?.notes || "",
   }))
@@ -174,6 +184,7 @@ export default function InvoiceForm({
           quantity: String(item.quantity ?? 1),
           unit: item.unit || "",
           rate: item.rate != null ? String(item.rate) : "",
+          gstPercentage: item.gstPercentage != null ? String(item.gstPercentage) : "18",
         }))
       : [newItemRow()]
   )
@@ -226,7 +237,6 @@ export default function InvoiceForm({
       invoiceDate: values.invoiceDate,
       dueDate: values.dueDate,
       discount: Number(values.discount) || 0,
-      gstPercentage: Number(values.gstPercentage) || 0,
       termsAndConditions: values.termsAndConditions.trim(),
       notes: values.notes.trim(),
       items: items.map((item) => ({
@@ -235,6 +245,7 @@ export default function InvoiceForm({
         quantity: Number(item.quantity),
         unit: item.unit.trim(),
         rate: Number(item.rate),
+        gstPercentage: item.gstPercentage !== "" ? Number(item.gstPercentage) : 0,
       })),
     }
 
@@ -281,7 +292,7 @@ export default function InvoiceForm({
 
       if (advancePayment.amount.trim() !== "") {
         const paid = Number(advancePayment.amount)
-        const totals = computeTotals(items, values.discount, values.gstPercentage)
+        const totals = computeTotals(items, values.discount)
         if (!Number.isFinite(paid) || paid <= 0) {
           nextErrors.advanceAmount = "Amount paid must be greater than zero"
         } else if (paid > totals.grandTotal) {
@@ -585,7 +596,7 @@ export default function InvoiceForm({
 
       <FormSection
         title="3. Invoice Items"
-        description="Line items with automatic amount calculation (Amount = Qty × Rate)."
+        description="Line items with automatic amount calculation (Amount = Qty × Rate + GST)."
       >
         <div className="sm:col-span-2">
           <QuotationItemsTable
@@ -610,7 +621,6 @@ export default function InvoiceForm({
             readOnly
             subtotal={initialValues?.subtotal}
             discount={initialValues?.discount}
-            gstPercentage={initialValues?.gstPercentage}
             gstAmount={initialValues?.gstAmount}
             grandTotal={initialValues?.grandTotal}
           />
@@ -621,11 +631,6 @@ export default function InvoiceForm({
             onDiscountChange={(value) => {
               setValues((prev) => ({ ...prev, discount: value }))
               setErrors((prev) => ({ ...prev, discount: undefined }))
-            }}
-            gstPercentage={values.gstPercentage}
-            onGstChange={(value) => {
-              setValues((prev) => ({ ...prev, gstPercentage: value }))
-              setErrors((prev) => ({ ...prev, gstPercentage: undefined }))
             }}
             errors={errors}
             subtotal={initialValues?.subtotal}
@@ -681,13 +686,13 @@ export default function InvoiceForm({
             <div className="sm:col-span-2 text-sm text-[#64748B] bg-[#F8FAFC] border border-gray-100 rounded-[12px] px-4 py-3">
               Invoice total is{" "}
               <span className="font-semibold text-[#0F172A]">
-                {formatINR(computeTotals(items, values.discount, values.gstPercentage).grandTotal)}
+                {formatINR(computeTotals(items, values.discount).grandTotal)}
               </span>
               . Outstanding after this payment will be{" "}
               <span className="font-semibold text-[#0B2D5C]">
                 {formatINR(
                   Math.max(
-                    computeTotals(items, values.discount, values.gstPercentage).grandTotal -
+                    computeTotals(items, values.discount).grandTotal -
                       Number(advancePayment.amount),
                     0
                   )

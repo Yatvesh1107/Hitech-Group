@@ -469,7 +469,6 @@ export default function InvoiceDetails() {
               readOnly
               subtotal={invoice.subtotal}
               discount={invoice.discount}
-              gstPercentage={invoice.gstPercentage}
               gstAmount={invoice.gstAmount}
               grandTotal={invoice.grandTotal}
             />

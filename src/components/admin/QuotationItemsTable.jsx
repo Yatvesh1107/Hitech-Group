@@ -67,6 +67,8 @@ export default function QuotationItemsTable({
               description: product.serviceName,
               unit: product.unit || item.unit || "",
               rate: product.defaultRate != null ? String(product.defaultRate) : item.rate ?? "",
+              gstPercentage:
+                product.gstPercentage != null ? String(product.gstPercentage) : item.gstPercentage ?? "",
             }
           : item
       )
@@ -79,15 +81,22 @@ export default function QuotationItemsTable({
       product.defaultRate != null && product.defaultRate !== ""
         ? ` — ₹${Number(product.defaultRate).toLocaleString("en-IN")}`
         : ""
-    return `${product.serviceName}${unitSuffix}${rate}`
+    const gstSuffix =
+      product.gstPercentage != null ? ` (${product.gstPercentage}% GST)` : ""
+    return `${product.serviceName}${unitSuffix}${rate}${gstSuffix}`
   }
 
   const itemAmount = (item) => {
     const qty = Number(item.quantity)
     const rate = Number(item.rate)
-    return Number.isFinite(qty) && Number.isFinite(rate)
-      ? round2((Number.isFinite(qty) ? qty : 0) * (Number.isFinite(rate) ? rate : 0))
-      : 0
+    const taxable =
+      Number.isFinite(qty) && Number.isFinite(rate)
+        ? round2((Number.isFinite(qty) ? qty : 0) * (Number.isFinite(rate) ? rate : 0))
+        : 0
+    const gstP = Number(item.gstPercentage)
+    const gst =
+      Number.isFinite(gstP) && gstP > 0 ? round2((taxable * gstP) / 100) : 0
+    return round2(taxable + gst)
   }
 
   const formatAmount = (amount) =>
@@ -130,17 +139,18 @@ export default function QuotationItemsTable({
       )}
 
       <div className="hidden xl:block overflow-x-auto">
-        <table className="w-full min-w-[920px] text-left">
+        <table className="w-full min-w-[1000px] text-left">
           <thead>
             <tr className="border-b border-gray-100 text-xs uppercase tracking-wider text-[#94A3B8]">
-              <th className="py-3 pr-4 font-semibold w-[28%]">
+              <th className="py-3 pr-4 font-semibold w-[24%]">
                 Product / Description
               </th>
-              <th className="py-3 pr-4 font-semibold w-[10%]">HSN/SAC</th>
-              <th className="py-3 pr-4 font-semibold w-[10%]">Qty</th>
-              <th className="py-3 pr-4 font-semibold w-[12%]">Unit</th>
-              <th className="py-3 pr-4 font-semibold w-[12%]">Rate (₹)</th>
-              <th className="py-3 pr-4 font-semibold w-[14%]">Amount</th>
+              <th className="py-3 pr-4 font-semibold w-[9%]">HSN/SAC</th>
+              <th className="py-3 pr-4 font-semibold w-[9%]">Qty</th>
+              <th className="py-3 pr-4 font-semibold w-[10%]">Unit</th>
+              <th className="py-3 pr-4 font-semibold w-[9%]">GST %</th>
+              <th className="py-3 pr-4 font-semibold w-[11%]">Rate (₹)</th>
+              <th className="py-3 pr-4 font-semibold w-[12%]">Amount</th>
               <th className="py-3 font-semibold w-10" />
             </tr>
           </thead>
@@ -198,6 +208,22 @@ export default function QuotationItemsTable({
                       disabled={disabled}
                       className={`${inputClass} ${disabled ? "opacity-60 cursor-not-allowed" : ""}`}
                     />
+                  </td>
+                  <td className="py-3 pr-4 align-top">
+                    <input
+                      type="number"
+                      min="0"
+                      max="100"
+                      step="any"
+                      value={item.gstPercentage ?? ""}
+                      onChange={(e) => handleField(index, "gstPercentage", e.target.value)}
+                      placeholder="18"
+                      disabled={disabled}
+                      className={`${inputClass} ${inputErrorClass(Boolean(rowError.gstPercentage))} ${disabled ? "opacity-60 cursor-not-allowed" : ""}`}
+                    />
+                    {rowError.gstPercentage && (
+                      <p className="mt-1 text-xs text-red-600">{rowError.gstPercentage}</p>
+                    )}
                   </td>
                   <td className="py-3 pr-4 align-top">
                     <input
@@ -313,6 +339,23 @@ export default function QuotationItemsTable({
                     disabled={disabled}
                     className={`${inputClass} ${disabled ? "opacity-60 cursor-not-allowed" : ""}`}
                   />
+                </div>
+                <div>
+                  <label className={descriptionLabelClass}>GST %</label>
+                  <input
+                    type="number"
+                    min="0"
+                    max="100"
+                    step="any"
+                    value={item.gstPercentage ?? ""}
+                    onChange={(e) => handleField(index, "gstPercentage", e.target.value)}
+                    placeholder="18"
+                    disabled={disabled}
+                    className={`${inputClass} ${inputErrorClass(Boolean(rowError.gstPercentage))} ${disabled ? "opacity-60 cursor-not-allowed" : ""}`}
+                  />
+                  {rowError.gstPercentage && (
+                    <p className="mt-1 text-xs text-red-600">{rowError.gstPercentage}</p>
+                  )}
                 </div>
                 <div>
                   <label className={descriptionLabelClass}>Rate (₹)</label>

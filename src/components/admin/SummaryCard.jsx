@@ -10,22 +10,18 @@ export default function SummaryCard({
   items = [],
   discount = "0",
   onDiscountChange,
-  gstPercentage = "",
-  onGstChange,
   errors = {},
   subtotal: savedSubtotal,
   gstAmount: savedGstAmount,
   grandTotal: savedGrandTotal,
 }) {
   const discountValue = Number(discount) || 0
-  const gst = Number(gstPercentage) || 0
 
   let totals
   if (readOnly) {
     totals = {
       subtotal: Number(savedSubtotal) || 0,
       discount: discountValue,
-      gst,
       gstAmount: Number(savedGstAmount) || 0,
       grandTotal: Number(savedGrandTotal) || 0,
     }
@@ -39,12 +35,25 @@ export default function SummaryCard({
       }, 0)
     )
     const taxableValue = subtotal - discountValue
+
+    const totalItemGst = round2(
+      items.reduce((sum, item) => {
+        const qty = Number(item.quantity)
+        const rate = Number(item.rate)
+        const gstP = Number(item.gstPercentage)
+        if (!Number.isFinite(qty) || !Number.isFinite(rate)) return sum
+        if (!Number.isFinite(gstP) || gstP <= 0) return sum
+        return sum + qty * rate * (gstP / 100)
+      }, 0)
+    )
+    const gstAmount =
+      subtotal > 0 ? round2(totalItemGst * (taxableValue / subtotal)) : round2(totalItemGst)
+
     totals = {
       subtotal,
       discount: discountValue,
-      gst,
-      gstAmount: round2((taxableValue * gst) / 100),
-      grandTotal: round2(taxableValue + (taxableValue * gst) / 100),
+      gstAmount,
+      grandTotal: round2(taxableValue + gstAmount),
     }
   }
 
@@ -64,24 +73,16 @@ export default function SummaryCard({
               error={errors.discount}
               placeholder="0"
             />
-            <InputField
-              id="gstPercentage"
-              label="GST %"
-              type="number"
-              min="0"
-              max="100"
-              step="any"
-              value={gstPercentage}
-              onChange={(e) => onGstChange?.(e.target.value)}
-              error={errors.gstPercentage}
-              placeholder="e.g. 18"
-            />
+            <p className="text-xs leading-relaxed text-[#94A3B8]">
+              Row amounts include GST. Subtotal is pre-tax value. Discount applies to
+              taxable value, GST is recalculated proportionally.
+            </p>
           </div>
 
           <div className="bg-[#F8FAFC] border border-gray-100 rounded-[16px] p-5 space-y-3">
             <SummaryRow label="Subtotal" value={formatINR(totals.subtotal)} />
             <SummaryRow label="Discount" value={`- ${formatINR(totals.discount)}`} />
-            <SummaryRow label={`GST Amount (${totals.gst}%)`} value={formatINR(totals.gstAmount)} />
+            <SummaryRow label="GST" value={formatINR(totals.gstAmount)} />
             <TotalRow label="Grand Total" value={formatINR(totals.grandTotal)} />
           </div>
         </div>
@@ -89,7 +90,7 @@ export default function SummaryCard({
         <div className="bg-[#F8FAFC] border border-gray-100 rounded-[16px] p-5 space-y-3">
           <SummaryRow label="Subtotal" value={formatINR(totals.subtotal)} />
           <SummaryRow label="Discount" value={`- ${formatINR(totals.discount)}`} />
-          <SummaryRow label={`GST (${totals.gst}%)`} value={formatINR(totals.gstAmount)} />
+          <SummaryRow label="GST" value={formatINR(totals.gstAmount)} />
           <TotalRow label="Grand Total" value={formatINR(totals.grandTotal)} />
         </div>
       )}

@@ -534,7 +534,6 @@ export default function QuotationDetails() {
               readOnly
               subtotal={quotation.subtotal}
               discount={quotation.discount}
-              gstPercentage={quotation.gstPercentage}
               gstAmount={quotation.gstAmount}
               grandTotal={quotation.grandTotal}
             />

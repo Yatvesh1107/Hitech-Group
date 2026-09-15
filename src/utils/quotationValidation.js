@@ -16,13 +16,6 @@ export function validateQuotationForm(values, items) {
     }
   }
 
-  if (values.gstPercentage !== "" && values.gstPercentage !== null && values.gstPercentage !== undefined) {
-    const gst = Number(values.gstPercentage)
-    if (Number.isNaN(gst) || gst < 0 || gst > 100) {
-      errors.gstPercentage = "GST percentage must be between 0 and 100"
-    }
-  }
-
   if (!Array.isArray(items) || items.length === 0) {
     errors.items = "At least one quotation item is required"
   } else {
@@ -48,6 +41,13 @@ export function validateQuotationForm(values, items) {
         const rate = Number(item.rate)
         if (Number.isNaN(rate) || rate < 0) {
           rowErrors.rate = "Rate must be 0 or more"
+        }
+      }
+
+      if (item.gstPercentage !== "" && item.gstPercentage !== null && item.gstPercentage !== undefined) {
+        const gst = Number(item.gstPercentage)
+        if (Number.isNaN(gst) || gst < 0 || gst > 100) {
+          rowErrors.gstPercentage = "GST percentage must be between 0 and 100"
         }
       }
 

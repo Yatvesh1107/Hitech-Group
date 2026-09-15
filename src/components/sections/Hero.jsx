@@ -9,8 +9,10 @@ import {
   Factory,
   BadgeCheck,
   MapPin,
+  Download,
 } from "lucide-react"
 import heroBg from "@/assets/images/home/hero-bg.png"
+import brochurePdf from "@/assets/brochure.pdf"
 
 const expertise = [
   {
@@ -100,7 +102,7 @@ function Hero() {
 
             <motion.div
               variants={itemVariants}
-              className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-7 sm:mt-8 justify-center lg:justify-start"
+              className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 mt-7 sm:mt-8 justify-center lg:justify-start"
             >
               <Link
                 to="/divisions"
@@ -114,6 +116,14 @@ function Hero() {
               >
                 Contact Us
               </Link>
+              <a
+                href={brochurePdf}
+                download
+                className="h-12 sm:h-[52px] px-6 sm:px-8 bg-white/10 border-2 border-[#F4B400]/70 text-[#F4B400] font-semibold rounded-xl inline-flex items-center justify-center gap-2 hover:bg-[#F4B400] hover:text-[#0F172A] transition-colors text-sm sm:text-base"
+              >
+                <Download size={18} />
+                Download Brochure
+              </a>
             </motion.div>
           </div>
 

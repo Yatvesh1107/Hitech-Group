@@ -44,7 +44,7 @@ function addDays(date, days) {
 }
 
 function newItemRow() {
-  return { key: `item-${Date.now()}`, hsnCode: "", description: "", quantity: "1", unit: "", rate: "" }
+  return { key: `item-${Date.now()}`, hsnCode: "", description: "", quantity: "1", unit: "", rate: "", gstPercentage: "18" }
 }
 
 function InfoItem({ label, value }) {
@@ -79,8 +79,6 @@ export default function QuotationForm({
         validTill: toDateInputValueOrEmpty(initialValues.validTill),
         status: initialValues.status || "Draft",
         discount: String(initialValues.discount ?? 0),
-        gstPercentage:
-          initialValues.gstPercentage != null ? String(initialValues.gstPercentage) : "",
         termsAndConditions: initialValues.termsAndConditions || "",
         notes: initialValues.notes || "",
       }
@@ -94,7 +92,6 @@ export default function QuotationForm({
       validTill: toDateInputValue(addDays(today, 30)),
       status: "Draft",
       discount: "0",
-      gstPercentage: "",
       termsAndConditions: DEFAULT_TERMS,
       notes: "",
     }
@@ -113,6 +110,7 @@ export default function QuotationForm({
           quantity: String(item.quantity ?? 1),
           unit: item.unit || "",
           rate: item.rate != null ? String(item.rate) : "",
+          gstPercentage: item.gstPercentage != null ? String(item.gstPercentage) : "18",
         }))
       : [newItemRow()]
   )
@@ -180,7 +178,6 @@ export default function QuotationForm({
     validTill: values.validTill,
     status,
     discount: Number(values.discount) || 0,
-    gstPercentage: Number(values.gstPercentage) || 0,
     termsAndConditions: values.termsAndConditions.trim(),
     notes: values.notes.trim(),
     items: items.map((item) => ({
@@ -189,6 +186,7 @@ export default function QuotationForm({
       quantity: Number(item.quantity),
       unit: item.unit.trim(),
       rate: Number(item.rate),
+      gstPercentage: item.gstPercentage !== "" ? Number(item.gstPercentage) : 0,
     })),
   })
 
@@ -346,7 +344,7 @@ export default function QuotationForm({
 
       <FormSection
         title="3. Quotation Items"
-        description="Line items with automatic amount calculation (Amount = Qty × Rate)."
+        description="Line items with automatic amount calculation (Amount = Qty × Rate + GST)."
       >
         <div className="sm:col-span-2">
           <QuotationItemsTable
@@ -373,11 +371,6 @@ export default function QuotationForm({
           onDiscountChange={(value) => {
             setValues((prev) => ({ ...prev, discount: value }))
             setErrors((prev) => ({ ...prev, discount: undefined }))
-          }}
-          gstPercentage={values.gstPercentage}
-          onGstChange={(value) => {
-            setValues((prev) => ({ ...prev, gstPercentage: value }))
-            setErrors((prev) => ({ ...prev, gstPercentage: undefined }))
           }}
           errors={errors}
           subtotal={initialValues?.subtotal}
