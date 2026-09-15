@@ -74,6 +74,7 @@ export default function QuotationForm({
       return {
         customer: initialValues.customer?._id || initialValues.customer || "",
         division: initialValues.division || "",
+        quotationNumber: initialValues.quotationNumber || "",
         quotationDate: toDateInputValueOrEmpty(initialValues.quotationDate),
         validTill: toDateInputValueOrEmpty(initialValues.validTill),
         status: initialValues.status || "Draft",
